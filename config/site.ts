@@ -1,8 +1,9 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "ChainPay",
+  description:
+    "Create professional crypto payment links and guide clients to pay in USDT/BTC. Cash out safely via Binance P2P.",
   navItems: [
     {
       label: "Home",

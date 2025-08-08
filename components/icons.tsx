@@ -186,3 +186,30 @@ export const SearchIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
+
+// Additional minimal icons for landing illustrations
+export const CoinIcon: React.FC<IconSvgProps> = ({ size = 28, width, height, ...props }) => (
+  <svg width={size || width} height={size || height} viewBox="0 0 24 24" fill="none" {...props}>
+    <circle cx="12" cy="12" r="9" fill="currentColor" opacity="0.12" />
+    <circle cx="12" cy="12" r="7.5" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M9.5 12h5M12 8.5v7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
+export const ShieldIcon: React.FC<IconSvgProps> = ({ size = 28, width, height, ...props }) => (
+  <svg width={size || width} height={size || height} viewBox="0 0 24 24" fill="none" {...props}>
+    <path d="M12 3l6 2v6c0 4.5-2.7 7.8-6 8.9-3.3-1.1-6-4.4-6-8.9V5l6-2z" stroke="currentColor" strokeWidth="1.5" fill="currentColor" opacity="0.08" />
+    <path d="M12 3l6 2v6c0 4.5-2.7 7.8-6 8.9-3.3-1.1-6-4.4-6-8.9V5l6-2z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+    <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export const NetworkIcon: React.FC<IconSvgProps> = ({ size = 28, width, height, ...props }) => (
+  <svg width={size || width} height={size || height} viewBox="0 0 24 24" fill="none" {...props}>
+    <circle cx="5" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="12" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="12" cy="19" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="19" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M7.3 10.7l2.9-2.9M7.3 13.3l2.9 2.9M16.7 10.7l-2.9-2.9M16.7 13.3l-2.9 2.9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
