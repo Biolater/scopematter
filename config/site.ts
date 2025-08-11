@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "ChainPay",
+  name: "PayLynk",
   description:
     "Get paid globally, instantly — without the payment barriers. Clients pay by card/bank; you receive USDT or ETH direct to your wallet.",
   navItems: [
@@ -61,10 +61,10 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: "https://github.com/your-org/chainpay",
-    twitter: "https://twitter.com/chainpay",
-    docs: "https://docs.chainpay.example",
-    discord: "https://discord.gg/chainpay",
-    sponsor: "https://buymeacoffee.com/chainpay",
+    github: "https://github.com/your-org/paylynk",
+    twitter: "https://twitter.com/paylynk",
+    docs: "https://docs.paylynk.example",
+    discord: "https://discord.gg/paylynk",
+    sponsor: "https://buymeacoffee.com/paylynk",
   },
 };

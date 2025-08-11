@@ -13,6 +13,8 @@ import {
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
 import clsx from "clsx";
+import Image from "next/image";
+import NavbarImage from "@/public/paylynk-navbar.png";
 
 export function LandingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,7 +36,9 @@ export function LandingNavbar() {
       isBlurred
     >
       <NavbarBrand>
-        <NextLink href="#hero" className="font-semibold tracking-tight">Chainpay</NextLink>
+        <NextLink href="#hero" className="flex items-center gap-2 font-semibold tracking-tight">
+          <Image src={NavbarImage} alt="PayLynk" className="h-32 w-auto" />
+        </NextLink>
       </NavbarBrand>
 
       {/* Desktop nav */}

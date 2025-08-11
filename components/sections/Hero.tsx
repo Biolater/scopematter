@@ -76,7 +76,7 @@ export default function HeroSection() {
                 <Chip size="sm" variant="flat" color="secondary">Polygon</Chip>
               </div>
               <div className="rounded-lg border border-default-200/70 bg-content2 px-3 py-2 text-sm text-default-600">
-                https://pay.chainpay.io/link/5JX9…
+                https://pay.paylynk.io/link/5JX9…
               </div>
             </CardBody>
           </Card>
