@@ -30,10 +30,8 @@ export function LandingNavbar() {
     <HeroUINavbar
       maxWidth="xl"
       position="sticky"
-      className={clsx(
-        "backdrop-blur border-b",
-        isScrolled ? "bg-background/90 border-default-200/60" : "bg-transparent border-transparent",
-      )}
+      isBordered
+      isBlurred
     >
       <NavbarBrand>
         <NextLink href="#hero" className="font-semibold tracking-tight">Chainpay</NextLink>

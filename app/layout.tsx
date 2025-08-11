@@ -24,9 +24,7 @@ export const metadata: Metadata = {
       "Clients pay in USD via card or bank. You receive crypto directly in your wallet — fast, secure, and non‑custodial.",
     url: "/",
     siteName: "Chainpay",
-    images: [
-      { url: "/og.png", width: 1200, height: 630, alt: "ChainPay" },
-    ],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "ChainPay" }],
     locale: "en_US",
     type: "website",
   },
@@ -71,19 +69,21 @@ export default function RootLayout({
       <body
         className={clsx(
           "min-h-screen text-foreground bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col min-h-screen">
             <SmoothScroll />
             <LandingNavbar />
-            <main className="container mx-auto max-w-7xl px-6 flex-grow">{children}</main>
-            <footer className="w-full py-8 border-t border-default-200/60">
+            <main>{children}</main>
+            <footer className="w-full py-8 border-t border-divider">
               <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
                 <div>
                   <p className="font-semibold">Chainpay</p>
-                  <p className="mt-2 text-default-600">Get paid globally, instantly — without the payment barriers.</p>
+                  <p className="mt-2 text-default-600">
+                    Get paid globally, instantly — without the payment barriers.
+                  </p>
                 </div>
                 <div className="text-center">
                   <p className="text-default-600">contact@chainpay.io</p>
