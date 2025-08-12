@@ -15,7 +15,11 @@ export function SmoothScroll() {
       if (!el) return;
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       event.preventDefault();
-      el.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" });
+      // Offset by sticky navbar height to avoid over-scrolling past the section title
+      const navbar = document.getElementById("site-navbar");
+      const offset = (navbar?.getBoundingClientRect().height ?? 0) + 22; // small cushion
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: prefersReduced ? "auto" : "smooth" });
     }
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);

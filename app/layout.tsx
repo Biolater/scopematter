@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Link } from "@heroui/link";
+import NextLink from "next/link";
+// import { Link } from "@heroui/link";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
@@ -52,8 +53,16 @@ export const metadata: Metadata = {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+      {
+        url: "/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: "/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
       { url: "/favicon.ico" },
     ],
     apple: [{ url: "/apple-touch-icon.png" }],
@@ -89,22 +98,25 @@ export default function RootLayout({
             <main>{children}</main>
             <FloatThemeToggle />
             <footer className="w-full py-8 border-t border-divider">
-              <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+              <div className="container items-center mx-auto max-w-7xl px-6 flex justify-between flex-wrap gap-6 text-sm">
                 <div>
-                  <p className="font-semibold">PayLynk</p>
-                  <p className="mt-2 text-default-600">
-                    Get paid globally, instantly — without the payment barriers.
-                  </p>
+                  <NextLink
+                    href="#hero"
+                    className="flex items-center font-semibold tracking-tight"
+                  >
+                    <img
+                      src="/navbar-brand.png"
+                      alt="PayLynk"
+                      className="h-12 w-auto"
+                    />
+                    <p className="font-bold text-inherit -ml-2">PayLynk</p>
+                  </NextLink>
                 </div>
                 <div className="text-center">
-                  <p className="text-default-600">contact@paylynk.io</p>
+                  <p className="text-default-600">muradyusubovdev@icloud.com</p>
                 </div>
                 <div className="md:text-right">
                   <p className="text-default-600">© 2025 PayLynk</p>
-                  <div className="space-x-3">
-                    <Link href="#">Privacy Policy</Link>
-                    <Link href="#">Terms</Link>
-                  </div>
                 </div>
               </div>
             </footer>

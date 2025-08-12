@@ -31,6 +31,7 @@ export function LandingNavbar() {
 
   return (
     <HeroUINavbar
+      id="site-navbar"
       maxWidth="xl"
       position="sticky"
       isBordered
@@ -51,7 +52,7 @@ export function LandingNavbar() {
         <NavbarItem><a className={linkClass} href="#support">Support</a></NavbarItem>
         <NavbarItem><a className={linkClass} href="#faq">FAQ</a></NavbarItem>
         <NavbarItem>
-          <a href="#waitlist" className="btn-primary">Join Waitlist</a>
+          <Button as="a" href="#waitlist" size="md" className="btn-primary">Join Waitlist</Button>
         </NavbarItem>
       </NavbarContent>
 
@@ -71,17 +72,23 @@ export function LandingNavbar() {
           { href: "#waitlist", label: "Join Waitlist", primary: true },
         ].map((item) => (
           <NavbarMenuItem key={item.href}>
-            <a
-              href={item.href}
-              className={clsx(
-                "block w-full py-3",
-                item.primary
-                  ? "font-medium text-primary"
-                  : "text-default-600 hover:text-foreground",
-              )}
-            >
-              {item.label}
-            </a>
+            {item.primary ? (
+              <Button
+                as="a"
+                href={item.href}
+                className="w-full btn-primary"
+                size="md"
+              >
+                {item.label}
+              </Button>
+            ) : (
+              <a
+                href={item.href}
+                className="block w-full py-3 text-default-600 hover:text-foreground"
+              >
+                {item.label}
+              </a>
+            )}
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
