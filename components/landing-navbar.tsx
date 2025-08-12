@@ -15,6 +15,7 @@ import { Button } from "@heroui/button";
 import clsx from "clsx";
 import Image from "next/image";
 import NavbarImage from "@/public/paylynk-navbar.png";
+import navbarSvg from "@/public/file.svg";
 
 export function LandingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,9 +36,10 @@ export function LandingNavbar() {
       isBordered
       isBlurred
     >
-      <NavbarBrand>
-        <NextLink href="#hero" className="flex items-center gap-2 font-semibold tracking-tight">
-          <Image src={NavbarImage} alt="PayLynk" className="h-32 w-auto" />
+      <NavbarBrand className="-ml-3">
+        <NextLink href="#hero" className="flex items-center font-semibold tracking-tight">
+          <img src="/navbar-brand.png" alt="PayLynk" className="h-12 w-auto" />
+          <p className="font-bold text-inherit -ml-2">PayLynk</p>
         </NextLink>
       </NavbarBrand>
 
