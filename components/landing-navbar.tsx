@@ -51,9 +51,9 @@ export function LandingNavbar() {
         <NavbarItem><a className={linkClass} href="#benefits">Benefits</a></NavbarItem>
         <NavbarItem><a className={linkClass} href="#support">Support</a></NavbarItem>
         <NavbarItem><a className={linkClass} href="#faq">FAQ</a></NavbarItem>
-        <NavbarItem>
+        {/* <NavbarItem>
           <Button as="a" href="#waitlist" size="md" className="btn-primary">Join Waitlist</Button>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
 
       {/* Mobile toggle */}
@@ -69,7 +69,7 @@ export function LandingNavbar() {
           { href: "#benefits", label: "Benefits" },
           { href: "#support", label: "Support" },
           { href: "#faq", label: "FAQ" },
-          { href: "#waitlist", label: "Join Waitlist", primary: true },
+          // { href: "#waitlist", label: "Join Waitlist", primary: true },
         ].map((item) => (
           <NavbarMenuItem key={item.href}>
             {item.primary ? (

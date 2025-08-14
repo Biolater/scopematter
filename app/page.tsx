@@ -5,7 +5,7 @@ import HowItWorksSection from "@/components/sections/HowItWorks";
 import BenefitsSection from "@/components/sections/Benefits";
 import SupportSection from "@/components/sections/Support";
 import FAQSection from "@/components/sections/FAQ";
-import CTAWaitlistSection from "@/components/sections/CTAWaitlist";
+// import CTAWaitlistSection from "@/components/sections/CTAWaitlist";
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
         <BenefitsSection />
         <SupportSection />
         <FAQSection />
-        <CTAWaitlistSection />
+        {/* <CTAWaitlistSection /> */}
       </div>
     </div>
   );

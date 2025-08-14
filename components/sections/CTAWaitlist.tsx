@@ -7,6 +7,7 @@ import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Avatar } from "@heroui/avatar";
 import { motion } from "framer-motion";
 import { countries } from "@/lib/data/countries";
+import { addToWaitlist } from "@/lib/actions/waitlist.actions";
 
 export default function CTAWaitlistSection() {
   const [name, setName] = useState("");
@@ -21,23 +22,21 @@ export default function CTAWaitlistSection() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus(null);
+
     if (!email.trim() || !country.trim()) {
       setStatus({ type: "error", message: "Email and country are required." });
       return;
     }
+
     try {
       setIsSubmitting(true);
-      const response = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name || undefined, email, country }),
-      });
-      if (!response.ok) throw new Error("Request failed");
+      await addToWaitlist(name || "", email, country);
       setStatus({ type: "success", message: "Thanks! You’re on the list." });
       setName("");
       setEmail("");
       setCountry("");
     } catch (error) {
+      console.error(error);
       setStatus({
         type: "error",
         message: "Something went wrong. Please try again.",
@@ -118,7 +117,6 @@ export default function CTAWaitlistSection() {
                   <Avatar
                     className="w-6 h-6"
                     alt={c.name}
-                    // use flagcdn with iso2 if available; fallback to emoji avatar
                     src={`https://flagcdn.com/${c.code}.svg`}
                   >
                     {c.emoji}

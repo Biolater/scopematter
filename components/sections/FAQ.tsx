@@ -4,7 +4,7 @@ import { Accordion, AccordionItem } from "@heroui/accordion";
 
 export default function FAQSection() {
   return (
-    <section id="faq" aria-labelledby="faq-heading" className="px-6 md:px-12">
+    <section id="faq" aria-labelledby="faq-heading" className="px-6 md:px-12 pb-24">
       <div className="w-full max-w-4xl mx-auto">
         <h2 id="faq-heading" className="text-2xl md:text-3xl font-semibold text-center">FAQ</h2>
         <Accordion className="mt-4" variant="splitted">
