@@ -6,7 +6,7 @@ import { Button } from "@heroui/button";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Avatar } from "@heroui/avatar";
 import { motion } from "framer-motion";
-import { countries } from "@/data/countries";
+import { countries } from "@/lib/data/countries";
 
 export default function CTAWaitlistSection() {
   const [name, setName] = useState("");
