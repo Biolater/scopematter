@@ -11,6 +11,7 @@ import { fontSans } from "@/config/fonts";
 import { LandingNavbar } from "@/components/landing-navbar";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import FloatThemeToggle from "@/components/FloatThemeToggle";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://paylynk.example"),
@@ -83,46 +84,50 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <head />
-      <body
-        className={clsx(
-          "min-h-screen text-foreground bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-          <div className="relative flex flex-col min-h-screen">
-            <SmoothScroll />
-            <LandingNavbar />
-            <main>{children}</main>
-            <FloatThemeToggle />
-            <footer className="w-full py-8 border-t border-divider">
-              <div className="container items-center mx-auto max-w-7xl px-6 flex justify-between flex-wrap gap-6 text-sm">
-                <div>
-                  <NextLink
-                    href="#hero"
-                    className="flex items-center font-semibold tracking-tight"
-                  >
-                    <img
-                      src="/navbar-brand.png"
-                      alt="PayLynk"
-                      className="h-12 w-auto"
-                    />
-                    <p className="font-bold text-inherit -ml-2">PayLynk</p>
-                  </NextLink>
+    <ClerkProvider>
+      <html suppressHydrationWarning lang="en">
+        <head />
+        <body
+          className={clsx(
+            "min-h-screen text-foreground bg-background font-sans antialiased",
+            fontSans.variable
+          )}
+        >
+          <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+            <div className="relative flex flex-col min-h-screen">
+              <SmoothScroll />
+              <LandingNavbar />
+              <main>{children}</main>
+              <FloatThemeToggle />
+              <footer className="w-full py-8 border-t border-divider">
+                <div className="container items-center mx-auto max-w-7xl px-6 flex justify-between flex-wrap gap-6 text-sm">
+                  <div>
+                    <NextLink
+                      href="#hero"
+                      className="flex items-center font-semibold tracking-tight"
+                    >
+                      <img
+                        src="/navbar-brand.png"
+                        alt="PayLynk"
+                        className="h-12 w-auto"
+                      />
+                      <p className="font-bold text-inherit -ml-2">PayLynk</p>
+                    </NextLink>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-default-600">
+                      muradyusubovdev@icloud.com
+                    </p>
+                  </div>
+                  <div className="md:text-right">
+                    <p className="text-default-600">© 2025 PayLynk</p>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-default-600">muradyusubovdev@icloud.com</p>
-                </div>
-                <div className="md:text-right">
-                  <p className="text-default-600">© 2025 PayLynk</p>
-                </div>
-              </div>
-            </footer>
-          </div>
-        </Providers>
-      </body>
-    </html>
+              </footer>
+            </div>
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
