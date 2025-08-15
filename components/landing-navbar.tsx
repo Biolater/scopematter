@@ -11,6 +11,8 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@heroui/navbar";
+import { Button } from "@heroui/button";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export function LandingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -83,6 +85,21 @@ export function LandingNavbar() {
             </button>
           </NavbarItem>
         ))}
+        <SignedOut>
+          <NavbarItem>
+            <Button as={NextLink} href="/sign-in" variant="flat">
+              Sign In
+            </Button>
+          </NavbarItem>
+          <NavbarItem>
+            <Button as={NextLink} href="/sign-up" color="primary">
+              Sign Up
+            </Button>
+          </NavbarItem>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </NavbarContent>
 
       {/* Mobile toggle */}
@@ -102,6 +119,27 @@ export function LandingNavbar() {
             </button>
           </NavbarMenuItem>
         ))}
+        <SignedOut>
+          <NavbarMenuItem>
+            <NextLink href="/sign-in" className="w-full">
+              <Button fullWidth variant="flat">
+                Sign In
+              </Button>
+            </NextLink>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <NextLink href="/sign-up" className="w-full">
+              <Button fullWidth color="primary">
+                Sign Up
+              </Button>
+            </NextLink>
+          </NavbarMenuItem>
+        </SignedOut>
+        <SignedIn>
+          <NavbarMenuItem>
+            <UserButton />
+          </NavbarMenuItem>
+        </SignedIn>
       </NavbarMenu>
     </HeroUINavbar>
   );
