@@ -26,15 +26,15 @@ export default function BenefitsSection() {
     <section
       id="benefits"
       aria-labelledby="benefits-heading"
-      className="px-6 md:px-12"
+      className="px-6 lg:px-12"
     >
       <h2
         id="benefits-heading"
-        className="text-2xl md:text-3xl font-semibold text-center"
+        className="text-2xl lg:text-3xl font-semibold text-center"
       >
         Benefits
       </h2>
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+      <div className="mt-6 grid gap-4 sm:gap-6 lg:grid-cols-3">
         {items.map((b, i) => (
           <motion.div
             key={b.title}
