@@ -12,6 +12,7 @@ import { LandingNavbar } from "@/components/landing-navbar";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import FloatThemeToggle from "@/components/FloatThemeToggle";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://paylynk.example"),
@@ -93,6 +94,7 @@ export default function RootLayout({
             fontSans.variable
           )}
         >
+          <Analytics />
           <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
             <div className="relative flex flex-col min-h-screen">
               <SmoothScroll />
