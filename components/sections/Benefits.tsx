@@ -7,18 +7,18 @@ export default function BenefitsSection() {
   const items = [
     {
       emoji: "⚡",
-      title: "Instant payouts",
-      desc: "Clients pay in fiat, you receive crypto in minutes.",
+      title: "Get paid in minutes",
+      desc: "Clients pay in fiat, you receive crypto directly to your wallet.",
     },
     {
-      emoji: "🚫",
-      title: "No PayPal/Wise limits",
-      desc: "Works in restricted countries.",
+      emoji: "🛠️",
+      title: "No crypto setup for clients",
+      desc: "Clients can pay without a wallet or any crypto knowledge.",
     },
     {
       emoji: "🔐",
-      title: "Non‑custodial",
-      desc: "You hold the keys to your funds.",
+      title: "You control your funds",
+      desc: "Non-custodial — we never hold your crypto.",
     },
   ];
 
