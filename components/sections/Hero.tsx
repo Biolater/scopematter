@@ -32,11 +32,11 @@ export default function HeroSection() {
         </defs>
         <circle cx="300" cy="300" r="300" fill="url(#g)" />
       </svg>
-      <div className="grid container mx-auto grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center px-6 md:px-12 py-16 md:py-24 relative">
+      <div className="grid container mx-auto grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center px-6 lg:px-12 py-16 lg:py-24 relative">
         <div className="max-w-2xl">
           <motion.h1
             id="hero-heading"
-            className="text-4xl md:text-6xl font-bold leading-tight tracking-tight"
+            className="text-3xl lg:text-5xl font-bold leading-tight tracking-tight"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -52,7 +52,7 @@ export default function HeroSection() {
             — no bank restrictions.
           </motion.h1>
           <motion.p
-            className="mt-4 text-default-700 text-base md:text-xl"
+            className="mt-4 text-default-700 text-base lg:text-xl"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
@@ -104,7 +104,7 @@ export default function HeroSection() {
           <Card
             radius="lg"
             shadow="md"
-            className="absolute left-6 right-6 top-6 md:left-0 md:right-16 md:top-4 border border-default-200/60 bg-content1/95"
+            className="absolute left-6 right-6 top-6 lg:left-0 lg:right-16 lg:top-4 border border-default-200/60 bg-content1/95"
           >
             <CardHeader className="p-5 border-default-200/60">
               <div className="flex items-baseline gap-2">
@@ -151,7 +151,7 @@ export default function HeroSection() {
           <Card
             radius="lg"
             shadow="md"
-            className="absolute left-8 right-4 top-40 md:left-10 md:right-24 md:top-40 border border-default-200/60 bg-content1/95"
+            className="absolute left-8 right-4 top-40 lg:left-10 lg:right-24 lg:top-40 border border-default-200/60 bg-content1/95"
           >
             <CardHeader className="p-5">
               <div className="flex items-baseline gap-2">
@@ -176,7 +176,7 @@ export default function HeroSection() {
           <Card
             radius="lg"
             shadow="md"
-            className="absolute left-16 right-0 bottom-4 md:left-24 md:right-10 md:bottom-6 border border-default-200/60 bg-content1/95"
+            className="absolute left-16 right-0 bottom-4 lg:left-24 lg:right-10 lg:bottom-6 border border-default-200/60 bg-content1/95"
           >
             <CardHeader className="p-5  border-default-200/60">
               <div className="flex items-baseline gap-2">

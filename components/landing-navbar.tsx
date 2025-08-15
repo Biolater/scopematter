@@ -11,14 +11,10 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@heroui/navbar";
-import { Button } from "@heroui/button";
-import clsx from "clsx";
-import Image from "next/image";
-import NavbarImage from "@/public/paylynk-navbar.png";
-import navbarSvg from "@/public/file.svg";
 
 export function LandingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
@@ -27,7 +23,33 @@ export function LandingNavbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const linkClass = "text-sm text-muted hover:text-foreground transition-colors";
+  const linkClass =
+    "text-sm text-muted hover:text-foreground transition-colors";
+
+  const navItems = [
+    { href: "#hero", label: "Home" },
+    { href: "#how", label: "How It Works" },
+    { href: "#benefits", label: "Benefits" },
+    { href: "#support", label: "Support" },
+    { href: "#faq", label: "FAQ" },
+  ];
+
+  const handleNavItemClick = (href: string) => {
+    setIsMenuOpen(false);
+
+    // Smooth scroll to section with offset for navbar height
+    const element = document.querySelector(href);
+    if (element) {
+      const navbarHeight = 80; // Approximate navbar height
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <HeroUINavbar
@@ -36,9 +58,14 @@ export function LandingNavbar() {
       position="sticky"
       isBordered
       isBlurred
+      onMenuOpenChange={setIsMenuOpen}
+      isMenuOpen={isMenuOpen}
     >
       <NavbarBrand className="-ml-3">
-        <NextLink href="#hero" className="flex items-center font-semibold tracking-tight">
+        <NextLink
+          href="#hero"
+          className="flex items-center font-semibold tracking-tight"
+        >
           <img src="/navbar-brand.png" alt="PayLynk" className="h-12 w-auto" />
           <p className="font-bold text-inherit -ml-2">PayLynk</p>
         </NextLink>
@@ -46,14 +73,16 @@ export function LandingNavbar() {
 
       {/* Desktop nav */}
       <NavbarContent justify="end" className="hidden md:flex gap-5">
-        <NavbarItem><a className={linkClass} href="#hero">Home</a></NavbarItem>
-        <NavbarItem><a className={linkClass} href="#how">How It Works</a></NavbarItem>
-        <NavbarItem><a className={linkClass} href="#benefits">Benefits</a></NavbarItem>
-        <NavbarItem><a className={linkClass} href="#support">Support</a></NavbarItem>
-        <NavbarItem><a className={linkClass} href="#faq">FAQ</a></NavbarItem>
-        {/* <NavbarItem>
-          <Button as="a" href="#waitlist" size="md" className="btn-primary">Join Waitlist</Button>
-        </NavbarItem> */}
+        {navItems.map((item) => (
+          <NavbarItem key={item.href}>
+            <button
+              onClick={() => handleNavItemClick(item.href)}
+              className="text-sm hover:text-foreground/80 cursor-pointer transition-colors"
+            >
+              {item.label}
+            </button>
+          </NavbarItem>
+        ))}
       </NavbarContent>
 
       {/* Mobile toggle */}
@@ -62,38 +91,18 @@ export function LandingNavbar() {
       </NavbarContent>
 
       {/* Mobile menu */}
-      <NavbarMenu>
-        {[
-          { href: "#hero", label: "Home" },
-          { href: "#how", label: "How It Works" },
-          { href: "#benefits", label: "Benefits" },
-          { href: "#support", label: "Support" },
-          { href: "#faq", label: "FAQ" },
-          // { href: "#waitlist", label: "Join Waitlist", primary: true },
-        ].map((item) => (
+      <NavbarMenu className="overflow-hidden">
+        {navItems.map((item) => (
           <NavbarMenuItem key={item.href}>
-            {item.primary ? (
-              <Button
-                as="a"
-                href={item.href}
-                className="w-full btn-primary"
-                size="md"
-              >
-                {item.label}
-              </Button>
-            ) : (
-              <a
-                href={item.href}
-                className="block w-full py-3 text-default-600 hover:text-foreground"
-              >
-                {item.label}
-              </a>
-            )}
+            <button
+              onClick={() => handleNavItemClick(item.href)}
+              className="w-full cursor-pointer block hover:text-foreground/80 transition-colors text-left"
+            >
+              {item.label}
+            </button>
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
     </HeroUINavbar>
   );
 }
-
-
