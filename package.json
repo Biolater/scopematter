@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.31.1",
+    "@clerk/themes": "^2.4.10",
     "@heroui/accordion": "^2.2.21",
     "@heroui/autocomplete": "^2.3.26",
     "@heroui/avatar": "^2.2.20",
