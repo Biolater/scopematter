@@ -1,6 +1,6 @@
 "use server";
 
-import env from "../env";
+import env from "../../config/env";
 
 
 export async function addToWaitlist(name: string, email: string, country: string) {

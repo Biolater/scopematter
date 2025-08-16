@@ -74,7 +74,7 @@ export function LandingNavbar() {
       </NavbarBrand>
 
       {/* Desktop nav */}
-      <NavbarContent justify="end" className="hidden md:flex gap-5">
+      <NavbarContent justify="end" className="hidden md:flex gap-4">
         {navItems.map((item) => (
           <NavbarItem key={item.href}>
             <button

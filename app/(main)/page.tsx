@@ -1,10 +1,10 @@
 "use client";
 
-import HeroSection from "@/components/sections/Hero";
-import HowItWorksSection from "@/components/sections/HowItWorks";
-import BenefitsSection from "@/components/sections/Benefits";
-import SupportSection from "@/components/sections/Support";
-import FAQSection from "@/components/sections/FAQ";
+import HeroSection from "@/components/sections/hero";
+import HowItWorksSection from "@/components/sections/how-it-works";
+import BenefitsSection from "@/components/sections/benefits";
+import SupportSection from "@/components/sections/support";
+import FAQSection from "@/components/sections/faq";
 // import CTAWaitlistSection from "@/components/sections/CTAWaitlist";
 
 export default function Home() {
