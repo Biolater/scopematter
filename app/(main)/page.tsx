@@ -9,7 +9,7 @@ import FAQSection from "@/components/sections/faq";
 // import CTAWaitlistSection from "@/components/sections/CTAWaitlist";
 
 export default async function Home() {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (userId) {
     redirect("/dashboard");
