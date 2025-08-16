@@ -1,4 +1,5 @@
-"use client";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 import HeroSection from "@/components/sections/hero";
 import HowItWorksSection from "@/components/sections/how-it-works";
@@ -7,7 +8,13 @@ import SupportSection from "@/components/sections/support";
 import FAQSection from "@/components/sections/faq";
 // import CTAWaitlistSection from "@/components/sections/CTAWaitlist";
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = auth();
+
+  if (userId) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="flex flex-col gap-24 py-0">
       <HeroSection />
