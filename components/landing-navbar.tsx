@@ -20,8 +20,10 @@ export function LandingNavbar() {
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -41,6 +43,7 @@ export function LandingNavbar() {
 
     // Smooth scroll to section with offset for navbar height
     const element = document.querySelector(href);
+
     if (element) {
       const navbarHeight = 80; // Approximate navbar height
       const elementPosition =
@@ -55,31 +58,31 @@ export function LandingNavbar() {
 
   return (
     <HeroUINavbar
+      isBlurred
+      isBordered
       id="site-navbar"
+      isMenuOpen={isMenuOpen}
       maxWidth="xl"
       position="sticky"
-      isBordered
-      isBlurred
       onMenuOpenChange={setIsMenuOpen}
-      isMenuOpen={isMenuOpen}
     >
       <NavbarBrand className="-ml-3">
         <NextLink
-          href="#hero"
           className="flex items-center font-semibold tracking-tight"
+          href="#hero"
         >
-          <img src="/navbar-brand.png" alt="PayLynk" className="h-12 w-auto" />
+          <img alt="PayLynk" className="h-12 w-auto" src="/navbar-brand.png" />
           <p className="font-bold text-inherit -ml-2">PayLynk</p>
         </NextLink>
       </NavbarBrand>
 
       {/* Desktop nav */}
-      <NavbarContent justify="end" className="hidden md:flex gap-4">
+      <NavbarContent className="hidden md:flex gap-4" justify="end">
         {navItems.map((item) => (
           <NavbarItem key={item.href}>
             <button
-              onClick={() => handleNavItemClick(item.href)}
               className="text-sm hover:text-foreground/80 cursor-pointer transition-colors"
+              onClick={() => handleNavItemClick(item.href)}
             >
               {item.label}
             </button>
@@ -92,7 +95,7 @@ export function LandingNavbar() {
             </Button>
           </NavbarItem>
           <NavbarItem>
-            <Button as={NextLink} href="/sign-up" color="primary">
+            <Button as={NextLink} color="primary" href="/sign-up">
               Sign Up
             </Button>
           </NavbarItem>
@@ -104,6 +107,9 @@ export function LandingNavbar() {
 
       {/* Mobile toggle */}
       <NavbarContent className="md:hidden" justify="end">
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
         <NavbarMenuToggle aria-label="Open menu" />
       </NavbarContent>
 
@@ -112,8 +118,8 @@ export function LandingNavbar() {
         {navItems.map((item) => (
           <NavbarMenuItem key={item.href}>
             <button
-              onClick={() => handleNavItemClick(item.href)}
               className="w-full cursor-pointer block hover:text-foreground/80 transition-colors text-left"
+              onClick={() => handleNavItemClick(item.href)}
             >
               {item.label}
             </button>
@@ -121,25 +127,20 @@ export function LandingNavbar() {
         ))}
         <SignedOut>
           <NavbarMenuItem>
-            <NextLink href="/sign-in" className="w-full">
+            <NextLink className="w-full" href="/sign-in">
               <Button fullWidth variant="flat">
                 Sign In
               </Button>
             </NextLink>
           </NavbarMenuItem>
           <NavbarMenuItem>
-            <NextLink href="/sign-up" className="w-full">
+            <NextLink className="w-full" href="/sign-up">
               <Button fullWidth color="primary">
                 Sign Up
               </Button>
             </NextLink>
           </NavbarMenuItem>
         </SignedOut>
-        <SignedIn>
-          <NavbarMenuItem>
-            <UserButton />
-          </NavbarMenuItem>
-        </SignedIn>
       </NavbarMenu>
     </HeroUINavbar>
   );
