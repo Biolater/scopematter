@@ -6,9 +6,15 @@ import { Chip } from "@heroui/chip";
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { motion } from "framer-motion";
 
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+
 export default function HeroSection() {
   const [copied, setCopied] = useState(false);
   const demoLinkUrl = "https://pay.paylynk.io/link/5JX9ABCDE";
+  const reduceMotion =
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false;
 
   return (
     <section
@@ -16,21 +22,19 @@ export default function HeroSection() {
       className="relative isolate overflow-hidden"
       id="hero"
     >
-      {/* animated background */}
-      <motion.div
-        aria-hidden
-        animate={{ rotate: [0, 15, 0], scale: [1, 1.1, 1] }}
-        className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/30 via-fuchsia-500/20 to-background"
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        aria-hidden
-        animate={{ x: ["-20%", "20%", "-20%"], y: [0, 40, 0] }}
-        className="pointer-events-none absolute -top-32 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 bg-primary/20 blur-3xl"
-        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-      />
+      <div className="absolute inset-0 -z-10">
+        {reduceMotion ? (
+          <div className="h-full w-full bg-gradient-to-br from-primary/30 via-fuchsia-500/20 to-background" />
+        ) : (
+          <BackgroundGradientAnimation
+            className="h-full w-full"
+            containerClassName="h-full w-full"
+          />
+        )}
+        <div className="absolute inset-0 bg-black/20 [@media(prefers-color-scheme:light)]:bg-black/10" />
+      </div>
 
-      <div className="container mx-auto grid gap-12 px-6 py-20 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12">
+      <div className="container relative z-10 mx-auto grid gap-12 px-6 py-20 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 min-h-[80svh] md:min-h-[calc(100svh-80px)]">
         {/* copy */}
         <div className="max-w-2xl">
           <motion.h1
@@ -68,13 +72,28 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            <Chip color="primary" radius="sm" variant="flat">
+            <Chip
+              className="transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              color="primary"
+              radius="sm"
+              variant="flat"
+            >
               ⚡ Instant payouts
             </Chip>
-            <Chip color="secondary" radius="sm" variant="flat">
+            <Chip
+              className="transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              color="secondary"
+              radius="sm"
+              variant="flat"
+            >
               🚫 No PayPal/Wise limits
             </Chip>
-            <Chip color="default" radius="sm" variant="flat">
+            <Chip
+              className="transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              color="default"
+              radius="sm"
+              variant="flat"
+            >
               🔐 Non‑custodial
             </Chip>
           </motion.div>
@@ -92,13 +111,14 @@ export default function HeroSection() {
             >
               Join Waitlist
             </Button> */}
-            <motion.button
-              className="rounded-md bg-primary px-8 py-4 text-white shadow-[0_0_20px_theme(colors.primary.DEFAULT)] hover:shadow-[0_0_30px_theme(colors.primary.DEFAULT)] focus:outline-none"
+            <motion.a
+              className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-4 text-white shadow-[0_0_20px_theme(colors.primary.DEFAULT)] transition hover:shadow-[0_0_30px_theme(colors.primary.DEFAULT)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              href="#how"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
             >
-              <a href="#how">How it works</a>
-            </motion.button>
+              How it works
+            </motion.a>
           </motion.div>
         </div>
 
