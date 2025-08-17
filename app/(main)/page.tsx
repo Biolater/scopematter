@@ -1,19 +1,12 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-
 import HeroSection from "@/components/sections/hero";
 import HowItWorksSection from "@/components/sections/how-it-works";
 import BenefitsSection from "@/components/sections/benefits";
 import SupportSection from "@/components/sections/support";
 import FAQSection from "@/components/sections/faq";
 // import CTAWaitlistSection from "@/components/sections/CTAWaitlist";
+import Footer from "@/components/footer";
 
 export default async function Home() {
-  const { userId } = await auth();
-
-  if (userId) {
-    redirect("/dashboard");
-  }
 
   return (
     <div className="flex flex-col gap-24 py-0">
@@ -25,6 +18,7 @@ export default async function Home() {
         <FAQSection />
         {/* <CTAWaitlistSection /> */}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -9,7 +9,8 @@ import { fontSans } from "@/config/fonts";
 import { LandingNavbar } from "@/components/landing-navbar";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import FloatThemeToggle from "@/components/float-theme-toggle";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import LogoutButton from "@/components/logout-button";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://paylynk.example"),
