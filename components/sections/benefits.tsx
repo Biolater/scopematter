@@ -1,6 +1,5 @@
 "use client";
 
-import { Card, CardBody, CardHeader } from "@heroui/card";
 import { motion } from "framer-motion";
 
 export default function BenefitsSection() {
@@ -24,40 +23,37 @@ export default function BenefitsSection() {
 
   return (
     <section
-      id="benefits"
       aria-labelledby="benefits-heading"
       className="px-6 lg:px-12"
+      id="benefits"
     >
       <h2
-        id="benefits-heading"
         className="text-2xl lg:text-3xl font-semibold text-center"
+        id="benefits-heading"
       >
         Benefits
       </h2>
-      <div className="mt-6 grid gap-4 sm:gap-6 lg:grid-cols-3">
+
+      <div className="mt-8 grid gap-6 md:grid-cols-3">
         {items.map((b, i) => (
           <motion.div
             key={b.title}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            className="relative rounded-xl bg-content1/70 p-px backdrop-blur-md"
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.45, delay: i * 0.05 }}
+            whileHover={{ y: -4 }}
+            whileInView={{ opacity: 1, y: 0 }}
           >
-            <Card radius="lg" shadow="sm">
-              <CardHeader className="flex items-start gap-3 p-5 md:p-6">
-                <div className="h-10 w-10 rounded-full bg-secondary/15 text-secondary flex items-center justify-center text-lg flex-shrink-0">
-                  <span aria-hidden>{b.emoji}</span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base md:text-lg">
-                    {b.title}
-                  </h3>
-                </div>
-              </CardHeader>
-              <CardBody className="pt-0 px-5 md:px-6 pb-5 md:pb-6">
-                <p className="text-sm text-default-600">{b.desc}</p>
-              </CardBody>
-            </Card>
+            <div className="h-full rounded-xl bg-content1 p-6 shadow-sm transition-shadow hover:shadow-lg">
+              <div className="flex items-start gap-4">
+                <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/15 text-2xl">
+                  {b.emoji}
+                </span>
+                <h3 className="font-semibold text-lg">{b.title}</h3>
+              </div>
+              <p className="mt-4 text-sm text-default-600">{b.desc}</p>
+            </div>
           </motion.div>
         ))}
       </div>
