@@ -1,6 +1,5 @@
 "use client";
 
-import { Card, CardBody, CardHeader } from "@heroui/card";
 import { motion } from "framer-motion";
 
 export default function HowItWorksSection() {
@@ -23,38 +22,40 @@ export default function HowItWorksSection() {
   ];
 
   return (
-    <section id="how" aria-labelledby="how-heading" className="px-6 lg:px-12">
+    <section aria-labelledby="how-heading" className="px-6 lg:px-12" id="how">
       <div className="w-full">
         <h2
-          id="how-heading"
           className="text-2xl lg:text-3xl font-semibold text-center"
+          id="how-heading"
         >
           How it works
         </h2>
-        <div className="mt-6 grid gap-4 sm:gap-6 lg:grid-cols-3">
-          {steps.map((s, i) => (
-            <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.45, delay: i * 0.05 }}
-            >
-              <Card radius="lg" shadow="sm">
-                <CardHeader className="flex items-start gap-3 p-5 lg:p-6">
-                  <div className="h-9 w-9 rounded-full bg-primary/15 flex items-center justify-center">
-                    {s.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">{s.title}</h3>
-                  </div>
-                </CardHeader>
-                <CardBody className="pt-0 px-5 lg:px-6 pb-5 lg:pb-6">
-                  <p className="text-sm text-default-600">{s.desc}</p>
-                </CardBody>
-              </Card>
-            </motion.div>
-          ))}
+
+        <div className="relative mx-auto mt-10 max-w-3xl">
+          {/* vertical line */}
+          <div className="absolute left-6 top-0 bottom-0 hidden w-px bg-gradient-to-b from-primary/50 to-transparent sm:block" />
+
+          <ul className="space-y-8">
+            {steps.map((s, i) => (
+              <motion.li
+                key={s.title}
+                className="relative pl-16 sm:pl-20"
+                initial={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true, amount: 0.4 }}
+                whileInView={{ opacity: 1, x: 0 }}
+              >
+                <span className="absolute left-0 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-2xl">
+                  {s.icon}
+                </span>
+                {i < steps.length - 1 && (
+                  <span className="absolute left-6 top-12 hidden h-full w-px bg-gradient-to-b from-primary/40 to-transparent sm:block" />
+                )}
+                <h3 className="font-semibold text-lg">{s.title}</h3>
+                <p className="mt-1 text-sm text-default-600">{s.desc}</p>
+              </motion.li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
