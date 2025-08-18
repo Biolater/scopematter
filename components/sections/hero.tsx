@@ -5,6 +5,7 @@ import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { motion } from "framer-motion";
+import { Highlight } from "../ui/hero-highlight";
 
 export default function HeroSection() {
   const [copied, setCopied] = useState(false);
@@ -46,10 +47,8 @@ export default function HeroSection() {
               USDT/ETH
             </span>{" "}
             from any client,{" "}
-            <span className="underline decoration-primary/50 underline-offset-4">
-              instantly
-            </span>{" "}
-            — no bank restrictions.
+            <Highlight className="decoration-primary/50">instantly</Highlight>—
+            no bank restrictions.
           </motion.h1>
           <motion.p
             className="mt-4 text-default-700 text-base lg:text-xl"
@@ -88,12 +87,7 @@ export default function HeroSection() {
             >
               Join Waitlist
             </Button> */}
-            <Button
-              as="a"
-              href="#how"
-              size="lg"
-              className="hover:text-foreground"
-            >
+            <Button as="a" href="#how" size="lg" variant="flat" color="primary">
               How it works
             </Button>
           </div>
