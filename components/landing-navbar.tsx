@@ -12,11 +12,12 @@ import {
   NavbarMenuToggle,
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/nextjs";
 
 export function LandingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isSignedIn } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
@@ -56,7 +57,9 @@ export function LandingNavbar() {
     }
   };
 
-  return (
+  return isSignedIn ? (
+    <></>
+  ) : (
     <HeroUINavbar
       isBlurred
       isBordered
@@ -69,7 +72,7 @@ export function LandingNavbar() {
       <NavbarBrand className="-ml-3">
         <NextLink
           className="flex items-center font-semibold tracking-tight"
-          href="#hero"
+          href={isSignedIn ? "/dashboard" : "#hero"}
         >
           <img alt="PayLynk" className="h-12 w-auto" src="/navbar-brand.png" />
           <p className="font-bold text-inherit -ml-2">PayLynk</p>
@@ -78,17 +81,17 @@ export function LandingNavbar() {
 
       {/* Desktop nav */}
       <NavbarContent className="hidden md:flex gap-4" justify="end">
-        {navItems.map((item) => (
-          <NavbarItem key={item.href}>
-            <button
-              className="text-sm hover:text-foreground/80 cursor-pointer transition-colors"
-              onClick={() => handleNavItemClick(item.href)}
-            >
-              {item.label}
-            </button>
-          </NavbarItem>
-        ))}
         <SignedOut>
+          {navItems.map((item) => (
+            <NavbarItem key={item.href}>
+              <button
+                className="text-sm hover:text-foreground/80 cursor-pointer transition-colors"
+                onClick={() => handleNavItemClick(item.href)}
+              >
+                {item.label}
+              </button>
+            </NavbarItem>
+          ))}
           <NavbarItem>
             <Button as={NextLink} href="/sign-in" variant="flat">
               Sign In

@@ -5,20 +5,23 @@ import SupportSection from "@/components/sections/support";
 import FAQSection from "@/components/sections/faq";
 // import CTAWaitlistSection from "@/components/sections/CTAWaitlist";
 import Footer from "@/components/footer";
+import { LandingNavbar } from "@/components/landing-navbar";
 
 export default async function Home() {
-
   return (
-    <div className="flex flex-col gap-24 py-0">
-      <HeroSection />
-      <div className="container mx-auto flex flex-col gap-24">
-        <HowItWorksSection />
-        <BenefitsSection />
-        <SupportSection />
-        <FAQSection />
-        {/* <CTAWaitlistSection /> */}
+    <>
+      <LandingNavbar />
+      <div className="flex flex-col gap-24 py-0">
+        <HeroSection />
+        <div className="container mx-auto flex flex-col gap-24">
+          <HowItWorksSection />
+          <BenefitsSection />
+          <SupportSection />
+          <FAQSection />
+          {/* <CTAWaitlistSection /> */}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
