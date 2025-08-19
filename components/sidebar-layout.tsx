@@ -187,10 +187,22 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-background text-foreground">
+    <div className="relative flex h-screen bg-background text-foreground">
+      {/* ✅ MOBILE FLOATING TOGGLE (top-4 / left-4) */}
+      <div className="fixed top-4 left-4 z-50 md:hidden">
+        <Button
+          isIconOnly
+          variant="flat"
+          aria-label="Open menu"
+          onPress={() => setIsOpen(true)}
+        >
+          <PanelLeft className="size-5" />
+        </Button>
+      </div>
+
       {/* Desktop Sidebar */}
       <aside
-        className={`relative hidden border-r border-divider md:flex flex-col overflow-hidden
+        className={`relative hidden md:flex flex-col overflow-hidden border-r border-divider
           ${isCollapsed ? "w-16" : "w-64"} transition-all duration-300 ease-in-out`}
       >
         <SidebarContent
@@ -201,9 +213,8 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
         {/* RIGHT RAIL: visible only when collapsed */}
         {isCollapsed && (
           <div
-            className="group absolute inset-y-0 w-full right-0 z-10 flex items-center justify-center
-             transition-[width] duration-200
-             bg-transparent cursor-[e-resize]"
+            className="group absolute inset-y-0 right-0 z-10 flex w-full items-center justify-center
+                       bg-transparent cursor-ew-resize"
             role="button"
             aria-label="Expand sidebar"
             tabIndex={0}
@@ -211,16 +222,25 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") setIsCollapsed(false);
             }}
-          ></div>
+          />
         )}
       </aside>
 
-      {/* Mobile Drawer (unchanged) */}
-      <Drawer isOpen={isOpen} onOpenChange={setIsOpen} placement="left">
+      {/* Mobile Drawer (same look & width as desktop sidebar) */}
+      <Drawer
+        classNames={{
+          wrapper: "items-start", // align from top
+          // panel itself: match desktop sidebar width + border
+          body: "w-64 border-r border-divider h-screen overflow-hidden !rounded-none",
+        }}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        placement="left"
+      >
         <DrawerContent>
           <SidebarContent
-            isCollapsed={isCollapsed}
-            setIsCollapsed={setIsCollapsed}
+            isCollapsed={false} // mobile drawer should be full sidebar
+            setIsCollapsed={() => {}} // no-op for mobile
           />
         </DrawerContent>
       </Drawer>
