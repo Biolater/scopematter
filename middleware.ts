@@ -1,5 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
+import env from './config/env'
 
 const isPublicRoute = createRouteMatcher([
   '/',
@@ -20,7 +21,8 @@ export default clerkMiddleware(async (auth, req) => {
     await auth.protect()
   }
 }, {
-  debug: true
+  signInUrl: env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
+  signUpUrl: env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
 })
 
 

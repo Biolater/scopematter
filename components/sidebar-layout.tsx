@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Drawer, DrawerContent } from "@heroui/drawer";
 import { Tooltip } from "@heroui/tooltip";
-import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
 import PayLynkLogo from "@/public/navbar-brand.png";
 import Image from "next/image";
@@ -16,16 +15,10 @@ import {
   Receipt,
   Link as LinkIcon,
   PanelLeft,
-  LogOut,
 } from "lucide-react";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-  DropdownItem,
-} from "@heroui/dropdown";
 import { UserButton } from "@clerk/nextjs";
+import MainNavbar from "./main-navbar";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   {
@@ -54,14 +47,21 @@ const navItems = [
 const SidebarContent = ({
   isCollapsed = false,
   setIsCollapsed,
+  fromMobile = false,
 }: {
   isCollapsed?: boolean;
   setIsCollapsed: (isCollapsed: boolean) => void;
-}) => (
-  <div className="flex flex-col h-full">
+  fromMobile?: boolean;
+}) => {
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href;
+  return (
+    <div className="flex flex-col h-full">
     {/* Logo / Brand */}
     <div
-      className="p-2 flex justify-between items-center flex-none overflow-hidden z-20" // FIX: prevent shrink, clip overflow
+      className={`p-2 flex justify-between items-center flex-none overflow-hidden z-20 ${
+        fromMobile ? "w-fit" : ""
+      }`} // FIX: prevent shrink, clip overflow
     >
       <Link href="/dashboard" className="flex items-center">
         <Image
@@ -79,6 +79,7 @@ const SidebarContent = ({
           <Button
             variant="light"
             isIconOnly
+            className="hidden md:flex"
             color="default"
             size="sm"
             onPress={() => setIsCollapsed(true)}
@@ -102,9 +103,12 @@ const SidebarContent = ({
               isDisabled={!isCollapsed}
             >
               <Button
-                className={`justify-start min-w-auto ${isCollapsed ? "" : "w-full"}`}
+                className={`justify-start min-w-auto ${isCollapsed ? "" : "w-full"} ${
+                  isActive(item.href) ? "bg-default/60" : ""
+                }`}
                 as={Link}
                 href={item.href}
+                onPress={() => fromMobile && setIsCollapsed(true)}
                 variant="light"
                 startContent={item.icon}
               >
@@ -180,7 +184,8 @@ const SidebarContent = ({
       )}
     </div>
   </div>
-);
+  );
+};
 
 export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -188,18 +193,6 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="relative flex h-screen bg-background text-foreground">
-      {/* ✅ MOBILE FLOATING TOGGLE (top-4 / left-4) */}
-      <div className="fixed top-4 left-4 z-50 md:hidden">
-        <Button
-          isIconOnly
-          variant="flat"
-          aria-label="Open menu"
-          onPress={() => setIsOpen(true)}
-        >
-          <PanelLeft className="size-5" />
-        </Button>
-      </div>
-
       {/* Desktop Sidebar */}
       <aside
         className={`relative hidden md:flex flex-col overflow-hidden border-r border-divider
@@ -228,25 +221,28 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Mobile Drawer (same look & width as desktop sidebar) */}
       <Drawer
-        classNames={{
-          wrapper: "items-start", // align from top
-          // panel itself: match desktop sidebar width + border
-          body: "w-64 border-r border-divider h-screen overflow-hidden !rounded-none",
-        }}
+        backdrop="blur"
         isOpen={isOpen}
         onOpenChange={setIsOpen}
         placement="left"
+        className="w-72 bg-background"
       >
         <DrawerContent>
-          <SidebarContent
-            isCollapsed={false} // mobile drawer should be full sidebar
-            setIsCollapsed={() => {}} // no-op for mobile
-          />
+          {(onClose) => (
+            <>
+              <SidebarContent
+                isCollapsed={false}
+                setIsCollapsed={onClose}
+                fromMobile={true}
+              />
+            </>
+          )}
         </DrawerContent>
       </Drawer>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        <MainNavbar onMenuPress={() => setIsOpen(true)} />
         <main className="flex-1 overflow-y-auto p-4">{children}</main>
       </div>
     </div>

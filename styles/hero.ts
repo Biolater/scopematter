@@ -192,7 +192,7 @@ export default heroui({
         content3: { DEFAULT: "#1F2937", foreground: "#E6EAF2" },
         content4: { DEFAULT: "#334155", foreground: "#E6EAF2" },
         focus: "#60A5FA",
-        overlay: "#FFFFFF",
+        overlay: "#000000",
       },
     },
   },
