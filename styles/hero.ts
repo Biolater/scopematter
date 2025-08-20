@@ -187,10 +187,10 @@ export default heroui({
         },
         background: "#0B1220",
         foreground: "#E6EAF2",
-        content1: { DEFAULT: "#0F172A", foreground: "#E6EAF2" },
-        content2: { DEFAULT: "#111827", foreground: "#E6EAF2" },
-        content3: { DEFAULT: "#1F2937", foreground: "#E6EAF2" },
-        content4: { DEFAULT: "#334155", foreground: "#E6EAF2" },
+        content1: { DEFAULT: "#0E1626", foreground: "#E6EAF2" }, // base surfaces, table rows
+        content2: { DEFAULT: "#121C30", foreground: "#E6EAF2" }, // cards, inputs
+        content3: { DEFAULT: "#19253F", foreground: "#E6EAF2" }, // popovers, menus, hover states
+        content4: { DEFAULT: "#223151", foreground: "#E6EAF2" }, // modals, headers, selected
         focus: "#60A5FA",
         overlay: "#000000",
       },

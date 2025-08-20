@@ -1,10 +1,17 @@
+import SectionHeader from "@/components/section-header";
+import CreateWalletDialog from "@/components/wallet/create-wallet-dialog";
 
 const WalletsPage = () => {
   return (
     <>
-        <h1>Wallets</h1>
+      <SectionHeader
+        title="Wallets"
+        description="Manage the wallets where your payments will be sent."
+      >
+        <CreateWalletDialog />
+      </SectionHeader>
     </>
-  )
-}
+  );
+};
 
-export default WalletsPage
+export default WalletsPage;
