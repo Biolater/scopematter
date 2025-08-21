@@ -3,6 +3,8 @@ import CreateWalletDialog from "@/components/wallet/create-wallet-dialog";
 import Wallets from "@/components/wallet/wallets";
 import { Suspense } from "react";
 
+export const dynamic = 'force-dynamic';
+
 const WalletsPage = () => {
   return (
     <>
