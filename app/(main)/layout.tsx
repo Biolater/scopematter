@@ -1,4 +1,5 @@
-import { SidebarLayout } from "@/components/sidebar-layout";
+import SidebarLayout from "@/components/sidebar-layout";
+import { cookies } from "next/headers";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -6,11 +7,13 @@ interface DashboardLayoutProps {
 }
 
 
- function DashboardLayout({
+ async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
+  const cookieStore = await cookies();
+  const collapsed = cookieStore.get("pl:sidebar:collapsed")?.value === "1";
   return (
-    <SidebarLayout>
+    <SidebarLayout initialCollapsed={collapsed}>
       {children}
     </SidebarLayout>
   );

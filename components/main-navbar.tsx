@@ -9,7 +9,7 @@ interface MainNavbarProps {
 
 const MainNavbar = ({ onMenuPress }: MainNavbarProps) => {
   return (
-    <div className="w-full flex px-4 md:hidden h-16 sticky top-0 z-10 items-center justify-between">
+    <div className="w-full border-b border-divider backdrop-blur-lg bg-background/50 flex px-4 md:hidden h-16 sticky top-0 z-10 items-center justify-between">
       <Button
         variant="light"
         isIconOnly

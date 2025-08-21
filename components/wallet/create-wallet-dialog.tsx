@@ -25,6 +25,7 @@ import { createWalletAction } from "@/lib/actions/wallet.actions";
 import { useServerAction } from "@/lib/hooks/use-server-action";
 import { Wallet } from "@/lib/types/wallet.types";
 import { applyFieldErrors } from "@/lib/http/map-errors";
+import { addToast } from "@heroui/toast";
 
 // Chains list (MVP = ETH only)
 const CHAINS = [{ key: "ETH_MAINNET", label: "Ethereum Mainnet" }];
@@ -63,6 +64,7 @@ const CreateWalletDialog = () => {
     Wallet
   >(createWalletAction, {
     onSuccess: () => {
+      addToast({ title: "Wallet added successfully", color: "success" });
       reset();
       setIsOpen(false);
     },

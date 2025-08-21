@@ -4,6 +4,6 @@ import { Wallet } from "../types/wallet.types";
 export const getWallets = async () => {
     return await handleQuery<Wallet[]>("/wallets", {
         tags: ["wallets"],
-        revalidate: 60,
+        revalidate: 300,
     })
 };

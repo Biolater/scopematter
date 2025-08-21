@@ -5,50 +5,51 @@ import Link from "next/link";
 import { Drawer, DrawerContent } from "@heroui/drawer";
 import { Tooltip } from "@heroui/tooltip";
 import { Button } from "@heroui/button";
-import PayLynkLogo from "@/public/navbar-brand.png";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
-  Wallet,
+  Wallet as WalletIcon,
   Settings,
   Receipt,
   Link as LinkIcon,
   PanelLeft,
 } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
-import MainNavbar from "./main-navbar";
+import MainNavbar from "@/components/main-navbar"; // adjust path
 import { usePathname } from "next/navigation";
+import PayLynkLogo from "@/public/navbar-brand.png";
+import { usePersistentCollapsed } from "@/lib/hooks/use-persistent-collapsed";
 
 const navItems = [
   {
     name: "Dashboard",
     href: "/dashboard",
-    icon: <LayoutDashboard className="size-4.5 shrink-0" />, // FIX: Added shrink-0
+    icon: <LayoutDashboard className="size-4.5 shrink-0" />,
   },
   {
     name: "Wallets",
     href: "/wallets",
-    icon: <Wallet className="size-4.5 shrink-0" />, // FIX: Added shrink-0
+    icon: <WalletIcon className="size-4.5 shrink-0" />,
   },
   {
     name: "Payment Links",
     href: "/payment-links",
-    icon: <LinkIcon className="size-4.5 shrink-0" />, // FIX: Added shrink-0
+    icon: <LinkIcon className="size-4.5 shrink-0" />,
   },
   {
     name: "Transactions",
     href: "/transactions",
-    icon: <Receipt className="size-4.5 shrink-0" />, // FIX: Added shrink-0
+    icon: <Receipt className="size-4.5 shrink-0" />,
   },
   {
     name: "Settings",
     href: "/settings",
-    icon: <Settings className="size-4.5 shrink-0" />, // FIX: Added shrink-0
+    icon: <Settings className="size-4.5 shrink-0" />,
   },
 ];
 
-const SidebarContent = ({
+function SidebarContent({
   isCollapsed = false,
   setIsCollapsed,
   fromMobile = false,
@@ -56,16 +57,15 @@ const SidebarContent = ({
   isCollapsed?: boolean;
   setIsCollapsed: (isCollapsed: boolean) => void;
   fromMobile?: boolean;
-}) => {
+}) {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       {/* Logo / Brand */}
       <div
-        className={`p-2 flex justify-between items-center flex-none overflow-hidden z-20 ${
-          fromMobile ? "w-fit" : ""
-        }`}
+        className={`z-20 flex flex-none items-center justify-between overflow-hidden p-2 ${fromMobile ? "w-fit" : ""}`}
       >
         <Link href="/dashboard" className="flex items-center">
           <Image
@@ -73,11 +73,10 @@ const SidebarContent = ({
             alt="PayLynk Logo"
             width={47}
             height={47}
-            className="w-[47px] h-[47px] shrink-0"
+            className="h-[47px] w-[47px] shrink-0"
           />
         </Link>
 
-        {/* Collapse button (top-right) */}
         {!isCollapsed && (
           <Tooltip content="Collapse sidebar" placement="right" color="default">
             <Button
@@ -95,8 +94,8 @@ const SidebarContent = ({
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto overflow-x-hidden">
-        <ul className="space-y-2 p-2 z-20 relative">
+      <nav className="flex-1 overflow-x-hidden overflow-y-auto">
+        <ul className="relative z-20 space-y-2 p-2">
           {navItems.map((item) => (
             <li key={item.name}>
               <Tooltip
@@ -105,9 +104,9 @@ const SidebarContent = ({
                 isDisabled={!isCollapsed}
               >
                 <Button
-                  className={`justify-start min-w-auto ${
-                    isCollapsed ? "" : "w-full"
-                  } ${isActive(item.href) ? "bg-default/60" : ""}`}
+                  className={`justify-start min-w-auto ${isCollapsed ? "" : "w-full"} ${
+                    isActive(item.href) ? "bg-default/60" : ""
+                  }`}
                   as={Link}
                   href={item.href}
                   onPress={() => fromMobile && setIsCollapsed(true)}
@@ -140,19 +139,16 @@ const SidebarContent = ({
       </nav>
 
       {/* User Section */}
-      <div className="p-4 w-64 flex flex-col overflow-hidden gap-3 z-20 relative">
+      <div className="relative z-20 flex w-64 flex-col gap-3 overflow-hidden p-4">
         <div className="flex items-center overflow-hidden">
           <UserButton
             appearance={{
               elements: {
-                userButtonAvatarBox: {
-                  width: "2rem",
-                  height: "2rem",
-                },
+                userButtonAvatarBox: { width: "2rem", height: "2rem" },
               },
             }}
           />
-          <div className="ml-3 overflow-hidden flex-1">
+          <div className="ml-3 flex-1 overflow-hidden">
             <motion.div
               className="flex flex-col"
               style={{ display: "inline-block" }}
@@ -166,7 +162,6 @@ const SidebarContent = ({
           </div>
         </div>
 
-        {/* Expand button (bottom, only when collapsed) */}
         {isCollapsed && (
           <Tooltip content="Expand sidebar" placement="right">
             <Button
@@ -183,31 +178,36 @@ const SidebarContent = ({
       </div>
     </div>
   );
-};
+}
 
-export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export default function SidebarLayout({
+  children,
+  initialCollapsed,
+}: {
+  children: React.ReactNode;
+  initialCollapsed: boolean; // <- from server cookie
+}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] =
+    usePersistentCollapsed(initialCollapsed);
 
   return (
     <div className="relative flex h-screen bg-background text-foreground">
       {/* Desktop Sidebar */}
       <aside
-        className={`relative hidden md:flex flex-col overflow-hidden border-r border-divider
-          ${
-            isCollapsed ? "w-16" : "w-64"
-          } transition-all duration-300 ease-in-out`}
+        className={`relative hidden md:flex flex-col overflow-hidden border-r border-divider ${
+          isCollapsed ? "w-16" : "w-64"
+        } transition-all duration-300 ease-in-out`}
       >
         <SidebarContent
           isCollapsed={isCollapsed}
           setIsCollapsed={setIsCollapsed}
         />
 
-        {/* RIGHT RAIL: visible only when collapsed */}
+        {/* RIGHT RAIL: click anywhere on the rail to expand when collapsed */}
         {isCollapsed && (
           <div
-            className="group absolute inset-y-0 right-0 z-10 flex w-full items-center justify-center
-                          bg-transparent cursor-ew-resize"
+            className="group absolute inset-y-0 right-0 z-10 flex w-full cursor-ew-resize items-center justify-center bg-transparent"
             role="button"
             aria-label="Expand sidebar"
             tabIndex={0}
@@ -219,7 +219,7 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
         )}
       </aside>
 
-      {/* Mobile Drawer (same look & width as desktop sidebar) */}
+      {/* Mobile Drawer */}
       <Drawer
         backdrop="blur"
         isOpen={isOpen}
@@ -229,24 +229,22 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <DrawerContent>
           {(onClose) => (
-            <>
-              <SidebarContent
-                isCollapsed={false}
-                setIsCollapsed={onClose}
-                fromMobile={true}
-              />
-            </>
+            <SidebarContent
+              isCollapsed={false}
+              setIsCollapsed={(_next) => onClose()}
+              fromMobile
+            />
           )}
         </DrawerContent>
       </Drawer>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden">
         <MainNavbar onMenuPress={() => setIsOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-4 container mx-auto">
+        <main className="container mx-auto flex-1 overflow-y-auto p-4">
           {children}
         </main>
       </div>
     </div>
   );
-};
+}

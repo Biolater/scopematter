@@ -28,6 +28,7 @@
     "@heroui/listbox": "2.3.22",
     "@heroui/navbar": "2.2.21",
     "@heroui/select": "^2.4.25",
+    "@heroui/skeleton": "^2.2.15",
     "@heroui/snippet": "2.2.24",
     "@heroui/switch": "2.2.21",
     "@heroui/system": "2.4.19",

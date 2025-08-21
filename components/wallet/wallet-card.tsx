@@ -19,8 +19,6 @@ import {
 } from "lucide-react";
 import { Wallet } from "@/lib/types/wallet.types";
 import { useState } from "react";
-import { deleteWalletAction } from "@/lib/actions/wallet.actions";
-import { useServerAction } from "@/lib/hooks/use-server-action";
 import { addToast } from "@heroui/toast";
 
 function shortAddr(addr: string) {
@@ -28,22 +26,27 @@ function shortAddr(addr: string) {
   return `${addr.slice(0, 6)}…${addr.slice(-4)}`;
 }
 
-export default function WalletCard({ wallet }: { wallet: Wallet }) {
+export default function WalletCard({
+  wallet,
+  onDelete,
+  onMakePrimary,
+}: {
+  wallet: Wallet;
+  onDelete: (id: string) => void;
+  onMakePrimary: (id: string) => void;
+}) {
   const [copied, setCopied] = useState(false);
-  const { runAction, isPending } = useServerAction(deleteWalletAction, {
-    onSuccess: () => {
+
+  const handleDelete = (id: string) => {
+    if (wallet.isPrimary) {
       addToast({
-        title: "Wallet deleted successfully",
-        color: "success",
-      });
-    },
-    onError: (err) => {
-      addToast({
-        title: err.message,
+        title: "Cannot delete primary wallet",
         color: "danger",
       });
-    },
-  });
+      return;
+    }
+    onDelete(id);
+  };
 
   async function handleCopy() {
     await navigator.clipboard.writeText(wallet.address);
@@ -52,9 +55,18 @@ export default function WalletCard({ wallet }: { wallet: Wallet }) {
   }
 
   const createdAt = new Date(wallet.createdAt);
+  const formatted = createdAt.toLocaleString(undefined, {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+  
 
   return (
-    <Card className="w-full">
+    <Card className="w-full h-full">
       <CardHeader className="flex items-start justify-between">
         <div className="flex flex-col gap-2">
           <Chip
@@ -93,13 +105,14 @@ export default function WalletCard({ wallet }: { wallet: Wallet }) {
             <DropdownItem
               key="make-primary"
               startContent={<StarIcon className="size-4" />}
+              onPress={() => onMakePrimary(wallet.id)}
             >
               {wallet.isPrimary ? "Already Primary" : "Make Primary"}
             </DropdownItem>
             <DropdownItem
               key="delete"
               className="text-danger"
-              onPress={() => runAction({ id: wallet.id })}
+              onPress={() => handleDelete(wallet.id)}
               color="danger"
               startContent={<Trash2 className="size-4" />}
             >
@@ -131,8 +144,7 @@ export default function WalletCard({ wallet }: { wallet: Wallet }) {
 
       <CardFooter className="flex justify-between text-xs text-default-500">
         <span>
-          Added {createdAt.toLocaleDateString()}{" "}
-          {createdAt.toLocaleTimeString()}
+          Added {formatted}
         </span>
         <span>{wallet.chain.replace("_", " ")}</span>
       </CardFooter>

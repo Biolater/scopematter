@@ -2,8 +2,7 @@
 
 import { handleAction } from "../http/action";
 import { Wallet } from "../types/wallet.types";
-import { createWalletSchema, deleteWalletSchema, DeleteWalletSchemaType, WalletSchemaType } from "../validation/wallet.schema";
-import { z } from "zod";
+import { createWalletSchema, deleteWalletSchema, DeleteWalletSchemaType, makePrimarySchema, MakePrimarySchemaType, WalletSchemaType } from "../validation/wallet.schema";
 
 export async function createWalletAction(payload: WalletSchemaType) {
   return handleAction<WalletSchemaType, Wallet>({
@@ -21,6 +20,16 @@ export async function deleteWalletAction(payload: DeleteWalletSchemaType) {
     path: `/wallets/${payload.id}`,
     body: payload,
     method: "DELETE",
+    revalidateTags: ["wallets"],
+  });
+}
+
+export async function makePrimaryAction(payload: MakePrimarySchemaType) {
+  return handleAction<MakePrimarySchemaType, Wallet>({
+    schema: makePrimarySchema,
+    path: `/wallets/${payload.id}/primary`,
+    method: "PATCH",
+    body: payload,
     revalidateTags: ["wallets"],
   });
 }
