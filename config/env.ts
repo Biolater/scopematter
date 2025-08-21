@@ -15,6 +15,7 @@ export const env = {
     DATABASE_PASSWORD: required('DATABASE_PASSWORD'),
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: required('NEXT_PUBLIC_CLERK_SIGN_IN_URL'),
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: required('NEXT_PUBLIC_CLERK_SIGN_UP_URL'),
+    API_URL: required('API_URL'),
 };
 
 export default env;

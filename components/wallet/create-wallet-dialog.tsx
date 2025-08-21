@@ -16,20 +16,20 @@ import { Select, SelectItem } from "@heroui/select";
 import { Form } from "@heroui/form";
 
 import { useForm, Controller } from "react-hook-form";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createWalletSchema,
   WalletSchemaType,
 } from "@/lib/validation/wallet.schema";
+import { createWalletAction } from "@/lib/actions/wallet.actions";
+import { useServerAction } from "@/lib/hooks/use-server-action";
+import { Wallet } from "@/lib/types/wallet.types";
+import { applyFieldErrors } from "@/lib/http/map-errors";
 
-// You can expand later; for now keep in sync with your BE enums.
-const CHAINS = [
-  { key: "ETH_MAINNET", label: "Ethereum Mainnet" },
-  // { key: "BASE_MAINNET", label: "Base Mainnet" },
-];
+// Chains list (MVP = ETH only)
+const CHAINS = [{ key: "ETH_MAINNET", label: "Ethereum Mainnet" }];
 
-// Optional, for TS friendliness
+// Add MetaMask typings
 declare global {
   interface Window {
     ethereum?: {
@@ -38,37 +38,16 @@ declare global {
   }
 }
 
-async function createWallet(payload: WalletSchemaType) {
-  const res = await fetch("/api/wallets", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-
-  // Expecting your standard response envelope. Adjust as needed.
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok || json?.success === false) {
-    const msg =
-      json?.error?.message ||
-      json?.message ||
-      `Failed to create wallet (HTTP ${res.status})`;
-    throw new Error(msg);
-  }
-  return json?.data ?? json;
-}
-
 const CreateWalletDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
 
   const {
-    register,
     control,
     handleSubmit,
     reset,
-    setValue,
+    setError,
     trigger,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<WalletSchemaType>({
     resolver: zodResolver(createWalletSchema),
     defaultValues: {
@@ -79,16 +58,24 @@ const CreateWalletDialog = () => {
     mode: "onBlur",
   });
 
-  const onSubmit = async (data: WalletSchemaType) => {
-    setServerError(null);
-    try {
-      await createWallet(data);
-      // success: reset and close
+  const { state, runAction, isPending } = useServerAction<
+    WalletSchemaType,
+    Wallet
+  >(createWalletAction, {
+    onSuccess: () => {
       reset();
       setIsOpen(false);
-    } catch (err: any) {
-      setServerError(err?.message ?? "Unexpected error");
-    }
+    },
+    onError: (err) => {
+      if (!err.ok) {
+        applyFieldErrors<WalletSchemaType>(err.details, setError);
+      }
+    },
+  });
+
+  const onSubmit = async (data: WalletSchemaType) => {
+    console.log("onSubmit", data);
+    runAction(data);
   };
 
   return (
@@ -110,7 +97,6 @@ const CreateWalletDialog = () => {
                 Add Wallet
               </ModalHeader>
 
-              {/* Wrap Body + Footer with Form so the footer button can submit */}
               <Form
                 validationBehavior="aria"
                 onSubmit={(e) => {
@@ -119,6 +105,7 @@ const CreateWalletDialog = () => {
                 }}
               >
                 <ModalBody className="space-y-4 w-full">
+                  {/* Chain select */}
                   <Controller
                     control={control}
                     name="chain"
@@ -141,6 +128,7 @@ const CreateWalletDialog = () => {
                     )}
                   />
 
+                  {/* Wallet address */}
                   <Controller
                     control={control}
                     name="address"
@@ -153,37 +141,43 @@ const CreateWalletDialog = () => {
                         isRequired
                         isInvalid={!!errors.address}
                         errorMessage={errors.address?.message}
-                        value={field.value} // ensures RHF drives the input value
+                        value={field.value}
                         onChange={(e) => field.onChange(e.target.value)}
                         endContent={
                           <Button
                             size="sm"
                             variant="flat"
+                            color="primary"
+                            className="min-w-fit"
                             onPress={async () => {
-                              setServerError(null);
                               try {
                                 if (!window.ethereum) {
-                                  setServerError(
-                                    "MetaMask is not available in this browser."
-                                  );
+                                  setError("address", {
+                                    type: "manual",
+                                    message: "MetaMask not available",
+                                  });
                                   return;
                                 }
                                 const accounts = await window.ethereum.request({
                                   method: "eth_requestAccounts",
                                 });
                                 if (!accounts?.[0]) {
-                                  setServerError(
-                                    "No accounts returned by MetaMask."
-                                  );
+                                  setError("address", {
+                                    type: "manual",
+                                    message: "No account returned",
+                                  });
                                   return;
                                 }
-                                field.onChange(accounts[0]); // update RHF + UI
+                                field.onChange(accounts[0]);
                                 await trigger("address");
                               } catch {
-                                setServerError("Failed to connect MetaMask.");
+                                setError("address", {
+                                  type: "manual",
+                                  message: "Failed to connect MetaMask",
+                                });
                               }
                             }}
-                            isDisabled={isSubmitting}
+                            isDisabled={isPending}
                           >
                             Use MetaMask
                           </Button>
@@ -192,6 +186,7 @@ const CreateWalletDialog = () => {
                     )}
                   />
 
+                  {/* Primary checkbox */}
                   <Controller
                     control={control}
                     name="isPrimary"
@@ -205,24 +200,27 @@ const CreateWalletDialog = () => {
                     )}
                   />
 
-                  {serverError ? (
-                    <div className="text-danger-500 text-sm">{serverError}</div>
-                  ) : null}
+                  {/* General error */}
+                  {state.ok === false && !state.details && (
+                    <div className="text-danger-500 text-sm">
+                      {state.message}
+                    </div>
+                  )}
                 </ModalBody>
 
                 <ModalFooter className="w-full">
                   <Button
                     variant="flat"
                     onPress={onClose}
-                    isDisabled={isSubmitting}
+                    isDisabled={isPending}
                   >
                     Cancel
                   </Button>
                   <Button
                     color="primary"
                     type="submit"
-                    isLoading={isSubmitting}
-                    isDisabled={isSubmitting}
+                    isLoading={isPending}
+                    isDisabled={isPending}
                   >
                     Add Wallet
                   </Button>
