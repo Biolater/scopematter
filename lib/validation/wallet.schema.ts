@@ -14,5 +14,11 @@ export const createWalletSchema = z.object({
   isPrimary: z.boolean(),
 });
 
+export const deleteWalletSchema = z.object({
+  id: z.string(),
+});
+
 
 export type WalletSchemaType = z.infer<typeof createWalletSchema>;
+
+export type DeleteWalletSchemaType = z.infer<typeof deleteWalletSchema>;

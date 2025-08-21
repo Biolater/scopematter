@@ -1,5 +1,7 @@
 import SectionHeader from "@/components/section-header";
 import CreateWalletDialog from "@/components/wallet/create-wallet-dialog";
+import Wallets from "@/components/wallet/wallets";
+import { Suspense } from "react";
 
 const WalletsPage = () => {
   return (
@@ -10,6 +12,9 @@ const WalletsPage = () => {
       >
         <CreateWalletDialog />
       </SectionHeader>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Wallets />
+      </Suspense>
     </>
   );
 };

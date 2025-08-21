@@ -6,8 +6,8 @@ import type { ActionResult } from "@/lib/http/action";
 export function useServerAction<TParams, TResponse>(
   action: (params: TParams) => Promise<ActionResult<TResponse>>,
   opts?: {
-    onSuccess?: (data: TResponse) => void;
-    onError?: (err: ActionResult<TResponse>) => void;
+    onSuccess?: (data: TResponse) => void;  
+    onError?: (err: Extract<ActionResult<TResponse>, { ok: false }>) => void;
   }
 ) {
   const [state, dispatch, isPending] = useActionState<
@@ -16,8 +16,11 @@ export function useServerAction<TParams, TResponse>(
   >(
     async (_prev, params: TParams) => {
       const res = await action(params);
-      if (res.ok) opts?.onSuccess?.(res.data);
-      else opts?.onError?.(res);
+      if (res.ok) {
+        opts?.onSuccess?.(res.data);
+      } else {
+        opts?.onError?.(res);
+      }
       return res;
     },
     // initial error-like state keeps types happy; UI can ignore empty message

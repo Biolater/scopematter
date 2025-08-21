@@ -16,7 +16,7 @@ const SectionHeader = ({
   return (
     <div
       className={cn(
-        "flex flex-row flex-wrap gap-4 items-center justify-between",
+        "flex flex-row flex-wrap gap-4 items-center justify-between mb-4",
         className
       )}>
       <div className="flex flex-col gap-2">

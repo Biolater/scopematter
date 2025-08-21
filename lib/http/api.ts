@@ -14,8 +14,6 @@ export async function api<T>(path: string, options: Options = {}): Promise<T> {
   const { getToken } = await auth();
   const token = await getToken();
 
-  console.log("api", `${env.API_URL}${path}`);
-
   const res = await fetch(`${env.API_URL}${path}`, {
     method: options.method ?? "GET",
     headers: {
