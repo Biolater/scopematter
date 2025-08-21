@@ -20,11 +20,7 @@ import {
 import { Wallet } from "@/lib/types/wallet.types";
 import { useState } from "react";
 import { addToast } from "@heroui/toast";
-
-function shortAddr(addr: string) {
-  if (!addr || addr.length < 12) return addr;
-  return `${addr.slice(0, 6)}…${addr.slice(-4)}`;
-}
+import { shortAddr } from "@/lib/utils/wallet.utils";
 
 export default function WalletCard({
   wallet,
@@ -63,7 +59,6 @@ export default function WalletCard({
     minute: "2-digit",
     hour12: true,
   });
-  
 
   return (
     <Card className="w-full h-full">
@@ -143,9 +138,7 @@ export default function WalletCard({
       </CardBody>
 
       <CardFooter className="flex justify-between text-xs text-default-500">
-        <span>
-          Added {formatted}
-        </span>
+        <span>Added {formatted}</span>
         <span>{wallet.chain.replace("_", " ")}</span>
       </CardFooter>
     </Card>
