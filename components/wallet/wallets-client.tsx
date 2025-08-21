@@ -42,8 +42,6 @@ export default function WalletsClient({ wallets }: { wallets: Wallet[] }) {
   const { runAction: runDelete, isPending: deleting } = useServerAction(
     deleteWalletAction,
     {
-      onSuccess: () =>
-        addToast({ title: "Wallet deleted successfully", color: "success" }),
       onError: (err) =>
         addToast({
           title: err.message ?? "Failed to delete wallet",
@@ -55,8 +53,6 @@ export default function WalletsClient({ wallets }: { wallets: Wallet[] }) {
   // Make primary action
   const { runAction: runMakePrimary, isPending: makingPrimary } =
     useServerAction(makePrimaryAction, {
-      onSuccess: () =>
-        addToast({ title: "Wallet made primary successfully", color: "success" }),
       onError: (err) =>
         addToast({
           title: err.message ?? "Failed to make primary",
@@ -72,7 +68,10 @@ export default function WalletsClient({ wallets }: { wallets: Wallet[] }) {
     }
 
     // optimistic remove
-    dispatchOptimistic({ type: "delete", id });
+    startTransition(() => {
+      dispatchOptimistic({ type: "delete", id });
+    });
+    addToast({ title: "Wallet deleted successfully", color: "success" });
 
     // backend call
     runDelete({ id });
@@ -89,6 +88,7 @@ export default function WalletsClient({ wallets }: { wallets: Wallet[] }) {
       dispatchOptimistic({ type: "makePrimary", id });
     });
 
+    addToast({ title: "Wallet made primary successfully", color: "success" });
     // backend call
     runMakePrimary({ id });
   };
@@ -103,8 +103,7 @@ export default function WalletsClient({ wallets }: { wallets: Wallet[] }) {
         {[...optimisticWallets]
           .sort(
             (a, b) =>
-              new Date(b.createdAt).getTime() -
-              new Date(a.createdAt).getTime()
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           )
           .map((w, i) => (
             <motion.div
@@ -137,7 +136,7 @@ export default function WalletsClient({ wallets }: { wallets: Wallet[] }) {
         wallet={selected}
         open={!!selected}
         onOpenChange={(open) => !open && setSelected(null)}
-        onConfirm={(id) =>  handleConfirmDelete(id)}
+        onConfirm={(id) => handleConfirmDelete(id)}
       />
     </motion.div>
   );

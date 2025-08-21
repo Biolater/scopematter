@@ -67,7 +67,7 @@ function SidebarContent({
       <div
         className={`z-20 flex flex-none items-center justify-between overflow-hidden p-2 ${fromMobile ? "w-fit" : ""}`}
       >
-        <Link href="/dashboard" className="flex items-center">
+        <Link prefetch href="/dashboard" className="flex items-center">
           <Image
             src={PayLynkLogo}
             alt="PayLynk Logo"
