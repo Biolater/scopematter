@@ -1,3 +1,5 @@
+import { Wallet } from "./wallet.types";
+
 export type Chain = "ETH_MAINNET";
 export type Asset = "USDT" | "ETH";
 export type PaymentLinkStatus = "ACTIVE" | "INACTIVE";
@@ -18,5 +20,14 @@ export type PaymentLink = {
     address: string;
     chain: Chain;
     isPrimary: boolean;
+  };
+};
+
+
+export type GetPaymentLinkBySlugResponse = PaymentLink & {
+
+  user: {
+    username: string;
+    imageUrl: string | null;
   };
 };
