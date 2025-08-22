@@ -11,6 +11,9 @@ export type PaymentLink = {
   amountUsd?: string | number | null;
   memo?: string | null;
   createdAt: string | Date;
+  transactions: {
+    id: string;
+  }[]
   wallet: {
     address: string;
     chain: Chain;

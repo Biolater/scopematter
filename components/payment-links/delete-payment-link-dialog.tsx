@@ -71,7 +71,8 @@ export default function DeletePaymentLinkDialog({
               </div>
 
               <div className="rounded-md border border-danger-200 bg-danger-50 px-3 py-2 text-xs text-danger-700">
-                Deleting will make the public page inaccessible.
+                Deleting will permanently remove this link and make the public
+                page inaccessible.
               </div>
             </ModalBody>
 
@@ -89,7 +90,7 @@ export default function DeletePaymentLinkDialog({
                 isLoading={submitting}
                 isDisabled={submitting}
               >
-                Delete link
+                Delete permanently
               </Button>
             </ModalFooter>
           </>

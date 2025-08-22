@@ -90,9 +90,7 @@ const CreatePaymentLinkDialog = ({ wallets }: CreatePaymentLinkDialogProps) => {
       setIsOpen(false);
     },
     onError: (err) => {
-      if (!err.ok) {
-        applyFieldErrors<CreatePaymentLinkSchemaType>(err.details, setError);
-      }
+      applyFieldErrors<CreatePaymentLinkSchemaType>(err.details, setError);
     },
   });
 
@@ -197,7 +195,7 @@ const CreatePaymentLinkDialog = ({ wallets }: CreatePaymentLinkDialogProps) => {
                     label="Network"
                     value="Ethereum Mainnet"
                     isReadOnly
-                    description="MVP supports Ethereum only"
+                    description="We support Ethereum only"
                   />
 
                   {/* Fixed Amount Toggle + Number */}

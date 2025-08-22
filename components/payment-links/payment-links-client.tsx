@@ -64,9 +64,12 @@ export default function PaymentLinksClient({
   const handleConfirmDelete = (id: string) => {
     if (deleting || !selected) return;
 
-    startTransition(() => {
-      dispatchOptimistic({ type: "delete", id });
-    });
+    // Only remove optimistically if this will be a true delete
+    if (selected.transactions.length === 0) {
+      startTransition(() => {
+        dispatchOptimistic({ type: "delete", id });
+      });
+    }
     addToast({ title: "Payment link deleted", color: "success" });
     runDelete({ id });
     setSelected(null);
