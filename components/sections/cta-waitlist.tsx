@@ -1,13 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
-import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
-import { Avatar } from "@heroui/avatar";
 import { motion } from "framer-motion";
-import { countries } from "@/lib/data/countries";
-import { addToWaitlist } from "@/lib/actions/waitlist.actions";
 
 export default function CTAWaitlistSection() {
   return (
