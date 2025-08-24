@@ -75,11 +75,9 @@ export default function FAQSection() {
         >
           <Accordion variant="splitted">
             {faqItems.map(({ key, title, content }) => (
-              <motion.div key={key} variants={itemVariants}>
-                <AccordionItem key={key} title={title}>
-                  {content}
-                </AccordionItem>
-              </motion.div>
+              <AccordionItem key={key} title={title}>
+                <p className="text-default-600">{content}</p>
+              </AccordionItem>
             ))}
           </Accordion>
         </motion.div>

@@ -46,7 +46,7 @@ export default function HeroSection() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative m isolate overflow-hidden"
+      className="relative isolate overflow-hidden"
       id="hero"
     >
       <div
@@ -131,15 +131,17 @@ export default function HeroSection() {
           className="relative h-[28rem]"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          animate="visible"
         >
           {/* Stacked project flow cards */}
-          <motion.div variants={cardVariants}>
+          <motion.div
+            variants={cardVariants}
+            className="absolute left-6 right-6 top-6 lg:left-0 lg:right-16 lg:top-12 z-30"
+          >
             <Card
               radius="lg"
               shadow="md"
-              className="absolute left-6 right-6 top-6 lg:left-0 lg:right-16 lg:top-4 border border-default-200/60 bg-content1/95"
+              className="border border-default-200/60 bg-content1/95"
             >
               <CardHeader className="p-5 border-default-200/60">
                 <div className="flex items-baseline gap-2">
@@ -158,11 +160,14 @@ export default function HeroSection() {
             </Card>
           </motion.div>
 
-          <motion.div variants={cardVariants}>
+          <motion.div
+            variants={cardVariants}
+            className="absolute left-8 right-4 top-40 lg:left-10 lg:right-24 lg:top-40 z-20"
+          >
             <Card
               radius="lg"
               shadow="md"
-              className="absolute left-8 right-4 top-40 lg:left-10 lg:right-24 lg:top-40 border border-default-200/60 bg-content1/95"
+              className="border border-default-200/60 bg-content1/95"
             >
               <CardHeader className="p-5">
                 <div className="flex items-baseline gap-2">
@@ -185,11 +190,14 @@ export default function HeroSection() {
             </Card>
           </motion.div>
 
-          <motion.div variants={cardVariants}>
+          <motion.div
+            variants={cardVariants}
+            className="absolute left-16 right-0 top-72 lg:left-24 lg:right-10 lg:top-72 z-10"
+          >
             <Card
               radius="lg"
               shadow="md"
-              className="absolute left-16 right-0 bottom-4 lg:left-24 lg:right-10 lg:bottom-6 border border-default-200/60 bg-content1/95"
+              className="border border-default-200/60 bg-content1/95"
             >
               <CardHeader className="p-5  border-default-200/60">
                 <div className="flex items-baseline gap-2">
