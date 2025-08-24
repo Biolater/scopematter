@@ -1,7 +1,29 @@
 "use client";
 
 import { Accordion, AccordionItem } from "@heroui/accordion";
+import { motion, Variants } from "framer-motion";
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
 
 const faqItems = [
   {
@@ -30,25 +52,38 @@ const faqItems = [
   },
 ];
 
-
 export default function FAQSection() {
   return (
     <section id="faq" aria-labelledby="faq-heading" className="px-6 md:px-12">
-      <div className="w-full max-w-4xl mx-auto">
-        <h2
+      <motion.div
+        className="w-full max-w-4xl mx-auto"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={containerVariants}
+      >
+        <motion.h2
           id="faq-heading"
           className="text-2xl md:text-3xl font-semibold text-center text-default-900"
+          variants={itemVariants}
         >
           Frequently Asked Questions
-        </h2>
-        <Accordion variant="splitted" className="mt-8">
-          {faqItems.map(({ key, title, content }) => (
-            <AccordionItem key={key} title={title}>
-              {content}
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
+        </motion.h2>
+        <motion.div
+          className="mt-8"
+          variants={containerVariants}
+        >
+          <Accordion variant="splitted">
+            {faqItems.map(({ key, title, content }) => (
+              <motion.div key={key} variants={itemVariants}>
+                <AccordionItem key={key} title={title}>
+                  {content}
+                </AccordionItem>
+              </motion.div>
+            ))}
+          </Accordion>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
