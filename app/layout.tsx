@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
+import { fontInter } from "@/config/fonts";
 import { LandingNavbar } from "@/components/landing-navbar";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import FloatThemeToggle from "@/components/float-theme-toggle";
@@ -13,7 +13,7 @@ import { Analytics } from "@vercel/analytics/next";
 import LogoutButton from "@/components/logout-button";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://scopematter.example"),
+  metadataBase: new URL("https://scopematter.xyz"),
   title: {
     default: "Scopematter — Formalize Requirements. Manage Change. Get Paid.",
     template: "%s — Scopematter",
@@ -88,8 +88,8 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen text-foreground bg-background font-sans antialiased",
-          fontSans.variable
+          "min-h-screen text-foreground bg-background font-inter antialiased",
+          fontInter.className
         )}
       >
         <Analytics />
