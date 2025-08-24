@@ -4,22 +4,18 @@ const required = (key: string): string => {
     return value;
 };
 
-export type Env = {
-    AIRTABLE_API_KEY: string;
-    AIRTABLE_BASE_ID: string;
-    AIRTABLE_TABLE_NAME: string;
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: string;
-    CLERK_SECRET_KEY: string;
-    DATABASE_PASSWORD: string;
-};
 
-export const env: Env = {
+
+export const env = {
     AIRTABLE_API_KEY: required('AIRTABLE_API_KEY'),
     AIRTABLE_BASE_ID: required('AIRTABLE_BASE_ID'),
     AIRTABLE_TABLE_NAME: required('AIRTABLE_TABLE_NAME'),
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: required('NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY'),
     CLERK_SECRET_KEY: required('CLERK_SECRET_KEY'),
     DATABASE_PASSWORD: required('DATABASE_PASSWORD'),
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL: required('NEXT_PUBLIC_CLERK_SIGN_IN_URL'),
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL: required('NEXT_PUBLIC_CLERK_SIGN_UP_URL'),
+    API_URL: required('API_URL'),
 };
 
 export default env;

@@ -2,54 +2,46 @@
 
 import { Accordion, AccordionItem } from "@heroui/accordion";
 
+
 const faqItems = [
   {
-    key: "fees",
-    title: "What fees do you charge?",
+    key: "how-different",
+    title: "How is this different from Jira, Trello, or other PM tools?",
     content:
-      "1.5% PayLynk fee + on-ramp fees (shown before payment) + standard network gas.",
+      "Knot is not a task manager. It's a financial agreement tool. It focuses on locking in the initial project scope and providing a clear, billable trail for any approved changes, ensuring you get paid for all your work.",
   },
   {
-    key: "client-crypto",
-    title: "Does my client need crypto?",
+    key: "client-experience",
+    title: "Will my non-technical clients find this difficult to use?",
     content:
-      "No. They pay in fiat via Onramper (card/bank transfer), KYC may apply.",
+      "No. The client interface is designed to be extremely simple. They receive a clear proposal and approve changes with a click. It builds trust by framing scope changes professionally, rather than through messy email chains.",
   },
   {
-    key: "custody",
-    title: "Is PayLynk custodial?",
+    key: "payments",
+    title: "How does this help me get paid?",
     content:
-      "No. Funds go directly from the on-ramp to your wallet — we never hold them.",
+      "Knot creates a formal, e-signature-style agreement on the scope and any changes. This gives you a clear record of what the client approved, eliminating disputes over extra work and providing the documentation you need to invoice confidently.",
   },
   {
-    key: "speed",
-    title: "How fast will I get paid?",
+    key: "is-it-for-me",
+    title: "Who is Knot for?",
     content:
-      "Usually within minutes of on-ramp approval, subject to provider checks/network load.",
-  },
-  {
-    key: "tokens",
-    title: "Which tokens/networks are supported?",
-    content:
-      "USDT (Ethereum ERC-20, Tron TRC-20) and ETH (Ethereum) at launch.",
+      "Knot is built for freelance developers and small agencies who are tired of losing money and time to scope creep, especially when working with clients who may not be familiar with the development process.",
   },
 ];
 
+
 export default function FAQSection() {
   return (
-    <section
-      id="faq"
-      aria-labelledby="faq-heading"
-      className="px-6 md:px-12 pb-24"
-    >
+    <section id="faq" aria-labelledby="faq-heading" className="px-6 md:px-12">
       <div className="w-full max-w-4xl mx-auto">
         <h2
           id="faq-heading"
-          className="text-2xl md:text-3xl font-semibold text-center"
+          className="text-2xl md:text-3xl font-semibold text-center text-default-900"
         >
-          FAQ
+          Frequently Asked Questions
         </h2>
-        <Accordion className="mt-4" variant="splitted">
+        <Accordion variant="splitted" className="mt-8">
           {faqItems.map(({ key, title, content }) => (
             <AccordionItem key={key} title={title}>
               {content}

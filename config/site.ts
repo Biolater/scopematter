@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "PayLynk",
+  name: "Knot",
   description:
     "Get paid globally, instantly — without the payment barriers. Clients pay by card/bank; you receive USDT or ETH direct to your wallet.",
   navItems: [
@@ -61,10 +61,10 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: "https://github.com/your-org/paylynk",
-    twitter: "https://twitter.com/paylynk",
-    docs: "https://docs.paylynk.example",
-    discord: "https://discord.gg/paylynk",
-    sponsor: "https://buymeacoffee.com/paylynk",
+    github: "https://github.com/your-org/knot",
+    twitter: "https://twitter.com/knot",
+    docs: "https://docs.knot.example",
+    discord: "https://discord.gg/knot",
+    sponsor: "https://buymeacoffee.com/knot",
   },
 };

@@ -12,27 +12,27 @@ import {
   NavbarMenuToggle,
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/nextjs";
 
 export function LandingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isSignedIn } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const linkClass =
-    "text-sm text-muted hover:text-foreground transition-colors";
 
   const navItems = [
     { href: "#hero", label: "Home" },
     { href: "#how", label: "How It Works" },
     { href: "#benefits", label: "Benefits" },
-    { href: "#support", label: "Support" },
+    /*     { href: "#support", label: "Support" }, */
     { href: "#faq", label: "FAQ" },
   ];
 
@@ -41,6 +41,7 @@ export function LandingNavbar() {
 
     // Smooth scroll to section with offset for navbar height
     const element = document.querySelector(href);
+
     if (element) {
       const navbarHeight = 80; // Approximate navbar height
       const elementPosition =
@@ -53,49 +54,56 @@ export function LandingNavbar() {
     }
   };
 
-  return (
+  return isSignedIn ? (
+    <></>
+  ) : (
     <HeroUINavbar
+      isBlurred
+      isBordered
       id="site-navbar"
+      isMenuOpen={isMenuOpen}
       maxWidth="xl"
       position="sticky"
-      isBordered
-      isBlurred
       onMenuOpenChange={setIsMenuOpen}
-      isMenuOpen={isMenuOpen}
     >
       <NavbarBrand className="-ml-3">
         <NextLink
-          href="#hero"
           className="flex items-center font-semibold tracking-tight"
+          href={isSignedIn ? "/dashboard" : "#hero"}
         >
-          <img src="/navbar-brand.png" alt="PayLynk" className="h-12 w-auto" />
-          <p className="font-bold text-inherit -ml-2">PayLynk</p>
+          <img alt="Knot" className="h-12 w-auto" src="/navbar-brand.png" />
+          <p className="font-bold text-inherit -ml-1">Knot</p>
         </NextLink>
       </NavbarBrand>
 
       {/* Desktop nav */}
-      <NavbarContent justify="end" className="hidden md:flex gap-4">
-        {navItems.map((item) => (
-          <NavbarItem key={item.href}>
-            <button
-              onClick={() => handleNavItemClick(item.href)}
-              className="text-sm hover:text-foreground/80 cursor-pointer transition-colors"
-            >
-              {item.label}
-            </button>
-          </NavbarItem>
-        ))}
+      <NavbarContent className="hidden md:flex gap-4" justify="end">
         <SignedOut>
+          {navItems.map((item) => (
+            <NavbarItem key={item.href}>
+              <button
+                className="text-sm hover:text-foreground/80 cursor-pointer transition-colors"
+                onClick={() => handleNavItemClick(item.href)}
+              >
+                {item.label}
+              </button>
+            </NavbarItem>
+          ))}
           <NavbarItem>
+            <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
+              Join Waitlist
+            </Button>
+          </NavbarItem>
+          {/*           <NavbarItem>
             <Button as={NextLink} href="/sign-in" variant="flat">
               Sign In
             </Button>
           </NavbarItem>
           <NavbarItem>
-            <Button as={NextLink} href="/sign-up" color="primary">
+            <Button as={NextLink} color="primary" href="/sign-up">
               Sign Up
             </Button>
-          </NavbarItem>
+          </NavbarItem> */}
         </SignedOut>
         <SignedIn>
           <UserButton />
@@ -104,6 +112,9 @@ export function LandingNavbar() {
 
       {/* Mobile toggle */}
       <NavbarContent className="md:hidden" justify="end">
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
         <NavbarMenuToggle aria-label="Open menu" />
       </NavbarContent>
 
@@ -112,34 +123,32 @@ export function LandingNavbar() {
         {navItems.map((item) => (
           <NavbarMenuItem key={item.href}>
             <button
-              onClick={() => handleNavItemClick(item.href)}
               className="w-full cursor-pointer block hover:text-foreground/80 transition-colors text-left"
+              onClick={() => handleNavItemClick(item.href)}
             >
               {item.label}
             </button>
           </NavbarMenuItem>
         ))}
-        <SignedOut>
+          <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
+            Join Waitlist
+          </Button>
+        {/*         <SignedOut>
           <NavbarMenuItem>
-            <NextLink href="/sign-in" className="w-full">
+            <NextLink className="w-full" href="/sign-in">
               <Button fullWidth variant="flat">
                 Sign In
               </Button>
             </NextLink>
           </NavbarMenuItem>
           <NavbarMenuItem>
-            <NextLink href="/sign-up" className="w-full">
+            <NextLink className="w-full" href="/sign-up">
               <Button fullWidth color="primary">
                 Sign Up
               </Button>
             </NextLink>
           </NavbarMenuItem>
-        </SignedOut>
-        <SignedIn>
-          <NavbarMenuItem>
-            <UserButton />
-          </NavbarMenuItem>
-        </SignedIn>
+        </SignedOut> */}
       </NavbarMenu>
     </HeroUINavbar>
   );

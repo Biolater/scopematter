@@ -9,42 +9,44 @@ import { fontSans } from "@/config/fonts";
 import { LandingNavbar } from "@/components/landing-navbar";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import FloatThemeToggle from "@/components/float-theme-toggle";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import LogoutButton from "@/components/logout-button";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://paylynk.example"),
+  metadataBase: new URL("https://knot.example"),
   title: {
-    default: "PayLynk — Get paid in USDT/ETH from any client, instantly",
-    template: "%s — PayLynk",
+    default: "Knot — Formalize Requirements. Manage Change. Get Paid.",
+    template: "%s — Knot",
   },
   description:
-    "Clients pay in USD via card or bank. You receive crypto directly in your wallet — fast, secure, and non‑custodial.",
+    "Knot is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
   openGraph: {
-    title: "PayLynk",
+    title: "Knot",
     description:
-      "Clients pay in USD via card or bank. You receive crypto directly in your wallet — fast, secure, and non‑custodial.",
+      "Knot is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
     url: "/",
-    siteName: "PayLynk",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "PayLynk" }],
+    siteName: "Knot",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Knot" }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PayLynk",
+    title: "Knot",
     description:
-      "Clients pay in USD via card or bank. You receive crypto directly in your wallet — fast, secure, and non‑custodial.",
+      "Knot is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
     images: ["/og.png"],
-    creator: "@paylynk",
+    creator: "@knot",
   },
   keywords: [
-    "crypto payments",
-    "freelancer payments",
-    "USDT",
-    "ETH",
-    "on-ramp",
-    "Binance P2P",
-    "global payments",
+    "scope creep",
+    "change requests",
+    "freelance developer tools",
+    "project management",
+    "client management",
+    "software development",
+    "requirements formalization",
+    "freelancer contracts",
   ],
   alternates: { canonical: "/" },
   manifest: "/site.webmanifest",

@@ -39,6 +39,7 @@ export function ClerkProviderWithTheme({
     <ClerkProvider
       signInUrl="/sign-in"
       signUpUrl="/sign-up"
+      waitlistUrl="/waitlist"
       appearance={{
         baseTheme: resolvedTheme === "dark" ? dark : undefined,
         variables: resolvedTheme === "dark" ? darkVariables : lightVariables,
