@@ -71,8 +71,8 @@ export function LandingNavbar() {
           className="flex items-center font-semibold tracking-tight"
           href={isSignedIn ? "/dashboard" : "#hero"}
         >
-          <img alt="Knot" className="h-12 w-auto" src="/navbar-brand.png" />
-          <p className="font-bold text-inherit -ml-1">Knot</p>
+          <img alt="Scopematter" className="h-12 w-auto" src="/scopematter-brand.png" />
+          <p className="font-bold text-inherit -ml-1">Scopematter</p>
         </NextLink>
       </NavbarBrand>
 

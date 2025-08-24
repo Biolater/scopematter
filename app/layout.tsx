@@ -13,30 +13,30 @@ import { Analytics } from "@vercel/analytics/next";
 import LogoutButton from "@/components/logout-button";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://knot.example"),
+  metadataBase: new URL("https://scopematter.example"),
   title: {
-    default: "Knot — Formalize Requirements. Manage Change. Get Paid.",
-    template: "%s — Knot",
+    default: "Scopematter — Formalize Requirements. Manage Change. Get Paid.",
+    template: "%s — Scopematter",
   },
   description:
-    "Knot is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
+    "Scopematter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
   openGraph: {
-    title: "Knot",
+    title: "Scopematter",
     description:
-      "Knot is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
+      "Scopematter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
     url: "/",
-    siteName: "Knot",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Knot" }],
+    siteName: "Scopematter",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Scopematter" }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Knot",
+    title: "Scopematter",
     description:
-      "Knot is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
+      "Scopematter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
     images: ["/og.png"],
-    creator: "@knot",
+    creator: "@scopematter",
   },
   keywords: [
     "scope creep",

@@ -10,18 +10,18 @@ const Footer = () => {
             className="flex items-center font-semibold tracking-tight"
           >
             <img
-              src="/navbar-brand.png"
-              alt="Knot"
+              src="/scopematter-brand.png"
+              alt="Scopematter"
               className="h-12 w-auto"
             />
-            <p className="font-bold text-inherit -ml-1">Knot</p>
+            <p className="font-bold text-inherit -ml-1">Scopematter</p>
           </NextLink>
         </div>
         <div className="text-center">
           <p className="text-default-600">muradyusubovdev@icloud.com</p>
         </div>
         <div className="md:text-right">
-          <p className="text-default-600">© 2025 Knot</p>
+          <p className="text-default-600">© 2025 Scopematter</p>
         </div>
       </div>
     </footer>

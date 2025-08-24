@@ -28,7 +28,7 @@ export default function CTAWaitlistSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          Join the waitlist and be the first to know when Knot is ready.
+          Join the waitlist and be the first to know when Scopematter is ready.
         </motion.p>
         <motion.div
           className="mt-6"

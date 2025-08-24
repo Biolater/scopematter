@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Knot",
+  name: "Scopematter",
   description:
     "Get paid globally, instantly — without the payment barriers. Clients pay by card/bank; you receive USDT or ETH direct to your wallet.",
   navItems: [
@@ -61,10 +61,10 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: "https://github.com/your-org/knot",
-    twitter: "https://twitter.com/knot",
-    docs: "https://docs.knot.example",
-    discord: "https://discord.gg/knot",
-    sponsor: "https://buymeacoffee.com/knot",
+    github: "https://github.com/your-org/scopematter",
+    twitter: "https://twitter.com/scopematter",
+    docs: "https://docs.scopematter.example",
+    discord: "https://discord.gg/scopematter",
+    sponsor: "https://buymeacoffee.com/scopematter",
   },
 };

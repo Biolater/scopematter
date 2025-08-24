@@ -18,7 +18,7 @@ import {
 import { UserButton } from "@clerk/nextjs";
 import MainNavbar from "@/components/main-navbar"; // adjust path
 import { usePathname } from "next/navigation";
-import PayLynkLogo from "@/public/navbar-brand.png";
+import ScopematterLogo from "@/public/scopematter-brand.png";
 import { usePersistentCollapsed } from "@/lib/hooks/use-persistent-collapsed";
 
 const navItems = [
@@ -69,8 +69,8 @@ function SidebarContent({
       >
         <Link prefetch href="/dashboard" className="flex items-center">
           <Image
-            src={PayLynkLogo}
-            alt="PayLynk Logo"
+            src={ScopematterLogo}
+            alt="Scopematter Logo"
             width={47}
             height={47}
             className="h-[47px] w-[47px] shrink-0"

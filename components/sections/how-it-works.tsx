@@ -30,7 +30,7 @@ function HowItWorksSection() {
           id="how-heading"
           className="text-2xl lg:text-3xl font-semibold text-center text-default-900"
         >
-          How Knot Protects Your Time
+          How Scopematter Protects Your Time
         </h2>
         <div className="mt-8 grid gap-4 sm:gap-6 lg:grid-cols-3">
           {steps.map((s, i) => (
