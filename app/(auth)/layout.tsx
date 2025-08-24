@@ -16,10 +16,10 @@ export default function AuthLayout({
       >
         <img
           src="/navbar-brand.png"
-          alt="PayLynk"
+          alt="Knot"
           className="h-12 -ml-3 w-auto"
         />
-        <p className="font-bold -ml-3 text-inherit">PayLynk</p>
+        <p className="font-bold -ml-3 text-inherit">Knot</p>
       </Button>
       {children}
     </div>
