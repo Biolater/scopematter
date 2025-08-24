@@ -11,17 +11,17 @@ const Footer = () => {
           >
             <img
               src="/navbar-brand.png"
-              alt="PayLynk"
+              alt="Knot"
               className="h-12 w-auto"
             />
-            <p className="font-bold text-inherit -ml-2">PayLynk</p>
+            <p className="font-bold text-inherit -ml-1">Knot</p>
           </NextLink>
         </div>
         <div className="text-center">
           <p className="text-default-600">muradyusubovdev@icloud.com</p>
         </div>
         <div className="md:text-right">
-          <p className="text-default-600">© 2025 PayLynk</p>
+          <p className="text-default-600">© 2025 Knot</p>
         </div>
       </div>
     </footer>

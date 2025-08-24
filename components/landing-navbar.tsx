@@ -28,14 +28,11 @@ export function LandingNavbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const linkClass =
-    "text-sm text-muted hover:text-foreground transition-colors";
-
   const navItems = [
     { href: "#hero", label: "Home" },
     { href: "#how", label: "How It Works" },
     { href: "#benefits", label: "Benefits" },
-    { href: "#support", label: "Support" },
+    /*     { href: "#support", label: "Support" }, */
     { href: "#faq", label: "FAQ" },
   ];
 
@@ -74,8 +71,8 @@ export function LandingNavbar() {
           className="flex items-center font-semibold tracking-tight"
           href={isSignedIn ? "/dashboard" : "#hero"}
         >
-          <img alt="PayLynk" className="h-12 w-auto" src="/navbar-brand.png" />
-          <p className="font-bold text-inherit -ml-2">PayLynk</p>
+          <img alt="Knot" className="h-12 w-auto" src="/navbar-brand.png" />
+          <p className="font-bold text-inherit -ml-1">Knot</p>
         </NextLink>
       </NavbarBrand>
 
@@ -93,6 +90,11 @@ export function LandingNavbar() {
             </NavbarItem>
           ))}
           <NavbarItem>
+            <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
+              Join Waitlist
+            </Button>
+          </NavbarItem>
+          {/*           <NavbarItem>
             <Button as={NextLink} href="/sign-in" variant="flat">
               Sign In
             </Button>
@@ -101,7 +103,7 @@ export function LandingNavbar() {
             <Button as={NextLink} color="primary" href="/sign-up">
               Sign Up
             </Button>
-          </NavbarItem>
+          </NavbarItem> */}
         </SignedOut>
         <SignedIn>
           <UserButton />
@@ -128,7 +130,10 @@ export function LandingNavbar() {
             </button>
           </NavbarMenuItem>
         ))}
-        <SignedOut>
+          <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
+            Join Waitlist
+          </Button>
+        {/*         <SignedOut>
           <NavbarMenuItem>
             <NextLink className="w-full" href="/sign-in">
               <Button fullWidth variant="flat">
@@ -143,7 +148,7 @@ export function LandingNavbar() {
               </Button>
             </NextLink>
           </NavbarMenuItem>
-        </SignedOut>
+        </SignedOut> */}
       </NavbarMenu>
     </HeroUINavbar>
   );

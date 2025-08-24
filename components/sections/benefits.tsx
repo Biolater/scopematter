@@ -3,22 +3,23 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { motion } from "framer-motion";
 
+
 export default function BenefitsSection() {
   const items = [
     {
-      emoji: "⚡",
-      title: "Get paid in minutes",
-      desc: "Clients pay in fiat, you receive crypto directly to your wallet.",
+      emoji: "✅",
+      title: "Eliminate Scope Creep",
+      desc: "Formalize the project scope upfront so there are no surprises or unpaid work.",
     },
     {
-      emoji: "🛠️",
-      title: "No crypto setup for clients",
-      desc: "Clients can pay without a wallet or any crypto knowledge.",
+      emoji: "🤝",
+      title: "Build Client Trust",
+      desc: "Provide clients with a clear, professional process for managing project changes.",
     },
     {
-      emoji: "🔐",
-      title: "You control your funds",
-      desc: "Non-custodial — we never hold your crypto.",
+      emoji: "💰",
+      title: "Get Paid for Every Hour",
+      desc: "Automate change requests and invoicing to ensure all your work is billed.",
     },
   ];
 
@@ -30,11 +31,11 @@ export default function BenefitsSection() {
     >
       <h2
         id="benefits-heading"
-        className="text-2xl lg:text-3xl font-semibold text-center"
+        className="text-2xl lg:text-3xl font-semibold text-center text-default-900"
       >
-        Benefits
+        Focus on Code, Not on Chasing Payments
       </h2>
-      <div className="mt-6 grid gap-4 sm:gap-6 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:gap-6 lg:grid-cols-3">
         {items.map((b, i) => (
           <motion.div
             key={b.title}
@@ -43,19 +44,19 @@ export default function BenefitsSection() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.45, delay: i * 0.05 }}
           >
-            <Card radius="lg" shadow="sm">
-              <CardHeader className="flex items-start gap-3 p-5 md:p-6">
-                <div className="h-10 w-10 rounded-full bg-secondary/15 text-secondary flex items-center justify-center text-lg flex-shrink-0">
+            <Card className="h-full border-default-400 bg-content2">
+              <CardHeader className="flex items-start gap-4 p-5 md:p-6">
+                <div className="h-10 w-10 rounded-lg bg-secondary/15 text-secondary flex items-center justify-center text-xl flex-shrink-0">
                   <span aria-hidden>{b.emoji}</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-base md:text-lg">
+                  <h3 className="font-semibold text-base md:text-lg text-default-900">
                     {b.title}
                   </h3>
                 </div>
               </CardHeader>
               <CardBody className="pt-0 px-5 md:px-6 pb-5 md:pb-6">
-                <p className="text-sm text-default-600">{b.desc}</p>
+                <p className="text-sm text-default-700">{b.desc}</p>
               </CardBody>
             </Card>
           </motion.div>

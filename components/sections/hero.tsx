@@ -6,10 +6,11 @@ import { Chip } from "@heroui/chip";
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { motion } from "framer-motion";
 import { Highlight } from "../ui/hero-highlight";
+import Link from "next/link";
 
 export default function HeroSection() {
-  const [copied, setCopied] = useState(false);
-  const demoLinkUrl = "https://pay.paylynk.io/link/5JX9ABCDE";
+  const [email, setEmail] = useState("");
+
   return (
     <section
       aria-labelledby="hero-heading"
@@ -42,13 +43,12 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Get paid in{" "}
+            Stop scope creep.{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-              USDT/ETH
+              Get paid
             </span>{" "}
-            from any client,{" "}
-            <Highlight className="decoration-primary/50">instantly</Highlight>—
-            no bank restrictions.
+            for every hour of your work,{" "}
+            <Highlight className="decoration-primary/50">guaranteed</Highlight>.
           </motion.h1>
           <motion.p
             className="mt-4 text-default-700 text-base lg:text-xl"
@@ -56,11 +56,11 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
           >
-            Clients pay in USD via card or bank. You receive{" "}
+            Clients approve a clear project scope upfront. Any changes are
+            tracked, quoted, and billed automatically.{" "}
             <span className="font-semibold text-foreground">
-              crypto directly in your wallet
-            </span>{" "}
-            — fast, secure, and non‑custodial.
+              No more free work or awkward conversations.
+            </span>
           </motion.p>
           <motion.div
             className="mt-6 flex flex-wrap gap-2"
@@ -69,24 +69,24 @@ export default function HeroSection() {
             transition={{ duration: 0.45, delay: 0.1 }}
           >
             <Chip variant="flat" color="primary" radius="sm">
-              ⚡ Instant payouts
+              📄 Clear Scope Agreements
             </Chip>
             <Chip variant="flat" color="secondary" radius="sm">
-              🚫 No PayPal/Wise limits
+              🔄 Automated Change Requests
             </Chip>
             <Chip variant="flat" color="default" radius="sm">
-              🔐 Non‑custodial
+              💰 Guaranteed Payments
             </Chip>
           </motion.div>
           <div className="mt-8 flex items-center gap-4">
-            {/* <Button
-              as="a"
-              href="#waitlist"
-              size="lg"
-              className="btn-primary px-8 py-6"
-            >
-              Join Waitlist
-            </Button> */}
+             <Button
+               as={Link}
+               href="/waitlist"
+               size="lg"
+               className="btn-primary px-8 py-6"
+             >
+               Join Waitlist
+             </Button>
             <Button as="a" href="#how" size="lg" variant="flat" color="primary">
               How it works
             </Button>
@@ -94,7 +94,7 @@ export default function HeroSection() {
         </div>
 
         <div className="relative h-[28rem]">
-          {/* Stacked payment flow cards */}
+          {/* Stacked project flow cards */}
           <Card
             radius="lg"
             shadow="md"
@@ -102,43 +102,16 @@ export default function HeroSection() {
           >
             <CardHeader className="p-5 border-default-200/60">
               <div className="flex items-baseline gap-2">
-                <p className="font-semibold text-lg">Create payment link</p>
+                <p className="font-semibold text-lg">Define Project Scope</p>
                 <Chip size="sm" variant="flat" color="default">
                   Step 1
                 </Chip>
               </div>
             </CardHeader>
             <CardBody className="pt-0 px-5 pb-5 space-y-3">
-              <div className="flex flex-wrap gap-2">
-                <Chip size="sm" variant="flat" color="primary">
-                  USDT
-                </Chip>
-                <Chip size="sm" variant="flat" color="default">
-                  ETH
-                </Chip>
-                <Chip size="sm" variant="flat" color="secondary">
-                  Polygon
-                </Chip>
-              </div>
-              <div className="rounded-lg border border-default-300 bg-content2 px-3 py-2 text-sm text-default-600 flex items-center gap-3 hover:border-default-400 transition-colors">
-                <span className="truncate">{demoLinkUrl}</span>
-                <Button
-                  size="sm"
-                  variant="light"
-                  color={copied ? "success" : "primary"}
-                  onPress={async () => {
-                    try {
-                      await navigator.clipboard.writeText(demoLinkUrl);
-                      setCopied(true);
-                      setTimeout(() => setCopied(false), 1500);
-                    } catch {
-                      // no-op
-                    }
-                  }}
-                >
-                  {copied ? "Copied" : "Copy"}
-                </Button>
-              </div>
+               <p className="text-sm text-default-600">
+                Outline deliverables, timelines, and total cost. Your client gets a clear, professional proposal.
+               </p>
             </CardBody>
           </Card>
 
@@ -149,7 +122,7 @@ export default function HeroSection() {
           >
             <CardHeader className="p-5">
               <div className="flex items-baseline gap-2">
-                <p className="font-semibold text-lg">Client pays</p>
+                <p className="font-semibold text-lg">Client Approves</p>
                 <Chip size="sm" variant="flat" color="secondary">
                   Step 2
                 </Chip>
@@ -157,12 +130,12 @@ export default function HeroSection() {
             </CardHeader>
             <CardBody className="pt-0 px-5 pb-5 space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-default-700">Method</span>
-                <span className="font-medium">Card / Bank</span>
+                <span className="text-default-700">Status</span>
+                <span className="font-medium text-success">Approved</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-default-700">Amount</span>
-                <span className="font-medium">$250.00</span>
+                <span className="text-default-700">Project Cost</span>
+                <span className="font-medium">$5,000.00</span>
               </div>
             </CardBody>
           </Card>
@@ -174,22 +147,20 @@ export default function HeroSection() {
           >
             <CardHeader className="p-5  border-default-200/60">
               <div className="flex items-baseline gap-2">
-                <p className="font-semibold text-lg">You receive</p>
-                <Chip size="sm" variant="flat" color="success">
-                  Instant
-                </Chip>
+                <p className="font-semibold text-lg">Manage Change Requests</p>
+                 <Chip size="sm" variant="flat" color="success">
+                   Seamless
+                 </Chip>
               </div>
             </CardHeader>
             <CardBody className="pt-0 px-5 pb-5 space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-default-700">Asset</span>
-                <span className="font-medium">0.14 ETH</span>
+               <div className="flex items-center justify-between text-sm">
+                <span className="text-default-700">New Request</span>
+                <span className="font-medium">Add Dark Mode</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-default-700">To</span>
-                <span className="font-medium truncate max-w-[10rem]">
-                  0xA2…e91C
-                </span>
+                <span className="text-default-700">Additional Cost</span>
+                <span className="font-medium">$750.00</span>
               </div>
             </CardBody>
           </Card>
