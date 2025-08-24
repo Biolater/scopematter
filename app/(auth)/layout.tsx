@@ -15,11 +15,11 @@ export default function AuthLayout({
         className="absolute top-4 left-4 flex items-center z-10"
       >
         <img
-          src="/navbar-brand.png"
-          alt="Knot"
+          src="/scopematter-brand.png"
+          alt="Scopematter"
           className="h-12 -ml-3 w-auto"
         />
-        <p className="font-bold -ml-3 text-inherit">Knot</p>
+        <p className="font-bold -ml-3 text-inherit">Scopematter</p>
       </Button>
       {children}
     </div>
