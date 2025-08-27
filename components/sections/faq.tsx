@@ -7,9 +7,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
@@ -18,10 +16,7 @@ const itemVariants: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
+    transition: { duration: 0.5, ease: "easeOut" },
   },
 };
 
@@ -30,7 +25,7 @@ const faqItems = [
     key: "how-different",
     title: "How is this different from Jira, Trello, or other PM tools?",
     content:
-      "Scopematter is not a task manager. It's a financial agreement tool. It focuses on locking in the initial project scope and providing a clear, billable trail for any approved changes, ensuring you get paid for all your work.",
+      "Scopematter is not a task manager. It's a financial agreement tool. It focuses on locking in the initial project scope and providing a clear, billable trail for any approved changes, so you can invoice with confidence and avoid unpaid work.",
   },
   {
     key: "client-experience",
@@ -69,10 +64,7 @@ export default function FAQSection() {
         >
           Frequently Asked Questions
         </motion.h2>
-        <motion.div
-          className="mt-8"
-          variants={containerVariants}
-        >
+        <motion.div className="mt-8" variants={containerVariants}>
           <Accordion variant="splitted">
             {faqItems.map(({ key, title, content }) => (
               <AccordionItem key={key} title={title}>

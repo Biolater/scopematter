@@ -7,9 +7,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
@@ -18,28 +16,25 @@ const itemVariants: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
+    transition: { duration: 0.5, ease: "easeOut" },
   },
 };
 
 function HowItWorksSection() {
   const steps = [
     {
-      title: "Define the Project Scope",
-      desc: "Quickly build a detailed proposal outlining all deliverables, timelines, and costs. No more ambiguity.",
+      title: "Set the Project Scope",
+      desc: "Create a clear proposal with deliverables, timelines, and costs. Everything defined upfront — no room for confusion.",
       icon: "📝",
     },
     {
-      title: "Client Reviews & Approves",
-      desc: "Your client receives a professional, easy-to-understand scope. They approve it with a click, locking it in.",
-      icon: "👍",
+      title: "Client Clicks Approve",
+      desc: "Your client gets a simple, professional scope. One click to approve, and it’s locked in — no disputes later.",
+      icon: "✅",
     },
     {
-      title: "Manage Changes & Get Paid",
-      desc: "Any new request is a formal change order. You provide a quote, the client approves, and it's added to the invoice.",
+      title: "Every Change = Paid Work",
+      desc: "New requests become formal change orders. You quote, client approves, and the updated cost is added to the project total — ready to invoice.",
       icon: "💸",
     },
   ];
@@ -58,10 +53,20 @@ function HowItWorksSection() {
           className="text-2xl lg:text-3xl font-semibold text-center text-default-900"
           variants={itemVariants}
         >
-          How Scopematter Protects Your Time
+          How Scopematter Works
         </motion.h2>
+        <motion.p
+          className="mt-3 text-center text-balance text-default-600 max-w-2xl mx-auto"
+          variants={itemVariants}
+        >
+          A simple 3-step flow that keeps projects clear and ensures{" "}
+          <span className="font-semibold text-foreground">
+          every extra hour is tracked, approved, and ready to be billed.
+          </span>
+        </motion.p>
+
         <motion.div
-          className="mt-8 grid gap-4 sm:gap-6 lg:grid-cols-3"
+          className="mt-10 grid gap-4 sm:gap-6 lg:grid-cols-3"
           variants={containerVariants}
         >
           {steps.map((s) => (
