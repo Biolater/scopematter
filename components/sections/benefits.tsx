@@ -7,9 +7,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
@@ -18,29 +16,26 @@ const itemVariants: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
+    transition: { duration: 0.5, ease: "easeOut" },
   },
 };
 
 export default function BenefitsSection() {
   const items = [
     {
-      emoji: "✅",
-      title: "Eliminate Scope Creep",
-      desc: "Formalize the project scope upfront so there are no surprises or unpaid work.",
+      emoji: "🛡️",
+      title: "Lock the Scope",
+      desc: "Define deliverables, timelines, and acceptance criteria upfront. Extras are out-of-scope by default—no free work.",
     },
     {
       emoji: "🤝",
-      title: "Build Client Trust",
-      desc: "Provide clients with a clear, professional process for managing project changes.",
+      title: "Transparent for Clients",
+      desc: "Simple approvals and a clear audit trail build trust and end debates. Point to the system, not to a chat thread.",
     },
     {
-      emoji: "💰",
-      title: "Get Paid for Every Hour",
-      desc: "Automate change requests and invoicing to ensure all your work is billed.",
+      emoji: "💸",
+      title: "Every Change = Paid",
+      desc: "New requests turn into quotes and approved line items automatically, so every extra hour is tracked, approved, and ready to be billed.",
     },
   ];
 
@@ -61,10 +56,20 @@ export default function BenefitsSection() {
           className="text-2xl lg:text-3xl font-semibold text-center text-default-900"
           variants={itemVariants}
         >
-          Focus on Code, Not on Chasing Payments
+          Ship faster. Get paid fairly.
         </motion.h2>
+        <motion.p
+          className="mt-3 text-center text-balance text-default-600 max-w-2xl mx-auto"
+          variants={itemVariants}
+        >
+          Scopematter removes ambiguity, automates change orders, and makes sure{" "}
+          <span className="font-semibold text-foreground">
+            every extra hour is tracked, approved, and ready to be billed.
+          </span>
+        </motion.p>
+
         <motion.div
-          className="mt-8 grid gap-4 sm:gap-6 lg:grid-cols-3"
+          className="mt-10 grid gap-4 sm:gap-6 lg:grid-cols-3"
           variants={containerVariants}
         >
           {items.map((b) => (
