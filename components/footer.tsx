@@ -1,3 +1,4 @@
+import { Route } from "next";
 import NextLink from "next/link";
 
 const Footer = () => {
@@ -28,7 +29,7 @@ const Footer = () => {
           <NextLink href="#faq" className="hover:text-foreground">
             FAQ
           </NextLink>
-          <NextLink href="/waitlist" className="hover:text-foreground font-medium">
+            <NextLink href={"/waitlist" as Route} className="hover:text-foreground font-medium">
             Join Waitlist
           </NextLink>
         </nav>
