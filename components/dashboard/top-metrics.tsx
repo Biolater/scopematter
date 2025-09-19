@@ -90,7 +90,7 @@ const TopMetrics = () => {
       variants={container}
       initial="hidden"
       animate="show"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
     >
       {dashboardMetrics.map((metric) => (
         <motion.div key={metric.id} variants={item}>
