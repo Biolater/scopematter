@@ -3,6 +3,7 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
+import { ClockIcon } from "lucide-react";
 
 interface ActivityItem {
   id: string;
@@ -30,7 +31,10 @@ export function RecentActivityCard({ activities }: RecentActivityCardProps) {
     <Card>
       <CardHeader>
         <h3 className="text-base font-semibold flex items-center gap-2">
-          🕒 Recent Activity
+          <span>
+            <ClockIcon className="size-6" />
+          </span>{" "}
+          Recent Activity
         </h3>
       </CardHeader>
       <CardBody>
@@ -46,7 +50,9 @@ export function RecentActivityCard({ activities }: RecentActivityCardProps) {
               variants={listItem}
               className="flex items-start gap-3"
             >
-              <span className="p-2 rounded-full bg-default-100">{item.icon}</span>
+              <span className="p-2 rounded-full bg-default-100">
+                {item.icon}
+              </span>
               <div>
                 <p className="text-sm font-medium">{item.message}</p>
                 <p className="text-xs text-default-500">{item.timeAgo}</p>

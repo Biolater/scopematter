@@ -2,6 +2,8 @@
 
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { motion } from "framer-motion";
+import { ChartBarIcon } from "lucide-react";
+import { Progress } from "@heroui/progress";
 
 interface QuickStatsCardProps {
   projectsCompleted: { value: number; total: number };
@@ -21,7 +23,10 @@ export function QuickStatsCard({
     <Card>
       <CardHeader>
         <h3 className="text-base font-semibold flex items-center gap-2">
-          📊 Quick Stats
+          <span>
+            <ChartBarIcon className="size-6" />
+          </span>{" "}
+          Quick Stats
         </h3>
       </CardHeader>
       <CardBody className="flex flex-col gap-4">
@@ -30,28 +35,14 @@ export function QuickStatsCard({
             Projects Completed {projectsCompleted.value}/
             {projectsCompleted.total}
           </p>
-          <div className="w-full h-2 bg-default-200 rounded overflow-hidden">
-            <motion.div
-              className="h-2 bg-primary rounded"
-              initial={{ width: 0 }}
-              animate={{ width: `${projectsPct}%` }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            />
-          </div>
+            <Progress value={projectsPct} />
         </div>
 
         <div>
           <p className="text-sm font-medium">
             Pending Requests {pendingRequests.value}/{pendingRequests.total}
           </p>
-          <div className="w-full h-2 bg-default-200 rounded overflow-hidden">
-            <motion.div
-              className="h-2 bg-success rounded"
-              initial={{ width: 0 }}
-              animate={{ width: `${requestsPct}%` }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-            />
-          </div>
+          <Progress value={requestsPct} />
         </div>
 
         <div>

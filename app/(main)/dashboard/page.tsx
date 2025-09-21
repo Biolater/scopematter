@@ -2,6 +2,7 @@ import DashboardContent from "@/components/dashboard/dashboard-content";
 import SectionHeader from "@/components/section-header";
 import { Button } from "@heroui/button";
 import Link from "next/link";
+import { PlusIcon } from "lucide-react";
 
 export default function DashboardPage() {
   return (
@@ -10,7 +11,12 @@ export default function DashboardPage() {
         title="Dashboard"
         description="Welcome back! Here's what's happening with your projects."
       >
-        <Button color="primary" as={Link} href="/projects">
+        <Button
+          startContent={<PlusIcon className="size-4" />}
+          color="primary"
+          as={Link}
+          href="/projects"
+        >
           New Project
         </Button>
       </SectionHeader>
