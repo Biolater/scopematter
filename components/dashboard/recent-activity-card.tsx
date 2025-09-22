@@ -3,17 +3,17 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
-import { ClockIcon } from "lucide-react";
-
-interface ActivityItem {
-  id: string;
-  icon: ReactNode;
-  message: string;
-  timeAgo: string;
-}
+import {
+  CheckCircleIcon,
+  ClockIcon,
+  FolderIcon,
+  MessageSquareIcon,
+} from "lucide-react";
+import { DashboardActivity } from "@/lib/types/dashboard.types";
+import { formatDistanceToNow } from "date-fns";
 
 interface RecentActivityCardProps {
-  activities: ActivityItem[];
+  activities: DashboardActivity[];
 }
 
 const list = {
@@ -51,11 +51,19 @@ export function RecentActivityCard({ activities }: RecentActivityCardProps) {
               className="flex items-start gap-3"
             >
               <span className="p-2 rounded-full bg-default-100">
-                {item.icon}
+                {item.type === "PROJECT_CREATED" ? (
+                  <FolderIcon className="text-blue-500 size-4" />
+                ) : item.type === "REQUEST_SUBMITTED" ? (
+                  <MessageSquareIcon className="text-purple-500 size-4" />
+                ) : (
+                  <CheckCircleIcon className="text-green-500 size-4" />
+                )}
               </span>
               <div>
                 <p className="text-sm font-medium">{item.message}</p>
-                <p className="text-xs text-default-500">{item.timeAgo}</p>
+                <p className="text-xs text-default-500">
+                  {formatDistanceToNow(item.createdAt, { addSuffix: true })}
+                </p>
               </div>
             </motion.div>
           ))}

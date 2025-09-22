@@ -3,8 +3,12 @@ import SectionHeader from "@/components/section-header";
 import { Button } from "@heroui/button";
 import Link from "next/link";
 import { PlusIcon } from "lucide-react";
+import { Suspense } from "react";
+import DashboardSkeleton from "@/components/dashboard/dashboard-skeleton";
 
-export default function DashboardPage() {
+export const dynamic = "force-dynamic";
+
+export default async function DashboardPage() {
   return (
     <>
       <SectionHeader
@@ -20,7 +24,9 @@ export default function DashboardPage() {
           New Project
         </Button>
       </SectionHeader>
-      <DashboardContent />
+      <Suspense fallback={<DashboardSkeleton />}>
+        <DashboardContent />
+      </Suspense>
     </>
   );
 }
