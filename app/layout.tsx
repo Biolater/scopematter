@@ -96,7 +96,7 @@ export default function RootLayout({
         <Providers themeProps={{ attribute: "class", defaultTheme: "system" }}>
           <div className="relative flex flex-col min-h-screen">
             <SmoothScroll />
-            <main>{children}</main>
+            {children}
             <FloatThemeToggle />
           </div>
         </Providers>
