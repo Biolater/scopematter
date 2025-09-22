@@ -27,7 +27,7 @@ const statusToBadge: Record<
   COMPLETED: { label: "Completed", color: "success" },
 };
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = ({ project, onDelete }: { project: Project, onDelete: (id: string) => void }) => {
   const created = format(project.createdAt, "M/d/yyyy");
   const status = statusToBadge[project.status];
 
@@ -45,7 +45,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
               {status.label}
             </Chip>
           </div>
-          <ProjectSettingsDropdown />
+          <ProjectSettingsDropdown onDelete={() => onDelete(project.id)} />
         </CardHeader>
         <CardBody className="space-y-4">
           {project.description && (

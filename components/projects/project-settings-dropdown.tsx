@@ -7,7 +7,14 @@ import {
 } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
 import { Copy, MoreHorizontal, Pencil, Trash } from "lucide-react";
-const ProjectSettingsDropdown = () => {
+
+interface ProjectSettingsDropdownProps {
+  onDelete: () => void;
+}
+
+const ProjectSettingsDropdown = ({
+  onDelete,
+}: ProjectSettingsDropdownProps) => {
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
@@ -30,6 +37,7 @@ const ProjectSettingsDropdown = () => {
           startContent={<Trash className="size-4" />}
           className="text-danger"
           color="danger"
+          onPress={onDelete}
         >
           Delete Project
         </DropdownItem>
