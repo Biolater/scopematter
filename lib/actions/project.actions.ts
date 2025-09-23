@@ -1,7 +1,8 @@
 "use server";
 
 import { handleAction } from "../http/action";
-import { deleteProjectSchema, DeleteProjectSchemaType } from "../validation/project.schema";
+import { CreateProjectOutput } from "../types/project.types";
+import { createProjectSchema, CreateProjectSchemaType, deleteProjectSchema, DeleteProjectSchemaType } from "../validation/project.schema";
 
 export const deleteProjectAction = async (payload: DeleteProjectSchemaType) => {
     return handleAction<DeleteProjectSchemaType, void>({
@@ -11,4 +12,14 @@ export const deleteProjectAction = async (payload: DeleteProjectSchemaType) => {
         body: payload,
         revalidateTags: ["projects", "dashboard"],
     });
+}
+
+export const createProjectAction = async (payload: CreateProjectSchemaType) => {
+    return handleAction<CreateProjectSchemaType, CreateProjectOutput>({
+        schema: createProjectSchema,
+        path: "/projects",
+        method: "POST",
+        body: payload,
+        revalidateTags: ["projects", "dashboard"],
+    })
 }

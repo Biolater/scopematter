@@ -21,4 +21,15 @@ export interface Project {
     };
 }
 
+export interface CreateProjectOutput {
+    id: string;
+    name: string;
+    description: string | null;
+    status: ProjectStatus;
+    userId: string;
+    clientId: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export type GetProjectsOutput = Project[];
