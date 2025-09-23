@@ -10,10 +10,12 @@ import { Copy, MoreHorizontal, Pencil, Trash } from "lucide-react";
 
 interface ProjectSettingsDropdownProps {
   onDelete: () => void;
+  onEdit: () => void;
 }
 
 const ProjectSettingsDropdown = ({
   onDelete,
+  onEdit,
 }: ProjectSettingsDropdownProps) => {
   return (
     <Dropdown placement="bottom-end">
@@ -23,15 +25,15 @@ const ProjectSettingsDropdown = ({
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="edit" startContent={<Pencil className="size-4" />}>
+        <DropdownItem onPress={onEdit} key="edit" startContent={<Pencil className="size-4" />}>
           Edit Project
         </DropdownItem>
-        <DropdownItem
+        {/*         <DropdownItem
           key="duplicate"
           startContent={<Copy className="size-4" />}
         >
           Duplicate
-        </DropdownItem>
+        </DropdownItem> */}
         <DropdownItem
           key="delete"
           startContent={<Trash className="size-4" />}

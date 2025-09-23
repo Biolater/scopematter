@@ -4,6 +4,7 @@ import ProjectsContent from "@/components/projects/projects-content";
 import { Button } from "@heroui/button";
 import { PlusIcon } from "lucide-react";
 import CreateProjectDialog from "@/components/projects/create-project-dialog";
+import EditProjectDialog from "@/components/projects/edit-project-dialog";
 
 export const dynamic = "force-dynamic";
 

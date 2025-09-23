@@ -1,6 +1,6 @@
 "use client";
 
-import { GetProjectsOutput } from "@/lib/types/project.types";
+import { GetProjectsOutput, Project } from "@/lib/types/project.types";
 import ProjectCard from "./project-card";
 import { motion } from "framer-motion";
 import { listContainer, listItemRise } from "@/lib/animations";
@@ -10,8 +10,10 @@ import { deleteProjectAction } from "@/lib/actions/project.actions";
 import { useServerAction } from "@/lib/hooks/use-server-action";
 import { DeleteProjectSchemaType } from "@/lib/validation/project.schema";
 import { addToast } from "@heroui/toast";
+import EditProjectDialog from "./edit-project-dialog";
 const ProjectsContent = ({ projects }: { projects: GetProjectsOutput }) => {
   const [deleteProjectId, setDeleteProjectId] = useState<string | null>(null);
+  const [editProjectId, setEditProjectId] = useState<string | null>(null);
   const { isPending, runAction, state } = useServerAction<
     DeleteProjectSchemaType,
     void
@@ -45,7 +47,11 @@ const ProjectsContent = ({ projects }: { projects: GetProjectsOutput }) => {
       >
         {projects.map((project) => (
           <motion.div key={project.id} variants={listItemRise}>
-            <ProjectCard project={project} onDelete={setDeleteProjectId} />
+            <ProjectCard
+              project={project}
+              onDelete={setDeleteProjectId}
+              onEdit={setEditProjectId}
+            />
           </motion.div>
         ))}
         <DeleteProjectDialog
@@ -55,6 +61,13 @@ const ProjectsContent = ({ projects }: { projects: GetProjectsOutput }) => {
           isPending={isPending}
         />
       </motion.div>
+      <EditProjectDialog
+        isOpen={!!editProjectId}
+        onOpenChange={(open) => setEditProjectId(open ? editProjectId : null)}
+        project={
+          projects.find((project) => project.id === editProjectId) as Project
+        }
+      />
     </>
   );
 };
