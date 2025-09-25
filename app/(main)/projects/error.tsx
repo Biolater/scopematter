@@ -26,7 +26,7 @@ export default function ProjectsError({
       <Alert
         description={
           error.message ||
-          "An unexpected error occurred while fetching your data."
+          "An unexpected error occurred, please try again later."
         }
         color="danger"
       />
@@ -39,7 +39,10 @@ export default function ProjectsError({
         >
           Try Again
         </Button>
-        <Button variant="bordered" onPress={() => (window.location.href = "/projects")}>
+        <Button
+          variant="bordered"
+          onPress={() => (window.location.href = "/projects")}
+        >
           Go Home
         </Button>
       </div>

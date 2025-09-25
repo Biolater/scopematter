@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { MessageSquareIcon } from "lucide-react";
 import { hoverLiftProps } from "@/lib/animations";
 import ProjectSettingsDropdown from "./project-settings-dropdown";
+import Link from "next/link";
 
 const statusToBadge: Record<
   Project["status"],
@@ -27,7 +28,15 @@ const statusToBadge: Record<
   COMPLETED: { label: "Completed", color: "success" },
 };
 
-const ProjectCard = ({ project, onDelete, onEdit }: { project: Project, onDelete: (id: string) => void, onEdit: (id: string) => void }) => {
+const ProjectCard = ({
+  project,
+  onDelete,
+  onEdit,
+}: {
+  project: Project;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
+}) => {
   const created = format(project.createdAt, "M/d/yyyy");
   const status = statusToBadge[project.status];
 
@@ -36,7 +45,12 @@ const ProjectCard = ({ project, onDelete, onEdit }: { project: Project, onDelete
       <Card className="transition-all duration-200 hover:shadow-lg">
         <CardHeader className="justify-between items-start">
           <div className="space-y-1">
-            <h3 className="text-lg font-semibold">{project.name}</h3>
+            <Link
+              href={`/projects/${project.id}`}
+              className="text-lg cursor-pointer font-semibold hover:text-primary"
+            >
+              {project.name}
+            </Link>
             <div className="flex items-center gap-1 text-default-600">
               <User className="size-4" />
               <p className="text-sm">{project.client.name}</p>
@@ -45,7 +59,10 @@ const ProjectCard = ({ project, onDelete, onEdit }: { project: Project, onDelete
               {status.label}
             </Chip>
           </div>
-          <ProjectSettingsDropdown onDelete={() => onDelete(project.id)} onEdit={() => onEdit(project.id)} />
+          <ProjectSettingsDropdown
+            onDelete={() => onDelete(project.id)}
+            onEdit={() => onEdit(project.id)}
+          />
         </CardHeader>
         <CardBody className="space-y-4">
           {project.description && (

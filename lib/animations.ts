@@ -1,6 +1,3 @@
-// Shared Framer Motion variants and motion props
-// Keep this file dependency-free so both server and client components can import safely.
-
 export const listContainer = {
   hidden: { opacity: 0 },
   show: {
@@ -13,6 +10,12 @@ export const listItemRise = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 };
+
+export const itemRise = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  exit: { opacity: 0, y: 20, transition: { duration: 0.3, ease: "easeOut" } },
+}
 
 export const hoverLiftProps = {
   whileHover: { y: -4 as number, scale: 1.02 as number },
