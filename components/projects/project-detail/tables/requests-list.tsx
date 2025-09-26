@@ -18,6 +18,8 @@ export default function RequestsList({
   onMarkInScope,
   onMarkOutOfScope,
   onMarkPending,
+  loadingRequestId,
+  loadingAction,
 }: {
   requests: ProjectRequest[];
   onAdd: () => void;
@@ -26,6 +28,8 @@ export default function RequestsList({
   onMarkInScope: (id: string) => void;
   onMarkOutOfScope: (id: string) => void;
   onMarkPending: (id: string) => void;
+  loadingRequestId: string | null;
+  loadingAction: "IN_SCOPE" | "OUT_OF_SCOPE" | "PENDING" | null;
 }) {
   if (!requests.length) {
     return (
@@ -53,6 +57,8 @@ export default function RequestsList({
     >
       {requests.map((req) => {
         const status = requestStatusMeta[req.status];
+        const isLoading = loadingRequestId === req.id;
+
         return (
           <motion.div
             key={req.id}
@@ -75,8 +81,6 @@ export default function RequestsList({
                     {status.label}
                   </Chip>
                 </div>
-
-                {/* Optional: createdAt */}
                 {req.createdAt && (
                   <p className="text-xs text-default-600">
                     Created {new Date(req.createdAt).toLocaleDateString()}
@@ -94,6 +98,8 @@ export default function RequestsList({
                         variant="light"
                         color="success"
                         onPress={() => onMarkInScope(req.id)}
+                        isLoading={isLoading && loadingAction === "IN_SCOPE"}
+                        isDisabled={isLoading && loadingAction !== "IN_SCOPE"}
                       >
                         <CheckCircle className="size-4" />
                       </Button>
@@ -105,6 +111,8 @@ export default function RequestsList({
                         variant="light"
                         color="danger"
                         onPress={() => onMarkOutOfScope(req.id)}
+                        isLoading={isLoading && loadingAction === "OUT_OF_SCOPE"}
+                        isDisabled={isLoading && loadingAction !== "OUT_OF_SCOPE"}
                       >
                         <XCircle className="size-4" />
                       </Button>
@@ -121,6 +129,8 @@ export default function RequestsList({
                         variant="light"
                         color="danger"
                         onPress={() => onMarkOutOfScope(req.id)}
+                        isLoading={isLoading && loadingAction === "OUT_OF_SCOPE"}
+                        isDisabled={isLoading && loadingAction !== "OUT_OF_SCOPE"}
                       >
                         <XCircle className="size-4" />
                       </Button>
@@ -131,6 +141,8 @@ export default function RequestsList({
                         size="sm"
                         variant="light"
                         onPress={() => onMarkPending(req.id)}
+                        isLoading={isLoading && loadingAction === "PENDING"}
+                        isDisabled={isLoading && loadingAction !== "PENDING"}
                       >
                         <RotateCcw className="size-4" />
                       </Button>
@@ -147,6 +159,8 @@ export default function RequestsList({
                         variant="light"
                         color="success"
                         onPress={() => onMarkInScope(req.id)}
+                        isLoading={isLoading && loadingAction === "IN_SCOPE"}
+                        isDisabled={isLoading && loadingAction !== "IN_SCOPE"}
                       >
                         <CheckCircle className="size-4" />
                       </Button>
@@ -157,6 +171,8 @@ export default function RequestsList({
                         size="sm"
                         variant="light"
                         onPress={() => onMarkPending(req.id)}
+                        isLoading={isLoading && loadingAction === "PENDING"}
+                        isDisabled={isLoading && loadingAction !== "PENDING"}
                       >
                         <RotateCcw className="size-4" />
                       </Button>
@@ -170,6 +186,7 @@ export default function RequestsList({
                     size="sm"
                     variant="light"
                     onPress={() => onEdit(req)}
+                    isDisabled={isLoading}
                   >
                     <Pencil className="size-4" />
                   </Button>
@@ -181,6 +198,7 @@ export default function RequestsList({
                     variant="light"
                     color="danger"
                     onPress={() => onDelete(req.id)}
+                    isDisabled={isLoading}
                   >
                     <Trash2 className="size-4" />
                   </Button>

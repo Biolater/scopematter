@@ -14,7 +14,7 @@ import type {
   ProjectRequest,
   ScopeItem,
 } from "@/lib/types/project.types";
-import { changeOrderStatusMeta, requestStatusMeta } from "./status-meta";
+import { changeOrderStatusMeta } from "./status-meta";
 
 import ScopeItemDialog from "./dialogs/scope-item/scope-item-dialog";
 import ScopeItemsTable from "./tables/scope-item-table";
@@ -23,6 +23,15 @@ import EditScopeItemDialog from "./dialogs/scope-item/edit-scope-item-dialog";
 import RequestsList from "./tables/requests-list";
 import CreateRequestDialog from "./dialogs/requests/create-request-dialog";
 import DeleteRequestDialog from "./dialogs/requests/delete-request-dialog";
+
+import {
+  markRequestInScopeAction,
+  markRequestOutOfScopeAction,
+  markRequestPendingAction,
+  deleteRequestAction,
+} from "@/lib/actions/request.actions";
+import { useServerAction } from "@/lib/hooks/use-server-action";
+import { addToast } from "@heroui/toast";
 
 export default function ProjectTabs({
   scopeItems,
@@ -42,6 +51,56 @@ export default function ProjectTabs({
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [deleteRequestId, setDeleteRequestId] = useState<string | null>(null);
   const [editRequest, setEditRequest] = useState<ProjectRequest | null>(null);
+
+  const [loadingRequestId, setLoadingRequestId] = useState<string | null>(null);
+  const [loadingAction, setLoadingAction] = useState<
+    "IN_SCOPE" | "OUT_OF_SCOPE" | "PENDING" | null
+  >(null);
+
+  const { runAction: runInScope } = useServerAction(markRequestInScopeAction, {
+    onSuccess: () => addToast({ title: "Marked In Scope", color: "success" }),
+    onError: (err) =>
+      addToast({ title: err.message ?? "Failed to update", color: "danger" }),
+    onSettled: () => {
+      setLoadingRequestId(null);
+      setLoadingAction(null);
+    },
+  });
+
+  const { runAction: runOutOfScope } = useServerAction(
+    markRequestOutOfScopeAction,
+    {
+      onSuccess: () =>
+        addToast({ title: "Marked Out of Scope", color: "warning" }),
+      onError: (err) =>
+        addToast({ title: err.message ?? "Failed to update", color: "danger" }),
+      onSettled: () => {
+        setLoadingRequestId(null);
+        setLoadingAction(null);
+      },
+    }
+  );
+
+  const { runAction: runPending } = useServerAction(markRequestPendingAction, {
+    onSuccess: () => addToast({ title: "Reset to Pending", color: "default" }),
+    onError: (err) =>
+      addToast({ title: err.message ?? "Failed to update", color: "danger" }),
+    onSettled: () => {
+      setLoadingRequestId(null);
+      setLoadingAction(null);
+    },
+  });
+
+  const { runAction: runDelete } = useServerAction(deleteRequestAction, {
+    onSuccess: () => addToast({ title: "Request deleted", color: "success" }),
+    onError: (err) =>
+      addToast({ title: err.message ?? "Failed to delete", color: "danger" }),
+    onSettled: () => {
+      setLoadingRequestId(null);
+      setLoadingAction(null);
+    },
+  });
+
   return (
     <>
       <Tabs
@@ -105,10 +164,31 @@ export default function ProjectTabs({
               requests={requests}
               onAdd={() => setIsRequestOpen(true)}
               onEdit={(req) => setEditRequest(req)}
-              onDelete={(id) => setDeleteRequestId(id)}
-              onMarkInScope={(id) => console.log("mark in-scope", id)}
-              onMarkOutOfScope={(id) => console.log("mark out-of-scope", id)}
-              onMarkPending={(id) => console.log("mark pending", id)}
+              onDelete={(id) => {
+                setLoadingRequestId(id);
+                runDelete({ projectId, data: { id } });
+              }}
+              onMarkInScope={(id) => {
+                setLoadingRequestId(id);
+                setLoadingAction("IN_SCOPE");
+                runInScope({ projectId, id, data: { status: "IN_SCOPE" } });
+              }}
+              onMarkOutOfScope={(id) => {
+                setLoadingRequestId(id);
+                setLoadingAction("OUT_OF_SCOPE");
+                runOutOfScope({
+                  projectId,
+                  id,
+                  data: { status: "OUT_OF_SCOPE" },
+                });
+              }}
+              onMarkPending={(id) => {
+                setLoadingRequestId(id);
+                setLoadingAction("PENDING");
+                runPending({ projectId, id, data: { status: "PENDING" } });
+              }}
+              loadingRequestId={loadingRequestId}
+              loadingAction={loadingAction}
             />
           </div>
         </Tab>
