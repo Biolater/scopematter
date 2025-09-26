@@ -38,36 +38,44 @@ export function RecentActivityCard({ activities }: RecentActivityCardProps) {
         </h3>
       </CardHeader>
       <CardBody>
-        <motion.div
-          variants={list}
-          initial="hidden"
-          animate="show"
-          className="flex flex-col gap-4"
-        >
-          {activities.map((item) => (
-            <motion.div
-              key={item.id}
-              variants={listItem}
-              className="flex items-start gap-3"
-            >
-              <span className="p-2 rounded-full bg-default-100">
-                {item.type === "PROJECT_CREATED" ? (
-                  <FolderIcon className="text-blue-500 size-4" />
-                ) : item.type === "REQUEST_SUBMITTED" ? (
-                  <MessageSquareIcon className="text-purple-500 size-4" />
-                ) : (
-                  <CheckCircleIcon className="text-green-500 size-4" />
-                )}
-              </span>
-              <div>
-                <p className="text-sm font-medium">{item.message}</p>
-                <p className="text-xs text-default-500">
-                  {formatDistanceToNow(item.createdAt, { addSuffix: true })}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+        {activities.length === 0 ? (
+          <div className="flex flex-col items-center justify-center pb-8 text-center text-default-600">
+            <ClockIcon className="size-12 mb-2 text-default-600" />
+            <p className="text-sm font-medium">No recent activity yet</p>
+            <p className="text-xs">Your projects’ updates will appear here</p>
+          </div>
+        ) : (
+          <motion.div
+            variants={list}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-4"
+          >
+            {activities.map((item) => (
+              <motion.div
+                key={item.id}
+                variants={listItem}
+                className="flex items-start gap-3"
+              >
+                <span className="p-2 rounded-full bg-default-100">
+                  {item.type === "PROJECT_CREATED" ? (
+                    <FolderIcon className="text-blue-500 size-4" />
+                  ) : item.type === "REQUEST_SUBMITTED" ? (
+                    <MessageSquareIcon className="text-purple-500 size-4" />
+                  ) : (
+                    <CheckCircleIcon className="text-green-500 size-4" />
+                  )}
+                </span>
+                <div>
+                  <p className="text-sm font-medium">{item.message}</p>
+                  <p className="text-xs text-default-500">
+                    {formatDistanceToNow(item.createdAt, { addSuffix: true })}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
       </CardBody>
     </Card>
   );
