@@ -16,12 +16,13 @@ import type {
 } from "@/lib/types/project.types";
 import { changeOrderStatusMeta, requestStatusMeta } from "./status-meta";
 
-import ScopeItemDialog from "./dialogs/scope-item-dialog";
+import ScopeItemDialog from "./dialogs/scope-item/scope-item-dialog";
 import ScopeItemsTable from "./tables/scope-item-table";
-import DeleteScopeItemDialog from "./dialogs/delete-scope-item-dialog";
-import EditScopeItemDialog from "./dialogs/edit-scope-item-dialog";
+import DeleteScopeItemDialog from "./dialogs/scope-item/delete-scope-item-dialog";
+import EditScopeItemDialog from "./dialogs/scope-item/edit-scope-item-dialog";
 import RequestsList from "./tables/requests-list";
-import CreateRequestDialog from "./dialogs/create-request-dialog";
+import CreateRequestDialog from "./dialogs/requests/create-request-dialog";
+import DeleteRequestDialog from "./dialogs/requests/delete-request-dialog";
 
 export default function ProjectTabs({
   scopeItems,
@@ -39,6 +40,8 @@ export default function ProjectTabs({
   const [isChangeOrderOpen, setIsChangeOrderOpen] = useState(false);
   const [editItem, setEditItem] = useState<ScopeItem | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
+  const [deleteRequestId, setDeleteRequestId] = useState<string | null>(null);
+  const [editRequest, setEditRequest] = useState<ProjectRequest | null>(null);
   return (
     <>
       <Tabs
@@ -101,8 +104,8 @@ export default function ProjectTabs({
             <RequestsList
               requests={requests}
               onAdd={() => setIsRequestOpen(true)}
-              onEdit={(req) => console.log("edit", req)}
-              onDelete={(id) => console.log("delete", id)}
+              onEdit={(req) => setEditRequest(req)}
+              onDelete={(id) => setDeleteRequestId(id)}
               onMarkInScope={(id) => console.log("mark in-scope", id)}
               onMarkOutOfScope={(id) => console.log("mark out-of-scope", id)}
               onMarkPending={(id) => console.log("mark pending", id)}
@@ -178,7 +181,11 @@ export default function ProjectTabs({
         isOpen={isRequestOpen}
         onOpenChange={setIsRequestOpen}
       />
-      {/* <ChangeOrderDialog isOpen={isChangeOrderOpen} onOpenChange={setIsChangeOrderOpen} /> */}
+      <DeleteRequestDialog
+        deleteRequestId={deleteRequestId}
+        onClose={() => setDeleteRequestId(null)}
+        projectId={projectId}
+      />
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use server";
 
 import { handleAction } from "../http/action";
-import { createRequestSchema, CreateRequestSchemaType } from "../validation/request.schema";
+import { createRequestSchema, CreateRequestSchemaType, deleteRequestSchema, DeleteRequestSchemaType } from "../validation/request.schema";
 import { ProjectRequest } from "../types/project.types";
 
 export const createRequestAction = async (payload: {
@@ -16,3 +16,16 @@ export const createRequestAction = async (payload: {
         revalidateTags: ["projects", "dashboard"],
     });
 }
+
+export const deleteRequestAction = async (payload: {
+    projectId: string;
+    data: DeleteRequestSchemaType;
+}) => {
+    return await handleAction<DeleteRequestSchemaType, void>({
+        schema: deleteRequestSchema,
+        path: `/projects/${payload.projectId}/requests/${payload.data.id}`,
+        method: "DELETE",
+        body: payload.data,
+        revalidateTags: ["projects", "dashboard"],
+    });
+}   
