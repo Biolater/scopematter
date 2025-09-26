@@ -1,6 +1,5 @@
 import { getProject } from "@/lib/data/projects";
 import ProjectDetailView from "@/components/projects/project-detail-view";
-import type { ProjectDetail } from "@/lib/types/project.types";
 import { notFound } from "next/navigation";
 
 interface ProjectPageProps {

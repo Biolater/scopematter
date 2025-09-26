@@ -14,14 +14,12 @@ import type {
   ProjectRequest,
   ScopeItem,
 } from "@/lib/types/project.types";
-import {
-  changeOrderStatusMeta,
-  requestStatusMeta,
-} from "./status-meta";
+import { changeOrderStatusMeta, requestStatusMeta } from "./status-meta";
 
 import ScopeItemDialog from "./dialogs/scope-item-dialog";
 import ScopeItemsTable from "./tables/scope-item-table";
 import DeleteScopeItemDialog from "./dialogs/delete-scope-item-dialog";
+import EditScopeItemDialog from "./dialogs/edit-scope-item-dialog";
 
 export default function ProjectTabs({
   scopeItems,
@@ -37,7 +35,7 @@ export default function ProjectTabs({
   const [isScopeOpen, setIsScopeOpen] = useState(false);
   const [isRequestOpen, setIsRequestOpen] = useState(false);
   const [isChangeOrderOpen, setIsChangeOrderOpen] = useState(false);
-  const [editItemId, setEditItemId] = useState<string | null>(null);
+  const [editItem, setEditItem] = useState<ScopeItem | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   return (
     <>
@@ -65,7 +63,7 @@ export default function ProjectTabs({
             <ScopeItemsTable
               items={scopeItems}
               onAdd={() => setIsScopeOpen(true)}
-              onEdit={(item) => setEditItemId(item.id)}
+              onEdit={(item) => setEditItem(item)}
               onDelete={(item) => setDeleteItemId(item.id)}
             />
           </div>
@@ -165,6 +163,12 @@ export default function ProjectTabs({
         deleteItemId={deleteItemId}
         onClose={() => setDeleteItemId(null)}
         projectId={projectId}
+      />
+      <EditScopeItemDialog
+        projectId={projectId}
+        isOpen={!!editItem}
+        onOpenChange={(open) => setEditItem(open ? editItem : null)}
+        item={editItem}
       />
       {/* <RequestDialog isOpen={isRequestOpen} onOpenChange={setIsRequestOpen} /> */}
       {/* <ChangeOrderDialog isOpen={isChangeOrderOpen} onOpenChange={setIsChangeOrderOpen} /> */}
