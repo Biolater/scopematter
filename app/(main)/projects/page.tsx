@@ -10,6 +10,7 @@ export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
   const projects = await getProjects();
+
   return (
     <>
       <SectionHeader
@@ -18,12 +19,33 @@ export default async function ProjectsPage() {
       >
         <div className="flex items-center gap-2">
           <CreateProjectDialog />
-          <p className="text-sm text-default-600">
-            {projects.length} project{projects.length === 1 ? "" : "s"}
-          </p>
+          {projects.length > 0 && (
+            <p className="text-sm text-default-600">
+              {projects.length} project{projects.length === 1 ? "" : "s"}
+            </p>
+          )}
         </div>
       </SectionHeader>
-      <ProjectsContent projects={projects} />
+
+      {projects.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-divider rounded-2xl bg-default-50">
+          <div className="p-4 rounded-full bg-default-100 mb-4">
+            <PlusIcon className="size-8 text-default-600" />
+          </div>
+          <h3 className="text-lg font-semibold text-default-600">
+            No projects yet
+          </h3>
+          <p className="text-sm text-default-600 max-w-sm mt-1">
+            Create your first project to track scope, requests, and changes all
+            in one place.
+          </p>
+          <div className="mt-6">
+            <CreateProjectDialog />
+          </div>
+        </div>
+      ) : (
+        <ProjectsContent projects={projects} />
+      )}
     </>
   );
 }
