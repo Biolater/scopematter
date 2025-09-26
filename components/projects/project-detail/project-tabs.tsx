@@ -21,6 +21,7 @@ import ScopeItemsTable from "./tables/scope-item-table";
 import DeleteScopeItemDialog from "./dialogs/delete-scope-item-dialog";
 import EditScopeItemDialog from "./dialogs/edit-scope-item-dialog";
 import RequestsList from "./tables/requests-list";
+import CreateRequestDialog from "./dialogs/create-request-dialog";
 
 export default function ProjectTabs({
   scopeItems,
@@ -172,7 +173,11 @@ export default function ProjectTabs({
         onOpenChange={(open) => setEditItem(open ? editItem : null)}
         item={editItem}
       />
-      {/* <RequestDialog isOpen={isRequestOpen} onOpenChange={setIsRequestOpen} /> */}
+      <CreateRequestDialog
+        projectId={projectId}
+        isOpen={isRequestOpen}
+        onOpenChange={setIsRequestOpen}
+      />
       {/* <ChangeOrderDialog isOpen={isChangeOrderOpen} onOpenChange={setIsChangeOrderOpen} /> */}
     </>
   );
