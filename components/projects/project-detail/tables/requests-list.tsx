@@ -1,0 +1,195 @@
+"use client";
+
+import { Card, CardBody, CardFooter } from "@heroui/card";
+import { Chip } from "@heroui/chip";
+import { Button } from "@heroui/button";
+import { Pencil, Trash2, CheckCircle, XCircle, RotateCcw } from "lucide-react";
+import { motion } from "framer-motion";
+import { listContainer, listItemRise } from "@/lib/animations";
+import type { ProjectRequest } from "@/lib/types/project.types";
+import { requestStatusMeta } from "../status-meta";
+import { Tooltip } from "@heroui/tooltip";
+
+export default function RequestsList({
+  requests,
+  onAdd,
+  onEdit,
+  onDelete,
+  onMarkInScope,
+  onMarkOutOfScope,
+  onMarkPending,
+}: {
+  requests: ProjectRequest[];
+  onAdd: () => void;
+  onEdit: (req: ProjectRequest) => void;
+  onDelete: (id: string) => void;
+  onMarkInScope: (id: string) => void;
+  onMarkOutOfScope: (id: string) => void;
+  onMarkPending: (id: string) => void;
+}) {
+  if (!requests.length) {
+    return (
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-default-200 px-6 py-12 text-center text-sm text-default-600">
+        No requests yet.
+        <Button
+          className="mt-4"
+          size="sm"
+          variant="flat"
+          color="primary"
+          onPress={onAdd}
+        >
+          Add your first Request
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      variants={listContainer}
+      initial="hidden"
+      animate="show"
+      className="space-y-4"
+    >
+      {requests.map((req) => {
+        const status = requestStatusMeta[req.status];
+        return (
+          <motion.div
+            key={req.id}
+            variants={listItemRise}
+            whileHover={{ y: -3 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          >
+            <Card className="border border-default-200 shadow-sm">
+              <CardBody className="flex flex-col gap-3">
+                <div className="flex items-start justify-between">
+                  <p className="text-sm leading-relaxed text-default-600">
+                    {req.description}
+                  </p>
+                  <Chip
+                    size="sm"
+                    variant="flat"
+                    color={status.color}
+                    className="text-xs font-medium"
+                  >
+                    {status.label}
+                  </Chip>
+                </div>
+
+                {/* Optional: createdAt */}
+                {req.createdAt && (
+                  <p className="text-xs text-default-600">
+                    Created {new Date(req.createdAt).toLocaleDateString()}
+                  </p>
+                )}
+              </CardBody>
+
+              <CardFooter className="flex gap-2 justify-end border-t border-divider pt-3">
+                {req.status === "PENDING" && (
+                  <>
+                    <Tooltip content="Mark as In Scope">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        color="success"
+                        onPress={() => onMarkInScope(req.id)}
+                      >
+                        <CheckCircle className="size-4" />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip content="Mark as Out of Scope">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        color="danger"
+                        onPress={() => onMarkOutOfScope(req.id)}
+                      >
+                        <XCircle className="size-4" />
+                      </Button>
+                    </Tooltip>
+                  </>
+                )}
+
+                {req.status === "IN_SCOPE" && (
+                  <>
+                    <Tooltip content="Move to Out of Scope">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        color="danger"
+                        onPress={() => onMarkOutOfScope(req.id)}
+                      >
+                        <XCircle className="size-4" />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip content="Reset to Pending">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        onPress={() => onMarkPending(req.id)}
+                      >
+                        <RotateCcw className="size-4" />
+                      </Button>
+                    </Tooltip>
+                  </>
+                )}
+
+                {req.status === "OUT_OF_SCOPE" && (
+                  <>
+                    <Tooltip content="Move to In Scope">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        color="success"
+                        onPress={() => onMarkInScope(req.id)}
+                      >
+                        <CheckCircle className="size-4" />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip content="Reset to Pending">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        onPress={() => onMarkPending(req.id)}
+                      >
+                        <RotateCcw className="size-4" />
+                      </Button>
+                    </Tooltip>
+                  </>
+                )}
+
+                <Tooltip content="Edit Request">
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    variant="light"
+                    onPress={() => onEdit(req)}
+                  >
+                    <Pencil className="size-4" />
+                  </Button>
+                </Tooltip>
+                <Tooltip content="Delete Request">
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    variant="light"
+                    color="danger"
+                    onPress={() => onDelete(req.id)}
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                </Tooltip>
+              </CardFooter>
+            </Card>
+          </motion.div>
+        );
+      })}
+    </motion.div>
+  );
+}

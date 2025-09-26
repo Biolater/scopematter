@@ -62,6 +62,7 @@ export interface ProjectRequest {
   id: string;
   description: string;
   status: RequestStatus;
+  createdAt: Date;
 }
 
 export type ChangeOrderStatus = "PENDING" | "APPROVED" | "REJECTED";

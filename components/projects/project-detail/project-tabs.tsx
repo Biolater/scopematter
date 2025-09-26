@@ -20,6 +20,7 @@ import ScopeItemDialog from "./dialogs/scope-item-dialog";
 import ScopeItemsTable from "./tables/scope-item-table";
 import DeleteScopeItemDialog from "./dialogs/delete-scope-item-dialog";
 import EditScopeItemDialog from "./dialogs/edit-scope-item-dialog";
+import RequestsList from "./tables/requests-list";
 
 export default function ProjectTabs({
   scopeItems,
@@ -80,31 +81,32 @@ export default function ProjectTabs({
             />
           }
         >
-          <TabContent
-            onAdd={() => setIsRequestOpen(true)}
-            title="Requests"
-            buttonLabel="Add Request"
-            emptyText="No requests yet."
-            items={requests}
-            getKey={(i) => i.id}
-            renderItem={(request) => {
-              const status = requestStatusMeta[request.status];
-              return (
-                <div className="space-y-3">
-                  <p className="text-sm leading-relaxed text-default-600">
-                    {request.description}
-                  </p>
-                  <Chip
-                    variant="flat"
-                    color={status.color}
-                    className="w-fit text-xs font-medium"
-                  >
-                    {status.label}
-                  </Chip>
-                </div>
-              );
-            }}
-          />
+          <div className="mt-3 space-y-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h3 className="text-base font-semibold text-default-900">
+                Requests
+              </h3>
+              <Button
+                size="sm"
+                variant="flat"
+                color="primary"
+                startContent={<Plus className="size-4" />}
+                onPress={() => setIsRequestOpen(true)}
+              >
+                Add Request
+              </Button>
+            </div>
+
+            <RequestsList
+              requests={requests}
+              onAdd={() => setIsRequestOpen(true)}
+              onEdit={(req) => console.log("edit", req)}
+              onDelete={(id) => console.log("delete", id)}
+              onMarkInScope={(id) => console.log("mark in-scope", id)}
+              onMarkOutOfScope={(id) => console.log("mark out-of-scope", id)}
+              onMarkPending={(id) => console.log("mark pending", id)}
+            />
+          </div>
         </Tab>
 
         {/* Change Orders tab */}
