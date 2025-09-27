@@ -1,4 +1,4 @@
-import { MarkRequestInScopeSchemaType, MarkRequestOutOfScopeSchemaType, MarkRequestPendingSchemaType } from "../validation/request.schema";
+import { EditRequestSchemaType, MarkRequestInScopeSchemaType, MarkRequestOutOfScopeSchemaType, MarkRequestPendingSchemaType } from "../validation/request.schema";
 
 export type MarkRequestInScopeInput = {
     projectId: string;
@@ -16,4 +16,10 @@ export type MarkRequestPendingInput = {
     projectId: string;
     id: string;
     data: MarkRequestPendingSchemaType;
+}
+
+export type EditRequestInput = {
+    projectId: string;
+    id: string;
+    data: EditRequestSchemaType;
 }

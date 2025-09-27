@@ -1,9 +1,9 @@
 "use server";
 
 import { handleAction } from "../http/action";
-import { createRequestSchema, CreateRequestSchemaType, deleteRequestSchema, DeleteRequestSchemaType, markRequestInScopeSchema, MarkRequestInScopeSchemaType, markRequestOutOfScopeSchema, MarkRequestOutOfScopeSchemaType, markRequestPendingSchema, MarkRequestPendingSchemaType } from "../validation/request.schema";
+import { createRequestSchema, CreateRequestSchemaType, deleteRequestSchema, DeleteRequestSchemaType, EditRequestSchemaType, editRequestSchema, markRequestInScopeSchema, MarkRequestInScopeSchemaType, markRequestOutOfScopeSchema, MarkRequestOutOfScopeSchemaType, markRequestPendingSchema, MarkRequestPendingSchemaType } from "../validation/request.schema";
 import { ProjectRequest } from "../types/project.types";
-import { MarkRequestInScopeInput, MarkRequestOutOfScopeInput, MarkRequestPendingInput } from "../types/request.types";
+import { EditRequestInput, MarkRequestInScopeInput, MarkRequestOutOfScopeInput, MarkRequestPendingInput } from "../types/request.types";
 
 export const createRequestAction = async (payload: {
     projectId: string;
@@ -54,6 +54,16 @@ export const markRequestOutOfScopeAction = async (payload: MarkRequestOutOfScope
 export const markRequestPendingAction = async (payload: MarkRequestPendingInput) => {
     return await handleAction<MarkRequestPendingSchemaType, void>({
         schema: markRequestPendingSchema,
+        path: `/projects/${payload.projectId}/requests/${payload.id}`,
+        method: "PUT",
+        body: payload.data,
+        revalidateTags: ["projects", "dashboard"],
+    });
+}
+
+export const editRequestAction = async (payload: EditRequestInput) => {
+    return await handleAction<EditRequestSchemaType, void>({
+        schema: editRequestSchema,
         path: `/projects/${payload.projectId}/requests/${payload.id}`,
         method: "PUT",
         body: payload.data,
