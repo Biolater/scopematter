@@ -3,7 +3,7 @@
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Button } from "@heroui/button";
-import { Pencil, Trash2, CheckCircle, XCircle, RotateCcw } from "lucide-react";
+import { Pencil, Trash2, CheckCircle, XCircle, RotateCcw, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { listContainer, listItemRise } from "@/lib/animations";
 import type { ProjectRequest } from "@/lib/types/project.types";
@@ -68,19 +68,43 @@ export default function RequestsList({
           >
             <Card className="border border-default-200 shadow-sm">
               <CardBody className="flex flex-col gap-3">
-                <div className="flex items-start justify-between">
-                  <p className="text-sm leading-relaxed text-default-600">
-                    {req.description}
-                  </p>
-                  <Chip
-                    size="sm"
-                    variant="flat"
-                    color={status.color}
-                    className="text-xs font-medium"
-                  >
-                    {status.label}
-                  </Chip>
-                </div>
+              <div className="flex items-start justify-between">
+  <div className="flex flex-col gap-1">
+    <p className="text-sm leading-relaxed text-default-600">
+      {req.description}
+    </p>
+
+    {req.changeOrder && (
+      <div className="flex items-center gap-1 text-xs text-default-600">
+        <FileText className="size-3.5 text-default-600" />
+        <span>
+          Change Order ·{" "}
+          <span
+            className={
+              req.changeOrder.status === "APPROVED"
+                ? "text-success-500 font-medium"
+                : req.changeOrder.status === "REJECTED"
+                ? "text-danger-500 font-medium"
+                : "text-warning-500 font-medium"
+            }
+          >
+            {req.changeOrder.status.charAt(0) +
+              req.changeOrder.status.slice(1).toLowerCase()}
+          </span>
+        </span>
+      </div>
+    )}
+  </div>
+
+  <Chip
+    size="sm"
+    variant="flat"
+    color={status.color}
+    className="text-xs font-medium"
+  >
+    {status.label}
+  </Chip>
+</div>
                 {req.createdAt && (
                   <p className="text-xs text-default-600">
                     Created {new Date(req.createdAt).toLocaleDateString()}

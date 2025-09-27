@@ -3,7 +3,13 @@
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Button } from "@heroui/button";
-import { CheckCircle, XCircle, Pencil, Trash2 } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  Pencil,
+  Trash2,
+  MessageSquare,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { listContainer, listItemRise } from "@/lib/animations";
 import { Tooltip } from "@heroui/tooltip";
@@ -105,9 +111,15 @@ export default function ChangeOrdersList({
 
                 {/* Linked request */}
                 {order.request && (
-                  <p className="text-sm text-default-500 leading-relaxed">
-                    From request: {order.request.description}
-                  </p>
+                  <div className="flex items-center gap-1 text-sm text-default-500 leading-relaxed">
+                    <MessageSquare className="size-3.5 text-default-400" />
+                    <span>
+                      From request:{" "}
+                      <span className="text-default-600">
+                        {order.request.description}
+                      </span>
+                    </span>
+                  </div>
                 )}
               </CardBody>
 
