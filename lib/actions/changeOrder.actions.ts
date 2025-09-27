@@ -3,6 +3,8 @@
 import { handleAction } from "../http/action";
 import { approveChangeOrderSchema, ApproveChangeOrderSchemaType, createChangeOrderSchema, type CreateChangeOrderSchemaType, rejectChangeOrderSchema, RejectChangeOrderSchemaType, deleteChangeOrderSchema, DeleteChangeOrderSchemaType, EditChangeOrderSchemaType, editChangeOrderSchema } from "../validation/changeOrder.schema";
 import { ApproveChangeOrderInput, ApproveChangeOrderOutput, DeleteChangeOrderInput, DeleteChangeOrderOutput, EditChangeOrderInput, EditChangeOrderOutput, RejectChangeOrderInput, RejectChangeOrderOutput, type CreateChangeOrderInput, type CreateChangeOrderOutput } from "../types/changeOrder.types";
+/* import { auth } from "@clerk/nextjs/server";
+ */import env from "@/config/env";
 
 export const createChangeOrderAction = async (payload: CreateChangeOrderInput) => {
     return await handleAction<CreateChangeOrderSchemaType, CreateChangeOrderOutput>({
@@ -50,4 +52,21 @@ export const editChangeOrderAction = async (payload: EditChangeOrderInput) => {
         body: payload.data,
         revalidateTags: ["projects", "dashboard"],
     });
+}
+
+export async function fetchChangeOrderPdf(path: string): Promise<Blob> {
+
+    const res = await fetch(`${env.API_URL}${path}`, {
+        method: "GET",
+        headers: {
+/*             ...(token ? { Authorization: `Bearer ${token}` } : {}),
+ */            "Accept": "application/pdf",
+        },
+        cache: "no-store",
+    });
+
+    if (!res.ok) throw new Error(`Failed to fetch PDF (${res.status})`);
+
+    const arrayBuffer = await res.arrayBuffer();
+    return new Blob([arrayBuffer], { type: "application/pdf" });
 }

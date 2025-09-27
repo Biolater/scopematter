@@ -9,6 +9,7 @@ import {
   Pencil,
   Trash2,
   MessageSquare,
+  Download,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { listContainer, listItemRise } from "@/lib/animations";
@@ -21,6 +22,8 @@ import {
   rejectChangeOrderAction,
 } from "@/lib/actions/changeOrder.actions";
 import { addToast } from "@heroui/toast";
+import { fetchChangeOrderPdf } from "@/lib/actions/changeOrder.actions";
+import { downloadBlob } from "@/lib/download";
 
 type ChangeOrdersListProps = {
   orders: ChangeOrder[];
@@ -123,74 +126,91 @@ export default function ChangeOrdersList({
                 )}
               </CardBody>
 
-              {order.status === "PENDING" && (
-                <CardFooter className="flex gap-2 justify-end border-t border-divider pt-3">
-                  <Tooltip content="Approve Change Order">
-                    <Button
-                      isIconOnly
-                      size="sm"
-                      variant="light"
-                      color="success"
-                      onPress={() =>
-                        runApproveAction({
-                          projectId,
-                          id: order.id,
-                          data: { status: "APPROVED" },
-                        })
-                      }
-                      isLoading={isApproving}
-                      isDisabled={isApproving || isRejecting}
-                    >
-                      <CheckCircle className="size-4" />
-                    </Button>
-                  </Tooltip>
+              <CardFooter className="flex gap-2 justify-end border-t border-divider pt-3">
+                {order.status === "PENDING" && (
+                  <>
+                    <Tooltip content="Approve Change Order">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        color="success"
+                        onPress={() =>
+                          runApproveAction({
+                            projectId,
+                            id: order.id,
+                            data: { status: "APPROVED" },
+                          })
+                        }
+                        isLoading={isApproving}
+                        isDisabled={isApproving || isRejecting}
+                      >
+                        <CheckCircle className="size-4" />
+                      </Button>
+                    </Tooltip>
 
-                  <Tooltip content="Reject Change Order">
-                    <Button
-                      isIconOnly
-                      size="sm"
-                      variant="light"
-                      color="danger"
-                      onPress={() =>
-                        runRejectAction({
-                          projectId,
-                          id: order.id,
-                          data: { status: "REJECTED" },
-                        })
-                      }
-                      isLoading={isRejecting}
-                      isDisabled={isApproving || isRejecting}
-                    >
-                      <XCircle className="size-4" />
-                    </Button>
-                  </Tooltip>
+                    <Tooltip content="Reject Change Order">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        color="danger"
+                        onPress={() =>
+                          runRejectAction({
+                            projectId,
+                            id: order.id,
+                            data: { status: "REJECTED" },
+                          })
+                        }
+                        isLoading={isRejecting}
+                        isDisabled={isApproving || isRejecting}
+                      >
+                        <XCircle className="size-4" />
+                      </Button>
+                    </Tooltip>
 
-                  <Tooltip content="Edit Change Order">
-                    <Button
-                      isIconOnly
-                      size="sm"
-                      variant="light"
-                      onPress={() => onEdit(order)}
-                      isDisabled={isApproving || isRejecting}
-                    >
-                      <Pencil className="size-4" />
-                    </Button>
-                  </Tooltip>
+                    <Tooltip content="Edit Change Order">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        onPress={() => onEdit(order)}
+                        isDisabled={isApproving || isRejecting}
+                      >
+                        <Pencil className="size-4" />
+                      </Button>
+                    </Tooltip>
 
-                  <Tooltip content="Delete Change Order">
-                    <Button
-                      isIconOnly
-                      size="sm"
-                      variant="light"
-                      color="danger"
-                      onPress={() => onDelete(order.id)}
-                      isDisabled={isApproving || isRejecting}
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
-                  </Tooltip>
-                </CardFooter>
-              )}
+                    <Tooltip content="Delete Change Order">
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        color="danger"
+                        onPress={() => onDelete(order.id)}
+                        isDisabled={isApproving || isRejecting}
+                      >
+                        <Trash2 className="size-4" />
+                      </Button>
+                    </Tooltip>
+                  </>
+                )}
+                <Tooltip content="Export Change Order">
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    variant="light"
+                    onPress={async () => {
+                      const blob = await fetchChangeOrderPdf(
+                        `/projects/${projectId}/change-orders/${order.id}/export`
+                      );
+                      downloadBlob(blob, `change-order-${order.id}.pdf`);
+                    }}
+                  >
+                    <Download className="size-4" />
+                  </Button>
+                </Tooltip>
+              </CardFooter>
             </Card>
           </motion.div>
         );

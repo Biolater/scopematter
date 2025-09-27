@@ -1,6 +1,11 @@
 import type { ChangeOrder } from "./project.types";
 import { ApproveChangeOrderSchemaType, CreateChangeOrderSchemaType, DeleteChangeOrderSchemaType, EditChangeOrderSchemaType, RejectChangeOrderSchemaType } from "../validation/changeOrder.schema";
 
+export interface getChangeOrderParams {
+    id: string;
+    projectId: string;
+}
+
 export interface CreateChangeOrderInput {
     projectId: string;
     data: CreateChangeOrderSchemaType;
