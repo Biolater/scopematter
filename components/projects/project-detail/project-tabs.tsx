@@ -35,6 +35,10 @@ import { addToast } from "@heroui/toast";
 import TabContent from "./tab-content";
 import TabTitle from "./tab-title";
 import EditRequestDialog from "./dialogs/requests/edit-request-dialog";
+import CreateChangeOrderDialog from "./dialogs/change-order/create-change-order-dialog";
+import ChangeOrdersList from "./tables/change-order-list";
+import DeleteChangeOrderDialog from "./dialogs/change-order/delete-change-order-dialog";
+import EditChangeOrderDialog from "./dialogs/change-order/edit-change-order-dialog";
 
 export default function ProjectTabs({
   scopeItems,
@@ -56,6 +60,12 @@ export default function ProjectTabs({
   const [editRequest, setEditRequest] = useState<ProjectRequest | null>(null);
 
   const [loadingRequestId, setLoadingRequestId] = useState<string | null>(null);
+  const [deleteChangeOrderId, setDeleteChangeOrderId] = useState<string | null>(
+    null
+  );
+  const [editChangeOrder, setEditChangeOrder] = useState<ChangeOrder | null>(
+    null
+  );
   const [loadingAction, setLoadingAction] = useState<
     "IN_SCOPE" | "OUT_OF_SCOPE" | "PENDING" | null
   >(null);
@@ -206,38 +216,33 @@ export default function ProjectTabs({
             />
           }
         >
-          <TabContent
-            onAdd={() => setIsChangeOrderOpen(true)}
-            title="Change Orders"
-            buttonLabel="Create Change Order"
-            emptyText="No change orders yet."
-            items={changeOrders}
-            getKey={(i) => i.id}
-            renderItem={(order) => {
-              const status = changeOrderStatusMeta[order.status];
-              return (
-                <div className="space-y-3">
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-default-600">
-                    <span className="font-medium text-default-900">
-                      {order.priceUsd}
-                    </span>
-                    <span>
-                      {order.extraDays
-                        ? `+${order.extraDays} days`
-                        : "No timeline impact"}
-                    </span>
-                  </div>
-                  <Chip
-                    variant="flat"
-                    color={status.color}
-                    className="w-fit text-xs font-medium"
-                  >
-                    {status.label}
-                  </Chip>
-                </div>
-              );
-            }}
-          />
+          <div className="mt-3 space-y-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h3 className="text-base font-semibold text-default-900">
+                Change Orders
+              </h3>
+              <Button
+                size="sm"
+                variant="flat"
+                color="primary"
+                startContent={<Plus className="size-4" />}
+                onPress={() => setIsChangeOrderOpen(true)}
+              >
+                Create Change Order
+              </Button>
+            </div>
+
+            <ChangeOrdersList
+              orders={changeOrders}
+              projectId={projectId}
+              onDelete={(id) => {
+                setDeleteChangeOrderId(id);
+              }}
+              onEdit={(order) => {
+                setEditChangeOrder(order);
+              }}
+            />
+          </div>
         </Tab>
       </Tabs>
 
@@ -273,6 +278,28 @@ export default function ProjectTabs({
         isOpen={!!editRequest}
         onOpenChange={(open) => setEditRequest(open ? editRequest : null)}
         request={editRequest}
+      />
+      <CreateChangeOrderDialog
+        projectId={projectId}
+        isOpen={isChangeOrderOpen}
+        onOpenChange={setIsChangeOrderOpen}
+        requestId={null}
+        eligibleRequests={requests.filter(
+          (req) => req.status === "OUT_OF_SCOPE" && req.changeOrder === null
+        )}
+      />
+      <DeleteChangeOrderDialog
+        deleteChangeOrderId={deleteChangeOrderId}
+        onClose={() => setDeleteChangeOrderId(null)}
+        projectId={projectId}
+      />
+      <EditChangeOrderDialog
+        projectId={projectId}
+        isOpen={!!editChangeOrder}
+        onOpenChange={(open) =>
+          setEditChangeOrder(open ? editChangeOrder : null)
+        }
+        order={editChangeOrder}
       />
     </>
   );

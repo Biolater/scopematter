@@ -16,6 +16,7 @@ export default function ProjectDetailView({
 }: {
   project: ProjectDetail;
 }) {
+  console.log({ project })
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const scopeItems = Array.isArray(project.scopeItems)

@@ -63,6 +63,8 @@ export interface ProjectRequest {
   description: string;
   status: RequestStatus;
   createdAt: Date;
+  changeOrder: ChangeOrder | null;
+  request: ProjectRequest | null;
 }
 
 export type ChangeOrderStatus = "PENDING" | "APPROVED" | "REJECTED";
@@ -71,6 +73,7 @@ export interface ChangeOrder {
   priceUsd: string; // display currency formatted by backend
   extraDays?: number | null;
   status: ChangeOrderStatus;
+  request: ProjectRequest | null;
 }
 
 export interface ProjectDetail extends Project {
