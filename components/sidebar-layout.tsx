@@ -32,11 +32,6 @@ const navItems = [
     icon: <Folders className="size-4.5 shrink-0" />,
   },
   {
-    name: "Transactions",
-    href: "/transactions",
-    icon: <Receipt className="size-4.5 shrink-0" />,
-  },
-  {
     name: "Settings",
     href: "/settings",
     icon: <Settings className="size-4.5 shrink-0" />,
@@ -53,7 +48,7 @@ function SidebarContent({
   fromMobile?: boolean;
 }) {
   const pathname = usePathname();
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href);
 
   return (
     <div className="flex h-full flex-col">
