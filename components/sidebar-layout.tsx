@@ -9,10 +9,8 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
-  Wallet as WalletIcon,
   Settings,
   Receipt,
-  Link as LinkIcon,
   PanelLeft,
   Folders,
 } from "lucide-react";
@@ -32,11 +30,6 @@ const navItems = [
     name: "Projects",
     href: "/projects",
     icon: <Folders className="size-4.5 shrink-0" />,
-  },
-  {
-    name: "Payment Links",
-    href: "/payment-links",
-    icon: <LinkIcon className="size-4.5 shrink-0" />,
   },
   {
     name: "Transactions",
