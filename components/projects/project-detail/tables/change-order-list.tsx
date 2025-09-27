@@ -24,6 +24,7 @@ import {
 import { addToast } from "@heroui/toast";
 import { fetchChangeOrderPdf } from "@/lib/actions/changeOrder.actions";
 import { downloadBlob } from "@/lib/download";
+import { useState } from "react";
 
 type ChangeOrdersListProps = {
   orders: ChangeOrder[];
@@ -38,6 +39,7 @@ export default function ChangeOrdersList({
   onEdit,
   onDelete,
 }: ChangeOrdersListProps) {
+  const [exportingId, setExportingId] = useState<string | null>(null);
   const { isPending: isApproving, runAction: runApproveAction } =
     useServerAction(approveChangeOrderAction, {
       onSuccess: () => {
@@ -200,11 +202,15 @@ export default function ChangeOrdersList({
                     isIconOnly
                     size="sm"
                     variant="light"
+                    isLoading={exportingId === order.id}
+                    isDisabled={exportingId === order.id}
                     onPress={async () => {
+                      setExportingId(order.id);
                       const blob = await fetchChangeOrderPdf(
                         `/projects/${projectId}/change-orders/${order.id}/export`
                       );
                       downloadBlob(blob, `change-order-${order.id}.pdf`);
+                      setExportingId(null);
                     }}
                   >
                     <Download className="size-4" />

@@ -3,8 +3,8 @@
 import { handleAction } from "../http/action";
 import { approveChangeOrderSchema, ApproveChangeOrderSchemaType, createChangeOrderSchema, type CreateChangeOrderSchemaType, rejectChangeOrderSchema, RejectChangeOrderSchemaType, deleteChangeOrderSchema, DeleteChangeOrderSchemaType, EditChangeOrderSchemaType, editChangeOrderSchema } from "../validation/changeOrder.schema";
 import { ApproveChangeOrderInput, ApproveChangeOrderOutput, DeleteChangeOrderInput, DeleteChangeOrderOutput, EditChangeOrderInput, EditChangeOrderOutput, RejectChangeOrderInput, RejectChangeOrderOutput, type CreateChangeOrderInput, type CreateChangeOrderOutput } from "../types/changeOrder.types";
-/* import { auth } from "@clerk/nextjs/server";
- */import env from "@/config/env";
+import { auth } from "@clerk/nextjs/server";
+import env from "@/config/env";
 
 export const createChangeOrderAction = async (payload: CreateChangeOrderInput) => {
     return await handleAction<CreateChangeOrderSchemaType, CreateChangeOrderOutput>({
@@ -55,12 +55,13 @@ export const editChangeOrderAction = async (payload: EditChangeOrderInput) => {
 }
 
 export async function fetchChangeOrderPdf(path: string): Promise<Blob> {
-
+   const { getToken } = await auth();
+   const token = await getToken();
     const res = await fetch(`${env.API_URL}${path}`, {
         method: "GET",
         headers: {
-/*             ...(token ? { Authorization: `Bearer ${token}` } : {}),
- */            "Accept": "application/pdf",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                   "Accept": "application/pdf",
         },
         cache: "no-store",
     });
