@@ -5,6 +5,8 @@ import { handleAction } from "@/lib/http/action";
 import { createScopeItemSchema, deleteScopeItemSchema, DeleteScopeItemSchemaType, updateScopeItemSchema, UpdateScopeItemSchemaType, type CreateScopeItemSchemaType } from "@/lib/validation/scopeItem.schema";
 import type { ScopeItem } from "@/lib/types/project.types";
 import { UpdateScopeItemInputFE, UpdateScopeItemOutput } from "../types/scopeItem.types";
+import { env } from "@/config/env";
+import { auth } from "@clerk/nextjs/server";
 
 export const createScopeItemAction = async (payload: {
     projectId: string;
@@ -40,4 +42,23 @@ export const updateScopeItemAction = async (payload: UpdateScopeItemInputFE) => 
         body: payload.data,
         revalidateTags: ["projects", "dashboard"],
     });
+}
+
+
+export async function fetchScopeItemPdf(path: string): Promise<Blob> {
+   const { getToken } = await auth();
+   const token = await getToken();
+    const res = await fetch(`${env.API_URL}${path}`, {
+        method: "GET",
+        headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                   "Accept": "application/pdf",
+        },
+        cache: "no-store",
+    });
+
+    if (!res.ok) throw new Error(`Failed to fetch PDF (${res.status})`);
+
+    const arrayBuffer = await res.arrayBuffer();
+    return new Blob([arrayBuffer], { type: "application/pdf" });
 }

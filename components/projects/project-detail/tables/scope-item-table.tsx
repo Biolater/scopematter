@@ -11,15 +11,19 @@ import {
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Tooltip } from "@heroui/tooltip";
-import { Pencil, Trash2 } from "lucide-react";
+import { Download, Pencil, Plus, Trash2 } from "lucide-react";
 import type { ScopeItem } from "@/lib/types/project.types";
 import { scopeStatusMeta } from "../status-meta";
-
+import { fetchScopeItemPdf } from "@/lib/actions/scopeItem.actions";
+import { downloadBlob } from "@/lib/download";
+import { useState } from "react";
+    
 type ScopeItemsTableProps = {
   items: ScopeItem[];
   onAdd?: () => void;
   onEdit?: (item: ScopeItem) => void;
   onDelete?: (item: ScopeItem) => void;
+  projectId: string;
 };
 
 type Column = { key: string; label: string; minWidth?: number };
@@ -37,7 +41,9 @@ export default function ScopeItemsTable({
   onAdd,
   onEdit,
   onDelete,
+  projectId,
 }: ScopeItemsTableProps) {
+  const [exporting, setExporting] = useState(false)
   return (
     <Table
       aria-label="Project scope items"
@@ -52,9 +58,33 @@ export default function ScopeItemsTable({
           <h3 className="text-base font-semibold text-default-900">
             Scope Items
           </h3>
-          <Button color="primary" size="sm" onPress={onAdd}>
-            Add Item
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              startContent={<Plus className="size-4" />}
+              color="primary"
+              isDisabled={exporting}
+              size="sm"
+              onPress={onAdd}
+            >
+              Add Item
+            </Button>
+            <Button
+              isDisabled={exporting}
+              size="sm"
+              startContent={!exporting &&<Download className="size-4" />}
+              variant="flat"
+              color="default"
+              isLoading={exporting}
+              onPress={async () => {
+                setExporting(true)
+                const blob = await fetchScopeItemPdf(`/projects/${projectId}/scope-items/export`)
+                downloadBlob(blob, `scope-item-${projectId}.pdf`)
+                setExporting(false)
+              }}
+            >
+              Export Scope
+            </Button>
+          </div>
         </div>
       }
       topContentPlacement="inside"

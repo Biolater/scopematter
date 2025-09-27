@@ -142,6 +142,7 @@ export default function ProjectTabs({
               onAdd={() => setIsScopeOpen(true)}
               onEdit={(item) => setEditItem(item)}
               onDelete={(item) => setDeleteItemId(item.id)}
+              projectId={projectId}
             />
           </div>
         </Tab>
