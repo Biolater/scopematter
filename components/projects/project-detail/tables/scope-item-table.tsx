@@ -17,7 +17,7 @@ import { scopeStatusMeta } from "../status-meta";
 import { fetchScopeItemPdf } from "@/lib/actions/scopeItem.actions";
 import { downloadBlob } from "@/lib/download";
 import { useState } from "react";
-    
+
 type ScopeItemsTableProps = {
   items: ScopeItem[];
   onAdd?: () => void;
@@ -43,16 +43,12 @@ export default function ScopeItemsTable({
   onDelete,
   projectId,
 }: ScopeItemsTableProps) {
-  const [exporting, setExporting] = useState(false)
+  const [exporting, setExporting] = useState(false);
   return (
     <Table
       aria-label="Project scope items"
       isStriped
-      classNames={{
-        table: "min-w-full",
-        thead: "rounded-lg",
-        wrapper: "shadow-sm border border-default-200 rounded-2xl",
-      }}
+      fullWidth
       topContent={
         <div className="flex items-center justify-between">
           <h3 className="text-base font-semibold text-default-900">
@@ -71,15 +67,17 @@ export default function ScopeItemsTable({
             <Button
               isDisabled={exporting}
               size="sm"
-              startContent={!exporting &&<Download className="size-4" />}
+              startContent={!exporting && <Download className="size-4" />}
               variant="flat"
               color="default"
               isLoading={exporting}
               onPress={async () => {
-                setExporting(true)
-                const blob = await fetchScopeItemPdf(`/projects/${projectId}/scope-items/export`)
-                downloadBlob(blob, `scope-item-${projectId}.pdf`)
-                setExporting(false)
+                setExporting(true);
+                const blob = await fetchScopeItemPdf(
+                  `/projects/${projectId}/scope-items/export`
+                );
+                downloadBlob(blob, `scope-item-${projectId}.pdf`);
+                setExporting(false);
               }}
             >
               Export Scope
@@ -87,14 +85,13 @@ export default function ScopeItemsTable({
           </div>
         </div>
       }
-      topContentPlacement="inside"
+      topContentPlacement="outside"
     >
       <TableHeader columns={columns}>
         {(col: Column) => (
           <TableColumn
             key={col.key}
-            width={col.minWidth}
-            className="text-xs font-semibold text-default-600"
+            className={`text-xs font-semibold text-default-600 ${col.minWidth ? `min-w-[${col.minWidth}px]` : ""}`}
           >
             {col.label}
           </TableColumn>
@@ -109,7 +106,7 @@ export default function ScopeItemsTable({
       >
         {(item: ScopeItem) => (
           <TableRow key={item.id}>
-            <TableCell className="text-sm font-medium text-default-900">
+            <TableCell className="text-sm font-medium text-default-900 whitespace-nowrap">
               {item.name}
             </TableCell>
 
@@ -137,7 +134,7 @@ export default function ScopeItemsTable({
               })()}
             </TableCell>
 
-            <TableCell className="text-sm text-default-500">
+            <TableCell className="text-sm text-default-500 whitespace-nowrap">
               {safeDate(item.createdAt)}
             </TableCell>
 

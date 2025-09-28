@@ -2,7 +2,7 @@
 
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@heroui/button";
 import {
@@ -45,6 +45,7 @@ export default function CreateChangeOrderDialog({
   requestId,
   eligibleRequests,
 }: CreateChangeOrderDialogProps) {
+  const [selectOpen, setSelectOpen] = useState(false);
   const defaultValues: CreateChangeOrderSchemaType = {
     requestId: requestId ?? eligibleRequests[0]?.id ?? "",
     priceUsd: 0,
@@ -110,6 +111,8 @@ export default function CreateChangeOrderDialog({
       onOpenChange={onOpenChange}
       backdrop="blur"
       size="md"
+      isDismissable={!selectOpen}
+      isKeyboardDismissDisabled={selectOpen}
     >
       <ModalContent>
         <form onSubmit={handleSubmit(onSubmit)} className="contents">
@@ -132,6 +135,7 @@ export default function CreateChangeOrderDialog({
                   onSelectionChange={(keys) =>
                     field.onChange(Array.from(keys)[0] as string)
                   }
+                  onOpenChange={setSelectOpen}
                   isRequired
                   isInvalid={!!errors.requestId}
                   errorMessage={errors.requestId?.message}

@@ -2,9 +2,9 @@
 
 import {
   FolderIcon,
-  FileTextIcon,
-  MessageSquareIcon,
-  RefreshCcwIcon,
+  FolderKanban,
+  ClipboardList,
+  GitPullRequest,
 } from "lucide-react";
 import { DashboardMetricCard } from "./dashboard-metric-card";
 import { Chip } from "@heroui/chip";
@@ -32,7 +32,7 @@ const TopMetrics = ({ data }: { data: GetDashboardOutput["metrics"] }) => {
       id: "scope",
       title: "Scope Items",
       value: data.scopeItems.total,
-      icon: <FileTextIcon className="text-orange-500 size-4" />,
+      icon: <FolderKanban className="text-orange-500 size-4" />,
       iconBackground: "bg-orange-500/10",
       footer: (
         <span className="text-default-600 text-xs">
@@ -44,7 +44,7 @@ const TopMetrics = ({ data }: { data: GetDashboardOutput["metrics"] }) => {
       id: "requests",
       title: "Requests",
       value: data.requests.total,
-      icon: <MessageSquareIcon className="text-red-500 size-4" />,
+      icon: <ClipboardList className="text-red-500 size-4" />,
       iconBackground: "bg-red-500/10",
       footer: (
         <div className="flex items-center gap-2 justify-between">
@@ -52,7 +52,7 @@ const TopMetrics = ({ data }: { data: GetDashboardOutput["metrics"] }) => {
             +{data.requests.growth} this {data.requests.growthPeriod}
           </span>
           <motion.div {...popInProps}>
-            <Chip size="sm" variant="flat" color="danger" radius="sm">
+            <Chip size="sm" variant="flat" color="danger" radius="full">
               {data.requests.pending} Pending
             </Chip>
           </motion.div>
@@ -63,7 +63,7 @@ const TopMetrics = ({ data }: { data: GetDashboardOutput["metrics"] }) => {
       id: "changeOrders",
       title: "Change Orders",
       value: data.changeOrders.total,
-      icon: <RefreshCcwIcon className="text-green-500 size-4" />,
+      icon: <GitPullRequest className="text-green-500 size-4" />,
       iconBackground: "bg-green-500/10",
       footer: (
         <div className="flex items-center gap-2 justify-between">
@@ -71,7 +71,7 @@ const TopMetrics = ({ data }: { data: GetDashboardOutput["metrics"] }) => {
             +{data.changeOrders.growth} this {data.changeOrders.growthPeriod}
           </span>
           <motion.div {...popInProps}>
-            <Chip size="sm" variant="flat" color="primary" radius="sm">
+            <Chip size="sm" variant="flat" color="primary" radius="full">
               {data.changeOrders.approved} Approved
             </Chip>
           </motion.div>

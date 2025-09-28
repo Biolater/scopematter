@@ -3,7 +3,7 @@
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Button } from "@heroui/button";
-import { Pencil, Trash2, CheckCircle, XCircle, RotateCcw, FileText } from "lucide-react";
+import { Pencil, Trash2, CheckCircle, XCircle, RotateCcw, FileText, GitPullRequest } from "lucide-react";
 import { motion } from "framer-motion";
 import { listContainer, listItemRise } from "@/lib/animations";
 import type { ProjectRequest } from "@/lib/types/project.types";
@@ -76,7 +76,7 @@ export default function RequestsList({
 
     {req.changeOrder && (
       <div className="flex items-center gap-1 text-xs text-default-600">
-        <FileText className="size-3.5 text-default-600" />
+        <GitPullRequest className="size-3.5 text-default-600" />
         <span>
           Change Order ·{" "}
           <span

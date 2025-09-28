@@ -7,7 +7,7 @@ import {
   CheckCircleIcon,
   ClockIcon,
   FolderIcon,
-  MessageSquareIcon,
+  ClipboardList,
 } from "lucide-react";
 import { DashboardActivity } from "@/lib/types/dashboard.types";
 import { formatDistanceToNow } from "date-fns";
@@ -61,7 +61,7 @@ export function RecentActivityCard({ activities }: RecentActivityCardProps) {
                   {item.type === "PROJECT_CREATED" ? (
                     <FolderIcon className="text-blue-500 size-4" />
                   ) : item.type === "REQUEST_SUBMITTED" ? (
-                    <MessageSquareIcon className="text-purple-500 size-4" />
+                    <ClipboardList className="text-red-500 size-4" />
                   ) : (
                     <CheckCircleIcon className="text-green-500 size-4" />
                   )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -38,6 +38,7 @@ export default function EditProjectDialog({
   onOpenChange,
   project,
 }: EditProjectDialogProps) {
+  const [selectOpen, setSelectOpen] = useState(false);
   const defaultValues: UpdateProjectSchemaType = {
     name: project?.name ?? "",
     description: project?.description ?? "",
@@ -108,6 +109,8 @@ export default function EditProjectDialog({
       backdrop="blur"
       size="md"
       scrollBehavior="inside"
+      isDismissable={!selectOpen}
+      isKeyboardDismissDisabled={selectOpen}
     >
       <ModalContent>
         <form onSubmit={handleSubmit(onSubmit)} className="contents">
@@ -169,6 +172,7 @@ export default function EditProjectDialog({
                       | "COMPLETED";
                     field.onChange(val);
                   }}
+                  onOpenChange={setSelectOpen}
                   isInvalid={!!errors.status}
                   errorMessage={errors.status?.message}
                   isDisabled={submitting}

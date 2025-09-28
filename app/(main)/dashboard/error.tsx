@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, startTransition } from "react";
 import { Button } from "@heroui/button";
 import { RefreshCwIcon } from "lucide-react";
 import { Alert } from "@heroui/alert";
+import { useRouter } from "next/navigation";
 
 /**
  * Route-level error boundary for /dashboard.
@@ -16,6 +17,7 @@ export default function DashboardError({
   error: Error;
   reset: () => void;
 }) {
+  const router = useRouter();
   useEffect(() => {
     // TODO: hook up to real error reporting
     console.error(error);
@@ -35,7 +37,11 @@ export default function DashboardError({
           startContent={<RefreshCwIcon className="size-4" />}
           variant="flat"
           color="primary"
-          onPress={() => reset()}
+          onPress={() => {
+            // Reset the error boundary and force a route refresh to re-fetch server data
+            startTransition(() => reset());
+            router.refresh();
+          }}
         >
           Try Again
         </Button>

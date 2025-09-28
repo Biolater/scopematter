@@ -55,7 +55,7 @@ const ProjectCard = ({
               <User className="size-4" />
               <p className="text-sm">{project.client.name}</p>
             </div>
-            <Chip size="sm" variant="flat" color={status.color} radius="sm">
+            <Chip size="sm" variant="flat" color={status.color} radius="full">
               {status.label}
             </Chip>
           </div>

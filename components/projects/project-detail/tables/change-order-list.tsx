@@ -8,7 +8,7 @@ import {
   XCircle,
   Pencil,
   Trash2,
-  MessageSquare,
+  ClipboardList,
   Download,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -117,7 +117,7 @@ export default function ChangeOrdersList({
                 {/* Linked request */}
                 {order.request && (
                   <div className="flex items-center gap-1 text-sm text-default-500 leading-relaxed">
-                    <MessageSquare className="size-3.5 text-default-400" />
+                    <ClipboardList className="size-3.5 text-default-400" />
                     <span>
                       From request:{" "}
                       <span className="text-default-600">
