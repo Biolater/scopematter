@@ -6,16 +6,18 @@ import {
   DropdownItem,
 } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
-import { Copy, MoreHorizontal, Pencil, Trash } from "lucide-react";
+import { Copy, MoreHorizontal, Pencil, Share, Trash } from "lucide-react";
 
 interface ProjectSettingsDropdownProps {
   onDelete: () => void;
   onEdit: () => void;
+  onShare: () => void;
 }
 
 const ProjectSettingsDropdown = ({
   onDelete,
   onEdit,
+  onShare,
 }: ProjectSettingsDropdownProps) => {
   return (
     <Dropdown placement="bottom-end">
@@ -25,8 +27,19 @@ const ProjectSettingsDropdown = ({
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem onPress={onEdit} key="edit" startContent={<Pencil className="size-4" />}>
+        <DropdownItem
+          onPress={onEdit}
+          key="edit"
+          startContent={<Pencil className="size-4" />}
+        >
           Edit Project
+        </DropdownItem>
+        <DropdownItem
+          onPress={onShare}
+          key="share"
+          startContent={<Share className="size-4" />}
+        >
+          Share Project
         </DropdownItem>
         {/*         <DropdownItem
           key="duplicate"

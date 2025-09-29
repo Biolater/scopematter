@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ClerkProviderWithTheme } from "@/components/clerk-provider-with-theme";
 import { ToastProvider } from "@heroui/toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -25,11 +26,25 @@ declare module "@react-types/shared" {
 export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: 1,
+        refetchOnMount: false,
+      },
+    },
+  });
+
   return (
     <HeroUIProvider>
       <NextThemesProvider {...themeProps}>
         <ToastProvider />
-        <ClerkProviderWithTheme>{children}</ClerkProviderWithTheme>
+        <ClerkProviderWithTheme>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </ClerkProviderWithTheme>
       </NextThemesProvider>
     </HeroUIProvider>
   );

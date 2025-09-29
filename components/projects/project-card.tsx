@@ -32,10 +32,12 @@ const ProjectCard = ({
   project,
   onDelete,
   onEdit,
+  onShare,
 }: {
   project: Project;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
+  onShare: (project: Project) => void;
 }) => {
   const created = format(project.createdAt, "M/d/yyyy");
   const status = statusToBadge[project.status];
@@ -62,6 +64,7 @@ const ProjectCard = ({
           <ProjectSettingsDropdown
             onDelete={() => onDelete(project.id)}
             onEdit={() => onEdit(project.id)}
+            onShare={() => onShare(project)}
           />
         </CardHeader>
         <CardBody className="space-y-4">

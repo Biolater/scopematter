@@ -11,9 +11,11 @@ import { useServerAction } from "@/lib/hooks/use-server-action";
 import { DeleteProjectSchemaType } from "@/lib/validation/project.schema";
 import { addToast } from "@heroui/toast";
 import EditProjectDialog from "./edit-project-dialog";
+import { ShareLinkDialog } from "./share-link/share-link-dialog";
 const ProjectsContent = ({ projects }: { projects: GetProjectsOutput }) => {
   const [deleteProjectId, setDeleteProjectId] = useState<string | null>(null);
   const [editProjectId, setEditProjectId] = useState<string | null>(null);
+  const [shareProject, setShareProject] = useState<Project | null>(null);
   const { isPending, runAction, state } = useServerAction<
     DeleteProjectSchemaType,
     void
@@ -51,15 +53,10 @@ const ProjectsContent = ({ projects }: { projects: GetProjectsOutput }) => {
               project={project}
               onDelete={setDeleteProjectId}
               onEdit={setEditProjectId}
+              onShare={setShareProject}
             />
           </motion.div>
         ))}
-        <DeleteProjectDialog
-          deleteProjectId={deleteProjectId}
-          onClose={() => setDeleteProjectId(null)}
-          onConfirm={handleDeleteProject}
-          isPending={isPending}
-        />
       </motion.div>
       <EditProjectDialog
         isOpen={!!editProjectId}
@@ -67,6 +64,17 @@ const ProjectsContent = ({ projects }: { projects: GetProjectsOutput }) => {
         project={
           projects.find((project) => project.id === editProjectId) as Project
         }
+      />
+      <DeleteProjectDialog
+        deleteProjectId={deleteProjectId}
+        onClose={() => setDeleteProjectId(null)}
+        onConfirm={handleDeleteProject}
+        isPending={isPending}
+      />
+      <ShareLinkDialog
+        isOpen={!!shareProject}
+        onClose={() => setShareProject(null)}
+        projectId={shareProject?.id ?? ""}
       />
     </>
   );

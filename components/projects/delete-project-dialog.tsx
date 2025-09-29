@@ -37,7 +37,7 @@ export default function DeleteProjectDialog({
           </p>
         </ModalBody>
         <ModalFooter>
-          <Button isDisabled={isPending} variant="ghost" onPress={onClose}>
+          <Button isDisabled={isPending} variant="light" onPress={onClose}>
             Cancel
           </Button>
           <Button
