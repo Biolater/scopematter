@@ -60,6 +60,7 @@ export default function ScopeItemsTable({
               color="primary"
               isDisabled={exporting}
               size="sm"
+              variant="flat"
               onPress={onAdd}
             >
               Add Item
