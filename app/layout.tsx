@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { Providers } from "./providers";
 
@@ -15,28 +16,28 @@ import LogoutButton from "@/components/logout-button";
 export const metadata: Metadata = {
   metadataBase: new URL("https://scopematter.xyz"),
   title: {
-    default: "Scopematter — Formalize Requirements. Manage Change. Get Paid.",
-    template: "%s — Scopematter",
+    default: "ScopeMatter — Formalize Requirements. Manage Change. Get Paid.",
+    template: "%s — ScopeMatter",
   },
   description:
-    "Scopematter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
+    "ScopeMatter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
   openGraph: {
-    title: "Scopematter",
+    title: "ScopeMatter",
     description:
-      "Scopematter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
+      "ScopeMatter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
     url: "/",
-    siteName: "Scopematter",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Scopematter" }],
+    siteName: "ScopeMatter",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "ScopeMatter" }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Scopematter",
+    title: "ScopeMatter",
     description:
-      "Scopematter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
+      "ScopeMatter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
     images: ["/og.png"],
-    creator: "@scopematter",
+    creator: "@scopematterscopeMatter",
   },
   keywords: [
     "scope creep",
@@ -98,6 +99,7 @@ export default function RootLayout({
             <SmoothScroll />
             {children}
             <FloatThemeToggle />
+            <SpeedInsights />
           </div>
         </Providers>
       </body>

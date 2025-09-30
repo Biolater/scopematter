@@ -12,10 +12,10 @@ const Footer = () => {
         >
           <img
             src="/scopematter-brand.png"
-            alt="Scopematter"
+            alt="ScopeMatter"
             className="h-10 w-auto"
           />
-          <span className="ml-2 font-bold">Scopematter</span>
+          <span className="ml-2 font-bold">ScopeMatter</span>
         </NextLink>
 
         {/* Navigation */}
@@ -42,7 +42,7 @@ const Footer = () => {
           >
             muradyusubovdev@icloud.com
           </a>
-          <p className="text-default-500 mt-1">© 2025 Scopematter</p>
+          <p className="text-default-500 mt-1">© 2025 ScopeMatter</p>
         </div>
       </div>
     </footer>
