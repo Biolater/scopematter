@@ -6,6 +6,5 @@ export const revokeShareLinkAction = async (payload: RevokeShareLinkParams) => {
         path: `/projects/${payload.projectId}/share-link/${payload.id}`,
         method: "DELETE",
         body: payload,
-        revalidateTags: [`share-link-${payload.projectId}`],
     });
 }
