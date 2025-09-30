@@ -64,8 +64,8 @@ export function ShareLinkDialog({
 
           {data && data.length > 0 && (
             <ul className="divide-y divide-default-200">
-              {data.map((link, index) => (
-                <ShareLinkItem key={link.id + index} link={link} />
+              {data.map((link) => (
+                <ShareLinkItem key={link.id} link={link} />
               ))}
             </ul>
           )}

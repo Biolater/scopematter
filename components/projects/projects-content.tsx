@@ -16,7 +16,7 @@ const ProjectsContent = ({ projects }: { projects: GetProjectsOutput }) => {
   const [deleteProjectId, setDeleteProjectId] = useState<string | null>(null);
   const [editProjectId, setEditProjectId] = useState<string | null>(null);
   const [shareProject, setShareProject] = useState<Project | null>(null);
-  const { isPending, runAction, state } = useServerAction<
+  const { isPending, runAction } = useServerAction<
     DeleteProjectSchemaType,
     void
   >(deleteProjectAction, {
