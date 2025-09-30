@@ -25,12 +25,15 @@ export function ShareLinkDialog({
   isOpen,
   onClose,
 }: ShareLinkDialogProps) {
-  const { data, isLoading, error } = shareLinkQueries.use([projectId], {
-    enabled: isOpen,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 5,
-    retry: 1,
-  });
+  const { data, isLoading, error } = shareLinkQueries.use(
+    { projectId },
+    {
+      enabled: isOpen,
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 5,
+      retry: 1,
+    }
+  );
 
   return (
     <Modal
@@ -61,11 +64,8 @@ export function ShareLinkDialog({
 
           {data && data.length > 0 && (
             <ul className="divide-y divide-default-200">
-              {data.map((link) => (
-                <ShareLinkItem
-                  key={link.id}
-                  link={link}
-                />
+              {data.map((link, index) => (
+                <ShareLinkItem key={link.id + index} link={link} />
               ))}
             </ul>
           )}

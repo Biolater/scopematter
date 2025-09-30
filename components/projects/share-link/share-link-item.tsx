@@ -14,13 +14,15 @@ type ShareLinkItemProps = {
 };
 
 export function ShareLinkItem({ link }: ShareLinkItemProps) {
+  const { useInvalidate } = shareLinkQueries;
+  const invalidate = useInvalidate();
   const { runAction, isPending } = useServerAction(revokeShareLinkAction, {
     onSuccess: () => {
       addToast({
         title: "Share link revoked",
         color: "success",
       });
-      shareLinkQueries.useInvalidate().one(link.projectId);
+      invalidate.params({ projectId: link.projectId });
     },
     onError: (e) => {
       addToast({
@@ -60,7 +62,7 @@ export function ShareLinkItem({ link }: ShareLinkItemProps) {
 
       {/* Right: Expiry + Actions */}
       <div className="flex items-center gap-3">
-        {link.expiresAt && (
+        {link.expiresAt && !link.revokedAt && (
           <span className="text-xs text-warning">
             Expires {new Date(link.expiresAt).toLocaleDateString()}
           </span>
