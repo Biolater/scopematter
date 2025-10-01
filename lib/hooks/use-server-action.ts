@@ -8,7 +8,7 @@ export function useServerAction<TParams, TResponse>(
   opts?: {
     onSuccess?: (data: TResponse) => void;
     onError?: (err: Extract<ActionResult<TResponse>, { ok: false }>) => void;
-    onSettled?: () => void; // ✅ new
+    onSettled?: () => void;
   }
 ) {
   const [state, dispatch, isPending] = useActionState<

@@ -9,22 +9,26 @@ import {
   ModalFooter,
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
-import { Spinner } from "@heroui/spinner";
-import { Tooltip } from "@heroui/tooltip";
-import { Link2, Eye, Calendar, Trash2, Shield } from "lucide-react";
+import { useRef, useState } from "react";
+
 import { ShareLinkItem } from "./share-link-item";
+import { ShareLinkSkeletonList } from "./share-link-skeleton";
+import CreateLinkForm from "./create-link-form";
 
 type ShareLinkDialogProps = {
   projectId: string;
   isOpen: boolean;
-  onClose: () => void;
+  onOpenChange: (open: boolean) => void;
 };
 
 export function ShareLinkDialog({
   projectId,
   isOpen,
-  onClose,
+  onOpenChange,
 }: ShareLinkDialogProps) {
+  const [pickerOpen, setPickerOpen] = useState(false); // track if datepicker is open
+  const popoverContainerRef = useRef<HTMLDivElement | null>(null);
+
   const { data, isLoading, error } = shareLinkQueries.use(
     { projectId },
     {
@@ -38,43 +42,64 @@ export function ShareLinkDialog({
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onOpenChange={onOpenChange}
       size="lg"
       backdrop="blur"
+      isDismissable={!pickerOpen}
+      isKeyboardDismissDisabled={pickerOpen}
       scrollBehavior="inside"
     >
       <ModalContent>
-        <ModalHeader>Share Links</ModalHeader>
-        <ModalBody>
-          {isLoading && (
-            <div className="flex justify-center py-8">
-              <Spinner />
-            </div>
-          )}
+        {(onClose) => (
+          <>
+            <ModalHeader>Share Links</ModalHeader>
 
-          {error && (
-            <p className="text-danger text-sm">Failed to load share links.</p>
-          )}
+            <ModalBody className="flex flex-col gap-6">
+              {/* Create link form */}
+              {/* Container for portalizing popovers inside the modal to prevent outside dismiss */}
+              <div ref={popoverContainerRef} />
+              <CreateLinkForm
+                onPickerOpenChange={setPickerOpen}
+                popoverContainer={popoverContainerRef.current ?? undefined}
+                projectId={projectId}
+              />
+              {/* Links list */}
+              <div className="flex flex-col gap-3">
+                <span className="text-sm font-medium text-default-600">
+                  Existing Links
+                </span>
 
-          {data && data.length === 0 && (
-            <p className="text-default-500 text-sm">
-              No share links created yet.
-            </p>
-          )}
+                {isLoading && <ShareLinkSkeletonList count={5} />}
 
-          {data && data.length > 0 && (
-            <ul className="divide-y divide-default-200">
-              {data.map((link) => (
-                <ShareLinkItem key={link.id} link={link} />
-              ))}
-            </ul>
-          )}
-        </ModalBody>
-        <ModalFooter>
-          <Button variant="light" onPress={onClose}>
-            Close
-          </Button>
-        </ModalFooter>
+                {error && (
+                  <p className="text-danger text-sm">
+                    Failed to load share links.
+                  </p>
+                )}
+
+                {data && data.length === 0 && (
+                  <p className="text-default-500 text-sm text-center">
+                    No share links created yet.
+                  </p>
+                )}
+
+                {data && data.length > 0 && (
+                  <ul className="flex flex-col gap-4">
+                    {data.map((link) => (
+                      <ShareLinkItem key={link.id} link={link} />
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button variant="light" color="danger" onPress={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </>
+        )}
       </ModalContent>
     </Modal>
   );

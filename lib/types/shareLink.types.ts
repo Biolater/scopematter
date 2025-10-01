@@ -25,3 +25,13 @@ export interface RevokeShareLinkParams {
     projectId: string;
     id: string;
 }
+
+export interface CreateShareLinkOutput {
+    id: string;
+    url: string;
+    expiresAt: Date | null;
+    showScopeItems: boolean;
+    showRequests: boolean;
+    showChangeOrders: boolean;
+    createdAt: Date;
+}
