@@ -26,10 +26,11 @@ import {
 } from "@/lib/validation/project.schema";
 import type { CreateProjectOutput } from "@/lib/types/project.types";
 import { PlusIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const CreateProjectDialog = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -54,11 +55,12 @@ const CreateProjectDialog = () => {
     CreateProjectSchemaType,
     CreateProjectOutput
   >(createProjectAction, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       addToast({
         title: "Project created successfully",
         color: "success",
       });
+      router.push(`/projects/${data.id}`);
       reset();
       onClose();
     },

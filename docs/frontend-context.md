@@ -7,14 +7,15 @@ This single document gives AI models the essential context to work within the Pa
 ## Project Stack
 - **Framework**: Next.js 15 (App Router, RSC)
 - **UI**: HeroUI (NextUI v2) components + Tailwind CSS 4
-- **State/Forms**: React Hook Form + Zod
+- **State/Forms**: React Hook Form + Zod + `@tanstack/react-query`
 - **Auth**: Clerk (`@clerk/nextjs`)
 - **Theming**: `next-themes` + custom Clerk theme bridge
 - **Animations**: Framer Motion
 - **Icons**: Lucide, Heroicons
+- **Analytics**: Vercel Analytics + Speed Insights
 - **Internationalization-ready**: strings are plain text, format-ready
 
-Key packages (see `package.json`): `@heroui/*`, `react-hook-form`, `@hookform/resolvers`, `zod`, `@clerk/nextjs`, `next-themes`, `framer-motion`, `@vercel/analytics`.
+Key packages (see `package.json`): `@heroui/*`, `react-hook-form`, `@hookform/resolvers`, `zod`, `@clerk/nextjs`, `next-themes`, `framer-motion`, `@tanstack/react-query`, `@vercel/analytics`, `@vercel/speed-insights`.
 
 ---
 
@@ -27,6 +28,7 @@ Key packages (see `package.json`): `@heroui/*`, `react-hook-form`, `@hookform/re
 - `components/`
   - `dashboard/*`: dashboard UI
   - `projects/*`: project list, cards, dialogs, detail view (tabs, tables)
+  - `projects/share-link/*`: share link management components
   - `sidebar-layout.tsx`, navbars, theme toggle, sections
   - `primitives.ts`: Tailwind Variants utilities (e.g., `title`, `subtitle`)
 - `lib/`
@@ -35,7 +37,7 @@ Key packages (see `package.json`): `@heroui/*`, `react-hook-form`, `@hookform/re
   - `actions/`: server action wrappers (domain-specific)
   - `validation/`: Zod schemas
   - `types/`: shared types per domain
-  - `data/`: demo/static data
+  - `data/`: server data functions + `queries/` for React Query factories
   - `animations.ts`, `utils/*`
 - `config/`: env, fonts, site
 - `styles/`: Tailwind, global CSS
@@ -62,8 +64,22 @@ Route boundaries: use `error.tsx` for error boundaries and `loading.tsx` for Sus
   - `NextThemesProvider` for theme switching
   - `ToastProvider` from `@heroui/toast`
   - `ClerkProviderWithTheme` to sync Clerk themes with app theme
+  - `QueryClientProvider` for React Query with optimized defaults
 
 Clerk appearance is themed via `components/clerk-provider-with-theme.tsx` and respects `next-themes`.
+
+### Query Client Configuration
+```ts
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      refetchOnMount: false,
+    },
+  },
+});
+```
 
 ---
 
@@ -73,8 +89,27 @@ Clerk appearance is themed via `components/clerk-provider-with-theme.tsx` and re
 - Writes (mutations): `handleAction<TBody, TResponse>({...})` in `lib/http/action.ts`.
 - Client forms/actions: `useServerAction(action, { onSuccess, onError, onSettled })` in `lib/hooks/use-server-action.ts` to get `runAction`, `isPending`, and unified result state.
 - Error mapping to forms: `applyFieldErrors(details, setError)` in `lib/http/map-errors.ts`.
+- React Query: Use `createQueryFactory` for client-side caching with `@tanstack/react-query`.
 
 API contract and exception handling are centralized. Clerk JWT is attached in `api.ts`.
+
+### React Query Factory Pattern
+```ts
+// Define query factory
+const shareLinkQueries = createQueryFactory<ShareLinkParams, ShareLink[]>({
+  resource: "share-link",
+  getKey: ({ projectId }) => [projectId],
+  queryFn: ({ projectId }) => getShareLinks({ projectId }),
+  defaults: { staleTime: 1000 * 60 * 5, gcTime: 1000 * 60 * 5, retry: 1 },
+});
+
+// Use in component
+const { data, isLoading, error } = shareLinkQueries.use({ projectId });
+
+// Invalidate after mutations
+const { all, params } = shareLinkQueries.useInvalidate();
+await params({ projectId }); // invalidate specific query
+```
 
 ---
 
@@ -82,6 +117,7 @@ API contract and exception handling are centralized. Clerk JWT is attached in `a
 - Build forms with React Hook Form + Zod resolvers.
 - Validate both client-side (Zod) and server-side via `handleAction` defense-in-depth.
 - On server errors, map `details` to fields using `applyFieldErrors`.
+- Use `useFormChanges` hook for edit forms to track dirty fields and submit only changed data.
 
 Minimal example (pattern):
 ```tsx
@@ -92,6 +128,11 @@ const { control, handleSubmit, setError, formState: { errors, isSubmitting, isVa
   mode: "onSubmit",
 });
 
+// For edit forms, use useFormChanges
+const { getChangedFieldsForSubmission } = useFormChanges<FormType>(defaultValues, {
+  resolver: zodResolver(formSchema),
+});
+
 // Bind server action with hooks
 const { runAction, isPending } = useServerAction<FormType, ResponseType>(actionFn, {
   onSuccess: () => { addToast({ title: "Success", color: "success" }); /* reset/close */ },
@@ -99,6 +140,19 @@ const { runAction, isPending } = useServerAction<FormType, ResponseType>(actionF
 });
 
 const onSubmit = (data: FormType) => runAction(data);
+```
+
+### Form Change Tracking
+For edit dialogs, use `useFormChanges` to submit only modified fields:
+```tsx
+const onSubmit = async () => {
+  const changedFields = getChangedFieldsForSubmission();
+  if (Object.keys(changedFields).length === 0) {
+    addToast({ title: "No changes detected", color: "warning" });
+    return;
+  }
+  await runAction({ id: project.id, data: changedFields });
+};
 ```
 
 ---
@@ -134,6 +188,27 @@ Example usage locations:
 ## Tables & Lists
 - Use HeroUI `@heroui/table` where needed; many lists are composed with Cards + Flex.
 - Motion patterns: `framer-motion` `variants` from `lib/animations.ts` (`listContainer`, `listItemRise`) for entrance and hover lifts.
+- Status indicators: Use `Chip` components with color variants for status display.
+- Action buttons: Icon-only buttons with `Tooltip` for better UX.
+
+### Animation Variants
+```ts
+// From lib/animations.ts
+export const listContainer = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
+
+export const listItemRise = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+};
+
+export const hoverLiftProps = {
+  whileHover: { y: -4, scale: 1.02 },
+  transition: { type: "spring", stiffness: 200, damping: 15 },
+};
+```
 
 ---
 
@@ -142,6 +217,25 @@ Example usage locations:
 - Co-locate domain components under `components/{domain}` with subfolders for `dialogs`, `tables`, etc.
 - Keep components presentational; wire data via server components or hooks.
 - Extract small style primitives into `components/primitives.ts` using `tailwind-variants`.
+- Use `"use client"` directive only when necessary (forms, interactions, hooks).
+
+### Styling Primitives
+```ts
+// From components/primitives.ts
+export const title = tv({
+  base: "tracking-tight inline font-semibold",
+  variants: {
+    color: { violet: "from-[#FF1CF7] to-[#b249f8]", /* ... */ },
+    size: { sm: "text-3xl lg:text-4xl", md: "text-[2.3rem] lg:text-5xl" },
+  },
+  compoundVariants: [
+    {
+      color: ["violet", "yellow", "blue", /* ... */],
+      class: "bg-clip-text text-transparent bg-gradient-to-b",
+    },
+  ],
+});
+```
 
 ---
 
@@ -155,6 +249,13 @@ Example usage locations:
 ## Performance & Caching
 - GETs can opt into Next.js cache with `revalidate` seconds and `tags` for selective `revalidateTag` on mutations.
 - Avoid N+1 renders in lists; use motion sparingly and memoize derived loading flags.
+- React Query provides client-side caching with configurable `staleTime` and `gcTime`.
+- Use `dynamic = "force-dynamic"` for pages that need fresh data on every request.
+
+### Caching Strategy
+- Server-side: Next.js cache with tags for selective invalidation
+- Client-side: React Query with 5-minute stale time by default
+- Mutations: Always revalidate relevant tags to keep data fresh
 
 ---
 
@@ -173,45 +274,59 @@ Example usage locations:
 ## Example References (code excerpts)
 
 Dialog with RHF + Zod + Action:
-```84:140:components/projects/create-project-dialog.tsx
-          <ModalBody className="space-y-4">
-            {/* Project Name */}
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  label="Project name"
-                  placeholder="Website redesign for Acme Inc."
-                  value={field.value ?? ""}
-                  onValueChange={field.onChange}
-                  onBlur={field.onBlur}
-                  isRequired
-                  isInvalid={!!errors.name}
-                  errorMessage={errors.name?.message}
-                />
-              )}
-            />
+```tsx
+// From components/projects/create-project-dialog.tsx
+<ModalBody className="space-y-4">
+  <Controller
+    name="name"
+    control={control}
+    render={({ field }) => (
+      <Input
+        label="Project name"
+        placeholder="Website redesign for Acme Inc."
+        value={field.value ?? ""}
+        onValueChange={field.onChange}
+        onBlur={field.onBlur}
+        isRequired
+        isInvalid={!!errors.name}
+        errorMessage={errors.name?.message}
+      />
+    )}
+  />
+</ModalBody>
 ```
 
 Server action hook usage in list actions:
-```43:61:components/projects/project-detail/tables/change-order-list.tsx
-  const { isPending: isApproving, runAction: runApproveAction } =
-    useServerAction(approveChangeOrderAction, {
-      onSuccess: () => {
-        addToast({ title: "Change order approved", color: "success" });
-      },
-      onError: (err) => {
-        addToast({
-          title: err.message ?? "Failed to approve change order",
-          color: "danger",
-        });
-      },
-    });
+```tsx
+// From components/projects/project-detail/tables/change-order-list.tsx
+const { isPending: isApproving, runAction: runApproveAction } =
+  useServerAction(approveChangeOrderAction, {
+    onSuccess: () => {
+      addToast({ title: "Change order approved", color: "success" });
+    },
+    onError: (err) => {
+      addToast({
+        title: err.message ?? "Failed to approve change order",
+        color: "danger",
+      });
+    },
+  });
+```
+
+React Query factory usage:
+```tsx
+// From components/projects/share-link/share-link-dialog.tsx
+const { data, isLoading, error } = shareLinkQueries.use([projectId], {
+  enabled: isOpen,
+  staleTime: 1000 * 60 * 5,
+  gcTime: 1000 * 60 * 5,
+  retry: 1,
+});
 ```
 
 Central GET wrapper:
-```21:34:lib/http/query.ts
+```ts
+// From lib/http/query.ts
 export async function handleQuery<T>(
     path: string,
     opts: QueryOptions = {}

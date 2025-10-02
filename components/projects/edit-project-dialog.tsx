@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
 import { Button } from "@heroui/button";
 import {
   Modal,
@@ -14,18 +12,21 @@ import {
 } from "@heroui/modal";
 import { Input, Textarea } from "@heroui/input";
 import { addToast } from "@heroui/toast";
+import { Select, SelectItem } from "@heroui/select";
 
 import { editProjectAction } from "@/lib/actions/project.actions";
 import { useServerAction } from "@/lib/hooks/use-server-action";
 import { applyFieldErrors } from "@/lib/http/map-errors";
 import { useFormChanges } from "@/lib/hooks/use-form-changes";
+import { typedZodResolver } from "@/lib/validation/typed-resolver";
 
 import {
   updateProjectSchema,
-  type UpdateProjectSchemaType,
+  type UpdateProjectFormValues, // RHF input type
+  type UpdateProjectDTO, // Server payload type
 } from "@/lib/validation/project.schema";
+
 import type { Project, UpdateProjectOutput } from "@/lib/types/project.types";
-import { Select, SelectItem } from "@heroui/select";
 
 type EditProjectDialogProps = {
   isOpen: boolean;
@@ -39,14 +40,17 @@ export default function EditProjectDialog({
   project,
 }: EditProjectDialogProps) {
   const [selectOpen, setSelectOpen] = useState(false);
-  const defaultValues: UpdateProjectSchemaType = {
+
+  // IMPORTANT: default values must follow the INPUT shape
+  // (email/company can be empty string; preprocess will convert "" -> undefined).
+  const defaultValues: UpdateProjectFormValues = {
     name: project?.name ?? "",
     description: project?.description ?? "",
     status: project?.status ?? "PENDING",
     client: {
       name: project?.client?.name ?? "",
-      email: project?.client?.email ?? "",
-      company: project?.client?.company ?? undefined,
+      email: project?.client?.email ?? "", // empty string ok for input
+      company: project?.client?.company ?? "", // empty string ok for input
     },
   };
 
@@ -57,8 +61,8 @@ export default function EditProjectDialog({
     setError,
     formState: { errors, isSubmitting, isValid, isDirty },
     getChangedFieldsForSubmission,
-  } = useFormChanges<UpdateProjectSchemaType>(defaultValues, {
-    resolver: zodResolver(updateProjectSchema),
+  } = useFormChanges<UpdateProjectFormValues>(defaultValues, {
+    resolver: typedZodResolver<UpdateProjectFormValues>(updateProjectSchema),
   });
 
   useEffect(() => {
@@ -66,7 +70,7 @@ export default function EditProjectDialog({
   }, [project, reset]);
 
   const { runAction, isPending } = useServerAction<
-    { id: string; data: UpdateProjectSchemaType },
+    { id: string; data: UpdateProjectDTO }, // server expects parsed OUTPUT
     UpdateProjectOutput
   >(editProjectAction, {
     onSuccess: () => {
@@ -82,14 +86,18 @@ export default function EditProjectDialog({
         title: err.message ?? "Failed to update project",
         color: "danger",
       });
-      applyFieldErrors<UpdateProjectSchemaType>(err.details, setError);
+      // Field errors should match the INPUT shape used by the form
+      applyFieldErrors<UpdateProjectFormValues>(err.details, setError);
     },
   });
 
   const submitting = isSubmitting || isPending;
 
+  // Receive parsed OUTPUT values from RHF+resolver, but we still limit submission
+  // to changed fields (computed from current INPUT values). Cast is safe here since
+  // server will validate again and fields are a subset of the schema.
   const onSubmit = async () => {
-    const changedFields = getChangedFieldsForSubmission();
+    const changedFields = getChangedFieldsForSubmission() as UpdateProjectDTO;
 
     if (Object.keys(changedFields).length === 0) {
       addToast({
@@ -136,6 +144,7 @@ export default function EditProjectDialog({
                   isRequired
                   isInvalid={!!errors.name}
                   errorMessage={errors.name?.message}
+                  isDisabled={submitting}
                 />
               )}
             />
@@ -154,10 +163,12 @@ export default function EditProjectDialog({
                   onBlur={field.onBlur}
                   isInvalid={!!errors.description}
                   errorMessage={errors.description?.message}
+                  isDisabled={submitting}
                 />
               )}
             />
 
+            {/* Status */}
             <Controller
               name="status"
               control={control}
@@ -204,6 +215,7 @@ export default function EditProjectDialog({
                       isRequired
                       isInvalid={!!errors.client?.name}
                       errorMessage={errors.client?.name?.message}
+                      isDisabled={submitting}
                     />
                   )}
                 />
@@ -216,11 +228,12 @@ export default function EditProjectDialog({
                       label="Client email"
                       type="email"
                       placeholder="client@company.com"
-                      value={field.value ?? ""}
-                      onValueChange={field.onChange}
+                      value={(field.value as string) ?? ""} // ✅ force to string
+                      onValueChange={(val) => field.onChange(val ?? "")} // ✅ normalize
                       onBlur={field.onBlur}
                       isInvalid={!!errors.client?.email}
-                      errorMessage={errors.client?.email?.message}
+                      errorMessage={(errors.client?.email as any)?.message}
+                      isDisabled={submitting}
                     />
                   )}
                 />
@@ -237,6 +250,7 @@ export default function EditProjectDialog({
                       onBlur={field.onBlur}
                       isInvalid={!!errors.client?.company}
                       errorMessage={errors.client?.company?.message}
+                      isDisabled={submitting}
                     />
                   )}
                 />
