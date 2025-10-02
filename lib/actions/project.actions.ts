@@ -2,7 +2,7 @@
 
 import { handleAction } from "../http/action";
 import { CreateProjectOutput, UpdateProjectOutput } from "../types/project.types";
-import { createProjectSchema, CreateProjectSchemaType, deleteProjectSchema, DeleteProjectSchemaType, updateProjectSchema, UpdateProjectSchemaType } from "../validation/project.schema";
+import { createProjectSchema, CreateProjectSchemaType, deleteProjectSchema, DeleteProjectSchemaType, updateProjectSchema, UpdateProjectDTO } from "../validation/project.schema";
 
 export const deleteProjectAction = async (payload: DeleteProjectSchemaType) => {
     return handleAction<DeleteProjectSchemaType, void>({
@@ -24,8 +24,8 @@ export const createProjectAction = async (payload: CreateProjectSchemaType) => {
     })
 }
 
-export const editProjectAction = async (payload: { id: string, data: UpdateProjectSchemaType }) => {
-    return handleAction<UpdateProjectSchemaType, UpdateProjectOutput>({
+export const editProjectAction = async (payload: { id: string, data: UpdateProjectDTO }) => {
+    return handleAction<UpdateProjectDTO, UpdateProjectOutput>({
         schema: updateProjectSchema,
         path: `/projects/${payload.id}`,
         method: "PUT",
