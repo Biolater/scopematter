@@ -9,12 +9,10 @@ export default function OverviewHeader({
   project,
   createdAt,
   updatedAt,
-  onEdit,
 }: {
   project: ProjectDetail;
   createdAt: string;
   updatedAt: string;
-  onEdit: () => void;
 }) {
   const statPillClass =
     "rounded-full border border-default-200 bg-content2 px-3 py-1 text-xs text-default-500";
@@ -49,15 +47,6 @@ export default function OverviewHeader({
             <span className={statPillClass}>Last updated {updatedAt}</span>
           </div>
         </div>
-
-        <Button
-          color="primary"
-          size="md"
-          startContent={<PencilLine className="size-4" />}
-          onPress={onEdit}
-        >
-          Edit Project
-        </Button>
       </div>
     </motion.section>
   );

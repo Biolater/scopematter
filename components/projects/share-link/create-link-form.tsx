@@ -12,6 +12,7 @@ import { useServerAction } from "@/lib/hooks/use-server-action";
 import { shareLinkQueries } from "@/lib/data/queries/share-link.queries";
 import { CreateShareLinkOutput } from "@/lib/types/shareLink.types";
 import { ToastCopyButton } from "@/components/ui/toast-copy-button";
+import { env } from "@/config/env";
 
 interface CreateLinkFormProps {
   onPickerOpenChange?: (open: boolean) => void;
@@ -38,7 +39,7 @@ const CreateLinkForm = ({
         timeout: 10000,
         endContent: (
           <ToastCopyButton
-            url={data.url}
+            url={`${window.location.origin}/share-link/${data.id}`}
             isIconOnly
             color="success"
             variant="light"

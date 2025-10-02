@@ -16,9 +16,6 @@ export default function ProjectDetailView({
 }: {
   project: ProjectDetail;
 }) {
-  console.log({ project })
-  const [isEditOpen, setIsEditOpen] = useState(false);
-
   const scopeItems = Array.isArray(project.scopeItems)
     ? project.scopeItems
     : [];
@@ -72,7 +69,6 @@ export default function ProjectDetailView({
         project={project}
         createdAt={createdAt}
         updatedAt={updatedAt}
-        onEdit={() => setIsEditOpen(true)}
       />
 
       <motion.section
@@ -111,12 +107,6 @@ export default function ProjectDetailView({
         requests={requests}
         changeOrders={changeOrders}
         projectId={project.id}
-      />
-
-      <EditProjectDialog
-        isOpen={isEditOpen}
-        onOpenChange={setIsEditOpen}
-        project={project}
       />
     </div>
   );

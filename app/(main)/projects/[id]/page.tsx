@@ -13,7 +13,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     const project = await getProject({ id });
     return (
       <div className="flex flex-col gap-6">
-        <ProjectPageClient projectId={project.id} />
+        <ProjectPageClient project={project} />
         <ProjectDetailView project={project} />
       </div>
     );
