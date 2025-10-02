@@ -2,6 +2,10 @@ export interface GetShareLinksParams {
     projectId: string;
 }
 
+export interface GetShareLinkParams {
+    token: string;
+}
+
 export interface ShareLink {
     id: string;
     projectId: string;

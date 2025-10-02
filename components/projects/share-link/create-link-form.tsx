@@ -27,7 +27,7 @@ const CreateLinkForm = ({
 }: CreateLinkFormProps) => {
   const { useInvalidate } = shareLinkQueries;
   const invalidate = useInvalidate();
-  const { runAction, isPending, state } = useServerAction<
+  const { runAction, isPending } = useServerAction<
     CreateShareLinkSchemaType,
     CreateShareLinkOutput
   >(createShareLinkAction, {
@@ -39,7 +39,7 @@ const CreateLinkForm = ({
         timeout: 10000,
         endContent: (
           <ToastCopyButton
-            url={`${window.location.origin}/share-link/${data.id}`}
+            url={data.url}
             isIconOnly
             color="success"
             variant="light"

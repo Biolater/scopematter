@@ -35,7 +35,7 @@ export function CreateShareLinkDialog({
       addToast({ title: "At least one permission must be selected", color: "danger", size: "sm" });
       return;
     }
-    console.log("TODO: create share link", { projectId, expiresAt, showScopeItems, showRequests, showChangeOrders });
+
   };
 
   return (

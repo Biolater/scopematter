@@ -11,13 +11,14 @@ type Options = {
   cache?: RequestCache;
   revalidate?: number;
   tags?: string[];
+  isPublicApi?: boolean;
 };
 
 export async function api<T>(path: string, options: Options = {}): Promise<T> {
   const { getToken } = await auth();
   const token = await getToken();
 
-  const res = await fetch(`${env.API_URL}${path}`, {
+  const res = await fetch(`${options.isPublicApi ? env.PUBLIC_API_URL : env.API_URL}${path}`, {
     method: options.method ?? "GET",
     headers: {
       "Content-Type": "application/json",

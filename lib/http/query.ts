@@ -11,6 +11,7 @@ type QueryOptions = {
     revalidate?: number;
     tags?: string[];
     cache?: RequestCache;
+    isPublicApi?: boolean;
 };
 
 /**
