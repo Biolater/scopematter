@@ -7,9 +7,7 @@ export const getShareLinks = async (params: GetShareLinksParams) => {
 
 export const getShareLink = async (params: GetShareLinkParams) => {
     return await handleQueryOrThrow<ShareLink>(`/share/${params.token}`, {
-        cache: "force-cache",
-        revalidate: 1000 * 60 * 5,
-        tags: [`share-link-${params.token}`],
-        isPublicApi: true
+        cache: "no-store",
+       isPublicApi: true
     })
 }
