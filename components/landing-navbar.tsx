@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import NextLink from "next/link";
+import { Route } from "next";
 import {
   Navbar as HeroUINavbar,
   NavbarBrand,
@@ -71,7 +72,11 @@ export function LandingNavbar() {
           className="flex items-center font-semibold tracking-tight"
           href={isSignedIn ? "/dashboard" : "#hero"}
         >
-          <img alt="Scopematter" className="h-12 w-auto" src="/scopematter-brand.png" />
+          <img
+            alt="Scopematter"
+            className="h-12 w-auto"
+            src="/scopematter-brand.png"
+          />
           <p className="font-bold text-inherit -ml-1">Scopematter</p>
         </NextLink>
       </NavbarBrand>
@@ -89,12 +94,12 @@ export function LandingNavbar() {
               </button>
             </NavbarItem>
           ))}
-          <NavbarItem>
+          {/*           <NavbarItem>
             <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
               Join Waitlist
             </Button>
-          </NavbarItem>
-          {/*           <NavbarItem>
+          </NavbarItem> */}
+          <NavbarItem>
             <Button as={NextLink} href="/sign-in" variant="flat">
               Sign In
             </Button>
@@ -103,7 +108,7 @@ export function LandingNavbar() {
             <Button as={NextLink} color="primary" href="/sign-up">
               Sign Up
             </Button>
-          </NavbarItem> */}
+          </NavbarItem>
         </SignedOut>
         <SignedIn>
           <UserButton />
@@ -130,25 +135,25 @@ export function LandingNavbar() {
             </button>
           </NavbarMenuItem>
         ))}
-          <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
-            Join Waitlist
-          </Button>
-        {/*         <SignedOut>
+        {/*         <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
+          Join Waitlist
+        </Button> */}
+        <SignedOut>
           <NavbarMenuItem>
-            <NextLink className="w-full" href="/sign-in">
+            <NextLink className="w-full" href={"/sign-in" as Route}>
               <Button fullWidth variant="flat">
                 Sign In
               </Button>
             </NextLink>
           </NavbarMenuItem>
           <NavbarMenuItem>
-            <NextLink className="w-full" href="/sign-up">
+            <NextLink className="w-full" href={"/sign-up" as Route}>
               <Button fullWidth color="primary">
                 Sign Up
               </Button>
             </NextLink>
           </NavbarMenuItem>
-        </SignedOut> */}
+        </SignedOut>
       </NavbarMenu>
     </HeroUINavbar>
   );

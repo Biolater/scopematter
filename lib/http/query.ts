@@ -11,6 +11,7 @@ type QueryOptions = {
     revalidate?: number;
     tags?: string[];
     cache?: RequestCache;
+    isPublicApi?: boolean;
 };
 
 /**
@@ -31,4 +32,21 @@ export async function handleQuery<T>(
     } catch (e: any) {
         return { ok: false, message: e.message ?? "Failed to fetch" };
     }
+}
+
+/**
+ * Throwing variant for GET queries.
+ * - Returns data directly on success
+ * - Throws the original error (ApiException/Error) on failure
+ */
+export async function handleQueryOrThrow<T>(
+    path: string,
+    opts: QueryOptions = {}
+): Promise<T> {
+    // api<T> already throws ApiException on non-2xx or envelope error
+    const data = await api<T>(path, {
+        method: "GET",
+        ...opts,
+    } as any);
+    return data;
 }

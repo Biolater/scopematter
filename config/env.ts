@@ -13,6 +13,7 @@ export const env = {
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: required('NEXT_PUBLIC_CLERK_SIGN_IN_URL'),
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: required('NEXT_PUBLIC_CLERK_SIGN_UP_URL'),
     API_URL: required('API_URL'),
+    PUBLIC_API_URL: required('PUBLIC_API_URL'),
 };
 
 export default env;

@@ -14,7 +14,7 @@ type ActionOptions<TBody, TResponse> = {
   schema?: ZodSchema<TBody>;
   path: string;
   method: "POST" | "PUT" | "PATCH" | "DELETE";
-  body: TBody;
+  body?: TBody;
   revalidateTags?: string[];
 };
 

@@ -9,11 +9,10 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
-  Wallet as WalletIcon,
   Settings,
   Receipt,
-  Link as LinkIcon,
   PanelLeft,
+  Folders,
 } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import MainNavbar from "@/components/main-navbar"; // adjust path
@@ -28,19 +27,9 @@ const navItems = [
     icon: <LayoutDashboard className="size-4.5 shrink-0" />,
   },
   {
-    name: "Wallets",
-    href: "/wallets",
-    icon: <WalletIcon className="size-4.5 shrink-0" />,
-  },
-  {
-    name: "Payment Links",
-    href: "/payment-links",
-    icon: <LinkIcon className="size-4.5 shrink-0" />,
-  },
-  {
-    name: "Transactions",
-    href: "/transactions",
-    icon: <Receipt className="size-4.5 shrink-0" />,
+    name: "Projects",
+    href: "/projects",
+    icon: <Folders className="size-4.5 shrink-0" />,
   },
   {
     name: "Settings",
@@ -59,7 +48,7 @@ function SidebarContent({
   fromMobile?: boolean;
 }) {
   const pathname = usePathname();
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href);
 
   return (
     <div className="flex h-full flex-col">
@@ -241,8 +230,8 @@ export default function SidebarLayout({
       {/* Main Content */}
       <div className="flex flex-1 flex-col overflow-hidden">
         <MainNavbar onMenuPress={() => setIsOpen(true)} />
-        <main className="container mx-auto flex-1 overflow-y-auto p-4">
-          {children}
+        <main className="flex-1 overflow-y-auto">
+          <div className="p-4 max-w-7xl mx-auto sm:py-6">{children}</div>
         </main>
       </div>
     </div>
