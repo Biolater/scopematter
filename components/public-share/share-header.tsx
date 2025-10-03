@@ -23,7 +23,7 @@ export default function ShareHeader({
   const meta = projectStatusMeta[status];
   return (
     <div className="mb-6">
-      <div className="mb-4">
+{/*       <div className="mb-4">
         <Button
           variant="light"
           size="sm"
@@ -33,7 +33,7 @@ export default function ShareHeader({
         >
           Go Back
         </Button>
-      </div>
+      </div> */}
       <h1 className="text-3xl font-semibold text-default-900">{name}</h1>
       <div className="mt-2 flex flex-wrap items-center gap-3 text-default-600">
         {clientName && (
