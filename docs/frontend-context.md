@@ -14,8 +14,12 @@ This single document gives AI models the essential context to work within the Pa
 - **Icons**: Lucide, Heroicons
 - **Analytics**: Vercel Analytics + Speed Insights
 - **Internationalization-ready**: strings are plain text, format-ready
+- **Error Handling**: `react-error-boundary`
+- **Utilities**: `clsx`, `tailwind-merge`, `tailwind-variants`
+- **Date Handling**: `date-fns`
+- **Country Data**: `world-countries`
 
-Key packages (see `package.json`): `@heroui/*`, `react-hook-form`, `@hookform/resolvers`, `zod`, `@clerk/nextjs`, `next-themes`, `framer-motion`, `@tanstack/react-query`, `@vercel/analytics`, `@vercel/speed-insights`.
+Key packages (see `package.json`): `@heroui/*`, `react-hook-form`, `@hookform/resolvers`, `zod`, `@clerk/nextjs`, `next-themes`, `framer-motion`, `@tanstack/react-query`, `@vercel/analytics`, `@vercel/speed-insights`, `react-error-boundary`, `clsx`, `tailwind-merge`, `tailwind-variants`, `date-fns`, `world-countries`.
 
 ---
 
@@ -24,11 +28,16 @@ Key packages (see `package.json`): `@heroui/*`, `react-hook-form`, `@hookform/re
   - `(auth)/{sign-in,sign-up,waitlist}`: Clerk routes
   - `(main)/dashboard`: dashboard page
   - `(main)/projects`: list + `[id]` detail, loading/error boundaries
+  - `(public)/share/[token]`: public share link pages
   - `layout.tsx`, `providers.tsx`: global layout/providers
 - `components/`
-  - `dashboard/*`: dashboard UI
+  - `dashboard/*`: dashboard UI (metrics, stats, activity)
   - `projects/*`: project list, cards, dialogs, detail view (tabs, tables)
   - `projects/share-link/*`: share link management components
+  - `projects/project-detail/*`: detailed project view components
+  - `public-share/*`: public share link display components
+  - `sections/*`: landing page sections (hero, benefits, FAQ, etc.)
+  - `ui/*`: reusable UI components (animations, highlights)
   - `sidebar-layout.tsx`, navbars, theme toggle, sections
   - `primitives.ts`: Tailwind Variants utilities (e.g., `title`, `subtitle`)
 - `lib/`
@@ -38,23 +47,30 @@ Key packages (see `package.json`): `@heroui/*`, `react-hook-form`, `@hookform/re
   - `validation/`: Zod schemas
   - `types/`: shared types per domain
   - `data/`: server data functions + `queries/` for React Query factories
-  - `animations.ts`, `utils/*`
+  - `animations.ts`, `utils/*`, `download.ts`
 - `config/`: env, fonts, site
-- `styles/`: Tailwind, global CSS
+- `styles/`: Tailwind, global CSS, custom theme
 - `docs/`: developer docs (this file; actions/queries guide)
 
 ---
 
 ## Routes (App Router)
 - Public:
-  - `/` landing
+  - `/` landing page
   - `/sign-in`, `/sign-up`, `/waitlist` (Clerk)
+  - `/share/[token]` public share links (wrapped in `(public)` layout)
 - Authenticated (wrapped in `(main)` layout):
   - `/dashboard`
   - `/projects`
   - `/projects/[id]` with `loading.tsx`, `not-found.tsx`, `error.tsx`
 
 Route boundaries: use `error.tsx` for error boundaries and `loading.tsx` for Suspense loading states.
+
+### Layout Structure
+- **Root Layout**: Global providers, analytics, theme toggle
+- **Auth Layout**: Simple centered layout with back-to-home button
+- **Main Layout**: Sidebar navigation with collapsible state
+- **Public Layout**: Minimal layout for share links
 
 ---
 
@@ -86,12 +102,21 @@ const queryClient = new QueryClient({
 ## Data Access Patterns
 - Never call `fetch` directly—use `lib/http/api.ts`.
 - Reads (GET): `handleQuery<T>(path, { revalidate?, tags? })` in `lib/http/query.ts`.
+- Reads (GET with error throwing): `handleQueryOrThrow<T>(path, { revalidate?, tags? })` for server components.
 - Writes (mutations): `handleAction<TBody, TResponse>({...})` in `lib/http/action.ts`.
 - Client forms/actions: `useServerAction(action, { onSuccess, onError, onSettled })` in `lib/hooks/use-server-action.ts` to get `runAction`, `isPending`, and unified result state.
 - Error mapping to forms: `applyFieldErrors(details, setError)` in `lib/http/map-errors.ts`.
 - React Query: Use `createQueryFactory` for client-side caching with `@tanstack/react-query`.
+- PDF Downloads: `fetchScopeItemPdf(path)` for server-side PDF generation.
 
 API contract and exception handling are centralized. Clerk JWT is attached in `api.ts`.
+
+### Server Actions by Domain
+- **Projects**: `createProjectAction`, `editProjectAction`, `deleteProjectAction`
+- **Scope Items**: `createScopeItemAction`, `updateScopeItemAction`, `deleteScopeItemAction`
+- **Change Orders**: `createChangeOrderAction`, `approveChangeOrderAction`, `rejectChangeOrderAction`, `editChangeOrderAction`, `deleteChangeOrderAction`
+- **Requests**: `markRequestInScopeAction`, `markRequestOutOfScopeAction`, `markRequestPendingAction`, `deleteRequestAction`
+- **Share Links**: `createShareLinkAction`, `deleteShareLinkAction`
 
 ### React Query Factory Pattern
 ```ts
@@ -155,6 +180,13 @@ const onSubmit = async () => {
 };
 ```
 
+### Utility Hooks & Functions
+- **`useFormChanges`**: Tracks form changes for edit dialogs
+- **`useLocalStorage`**: Persistent local storage with SSR safety
+- **`usePersistentCollapsed`**: Sidebar collapse state persistence
+- **`cn()`**: Class name utility combining `clsx` and `tailwind-merge`
+- **`downloadBlob()`**: Client-side file download utility
+
 ---
 
 ## Dialogs (Modals) Pattern
@@ -191,6 +223,13 @@ Example usage locations:
 - Status indicators: Use `Chip` components with color variants for status display.
 - Action buttons: Icon-only buttons with `Tooltip` for better UX.
 
+## Public Share Links
+- **Route**: `/share/[token]` for external client access
+- **Components**: `public-share/*` for read-only project display
+- **Permissions**: Configurable visibility for scope items, requests, change orders
+- **Layout**: Minimal layout without navigation or auth requirements
+- **Error Handling**: 404 for invalid tokens, error boundaries for failures
+
 ### Animation Variants
 ```ts
 // From lib/animations.ts
@@ -204,9 +243,21 @@ export const listItemRise = {
   show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 };
 
+export const itemRise = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  exit: { opacity: 0, y: 20, transition: { duration: 0.3, ease: "easeOut" } },
+};
+
 export const hoverLiftProps = {
   whileHover: { y: -4, scale: 1.02 },
   transition: { type: "spring", stiffness: 200, damping: 15 },
+};
+
+export const popInProps = {
+  initial: { scale: 0.8, opacity: 0 },
+  animate: { scale: 1, opacity: 1 },
+  transition: { type: "spring", stiffness: 300 },
 };
 ```
 
@@ -218,6 +269,16 @@ export const hoverLiftProps = {
 - Keep components presentational; wire data via server components or hooks.
 - Extract small style primitives into `components/primitives.ts` using `tailwind-variants`.
 - Use `"use client"` directive only when necessary (forms, interactions, hooks).
+- Theme-aware styling: Use semantic color classes (`text-foreground`, `text-muted`, `bg-background`, etc.) instead of hardcoded colors.
+
+### Component Categories
+- **Dashboard**: Metrics, stats, activity cards, skeleton loaders
+- **Projects**: Project cards, detail views, CRUD dialogs, settings dropdowns
+- **Project Detail**: Tabs, tables, status cards, progress indicators
+- **Share Links**: Creation, management, and display components
+- **Public Share**: Read-only project display for external clients
+- **Landing**: Hero, benefits, FAQ, CTA sections
+- **UI Primitives**: Reusable animations, highlights, background effects
 
 ### Styling Primitives
 ```ts
@@ -251,22 +312,55 @@ export const title = tv({
 - Avoid N+1 renders in lists; use motion sparingly and memoize derived loading flags.
 - React Query provides client-side caching with configurable `staleTime` and `gcTime`.
 - Use `dynamic = "force-dynamic"` for pages that need fresh data on every request.
+- Sidebar state persistence via cookies for better UX.
 
 ### Caching Strategy
 - Server-side: Next.js cache with tags for selective invalidation
 - Client-side: React Query with 5-minute stale time by default
 - Mutations: Always revalidate relevant tags to keep data fresh
+- Sidebar: Cookie-based persistence for collapsed state
 
 ---
+
+## Authentication & Middleware
+- **Clerk Integration**: `@clerk/nextjs` with custom theme bridge
+- **Middleware**: `middleware.ts` handles route protection and redirects
+- **Public Routes**: `/`, `/sign-in`, `/sign-up`, `/waitlist`, `/api/*`, `/share/*`
+- **Protected Routes**: All other routes require authentication
+- **Auto-redirect**: Authenticated users redirected from `/` to `/dashboard`
+- **Theme Sync**: Clerk appearance synced with app theme via `ClerkProviderWithTheme`
+
+### Environment Configuration
+- **Required Variables**: Validated at startup via `config/env.ts`
+- **API URLs**: Separate internal and public API endpoints
+- **Clerk URLs**: Sign-in/sign-up URLs configured via environment
 
 ## Security
 - No direct credential storage; Clerk token is injected server-side in `api.ts`.
 - Never hard-code secrets in the frontend.
+- Environment variables validated at startup via `config/env.ts`.
+- Public routes defined in middleware for proper auth flow.
+- Share links are public but token-based for security.
 
 ---
 
+## Custom Theme & Styling
+- **Custom Theme**: ScopeMatter Pro theme defined in `styles/hero.ts` with light/dark variants
+- **Color System**: Semantic color mapping (success=in-scope, warning=pending, danger=out-of-scope)
+- **Surface Hierarchy**: `content1` (base), `content2` (cards), `content3` (popovers), `content4` (modals)
+- **Global Styles**: Custom animations, smooth scroll, utility classes in `styles/globals.css`
+- **Tailwind Config**: HeroUI plugin integration with custom content paths
+- **Theme-aware Colors**: Always use semantic classes (`text-foreground`, `bg-background`, etc.)
+
+### Theme Colors
+- **Primary**: Indigo (#4F46E5) - confident actions
+- **Secondary**: Cyan (#06B6D4) - links, subtle CTAs  
+- **Success**: Green (#10B981) - in-scope/approved
+- **Warning**: Amber (#F59E0B) - pending/needs review
+- **Danger**: Red (#EF4444) - out-of-scope/rejected
+
 ## Accessibility & i18n
-- Use labeled inputs, `aria-label` for icon-only buttons, and HeroUI’s accessible components.
+- Use labeled inputs, `aria-label` for icon-only buttons, and HeroUI's accessible components.
 - Keep all visible strings simple and ready for translation.
 
 ---
