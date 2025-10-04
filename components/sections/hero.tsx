@@ -76,8 +76,8 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div className="mt-8 flex items-center gap-4" variants={itemVariants}>
-            <Button as={Link} href="/waitlist" size="lg" className="btn-primary px-8 py-6">
-              Join Waitlist
+            <Button as={Link} href="/sign-up" size="lg" className="btn-primary px-8 py-6">
+              Get Started
             </Button>
           </motion.div>
 

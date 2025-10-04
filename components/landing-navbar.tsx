@@ -22,10 +22,8 @@ export function LandingNavbar() {
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
-
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -33,25 +31,27 @@ export function LandingNavbar() {
     { href: "#hero", label: "Home" },
     { href: "#how", label: "How It Works" },
     { href: "#benefits", label: "Benefits" },
-    /*     { href: "#support", label: "Support" }, */
     { href: "#faq", label: "FAQ" },
+  ];
+
+  const legalItems = [
+    { href: "/terms", label: "Terms" },
+    { href: "/privacy", label: "Privacy" },
   ];
 
   const handleNavItemClick = (href: string) => {
     setIsMenuOpen(false);
-
-    // Smooth scroll to section with offset for navbar height
-    const element = document.querySelector(href);
-
-    if (element) {
-      const navbarHeight = 80; // Approximate navbar height
-      const elementPosition =
-        element.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-
-      window.scrollTo({
-        top: elementPosition,
-        behavior: "smooth",
-      });
+    if (href.startsWith("#")) {
+      // Smooth scroll to section
+      const element = document.querySelector(href);
+      if (element) {
+        const navbarHeight = 80;
+        const elementPosition =
+          element.getBoundingClientRect().top +
+          window.pageYOffset -
+          navbarHeight;
+        window.scrollTo({ top: elementPosition, behavior: "smooth" });
+      }
     }
   };
 
@@ -81,7 +81,7 @@ export function LandingNavbar() {
         </NextLink>
       </NavbarBrand>
 
-      {/* Desktop nav */}
+      {/* Desktop navigation */}
       <NavbarContent className="hidden md:flex gap-4" justify="end">
         <SignedOut>
           {navItems.map((item) => (
@@ -94,11 +94,19 @@ export function LandingNavbar() {
               </button>
             </NavbarItem>
           ))}
-          {/*           <NavbarItem>
-            <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
-              Join Waitlist
-            </Button>
-          </NavbarItem> */}
+
+          {/* Legal links */}
+          {legalItems.map((item) => (
+            <NavbarItem key={item.href}>
+              <NextLink
+                href={item.href as Route}
+                className="text-sm hover:text-foreground/80 transition-colors"
+              >
+                {item.label}
+              </NextLink>
+            </NavbarItem>
+          ))}
+
           <NavbarItem>
             <Button as={NextLink} href="/sign-in" variant="flat">
               Sign In
@@ -110,6 +118,7 @@ export function LandingNavbar() {
             </Button>
           </NavbarItem>
         </SignedOut>
+
         <SignedIn>
           <UserButton />
         </SignedIn>
@@ -135,9 +144,19 @@ export function LandingNavbar() {
             </button>
           </NavbarMenuItem>
         ))}
-        {/*         <Button as={NextLink} href="/waitlist" color="primary" variant="flat">
-          Join Waitlist
-        </Button> */}
+
+        {/* Legal items */}
+        {legalItems.map((item) => (
+          <NavbarMenuItem key={item.href}>
+            <NextLink
+              href={item.href as Route}
+              className="block w-full text-left hover:text-foreground/80 transition-colors"
+            >
+              {item.label}
+            </NextLink>
+          </NavbarMenuItem>
+        ))}
+
         <SignedOut>
           <NavbarMenuItem>
             <NextLink className="w-full" href={"/sign-in" as Route}>

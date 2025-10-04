@@ -29,8 +29,11 @@ const Footer = () => {
           <NextLink href="#faq" className="hover:text-foreground">
             FAQ
           </NextLink>
-            <NextLink href={"/waitlist" as Route} className="hover:text-foreground font-medium">
-            Join Waitlist
+          <NextLink href="/terms" className="hover:text-foreground">
+            Terms
+          </NextLink>
+          <NextLink href="/privacy" className="hover:text-foreground">
+            Privacy
           </NextLink>
         </nav>
 
@@ -42,7 +45,9 @@ const Footer = () => {
           >
             muradyusubovdev@icloud.com
           </a>
-          <p className="text-default-500 mt-1">© 2025 ScopeMatter</p>
+          <p className="text-default-500 mt-1">
+            © {new Date().getFullYear()} ScopeMatter
+          </p>
         </div>
       </div>
     </footer>

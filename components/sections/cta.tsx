@@ -25,10 +25,10 @@ const itemVariants: Variants = {
   },
 };
 
-export default function CTAWaitlistSection() {
+export default function CTASection() {
   return (
     <section
-      id="waitlist"
+      id="cta"
       aria-labelledby="cta-heading"
       className="px-6 md:px-12 pb-12"
     >
@@ -44,20 +44,23 @@ export default function CTAWaitlistSection() {
           className="text-2xl md:text-3xl font-semibold text-default-900"
           variants={itemVariants}
         >
-          Stop Giving Away Free Work
+          Stop Losing Hours to Scope Creep
         </motion.h3>
+
         <motion.p className="mt-2 text-default-700" variants={itemVariants}>
-          Join the waitlist and be the first to know when Scopematter is ready.
+          Sign up for free and start managing projects with clear boundaries and
+          no unpaid work.
         </motion.p>
+
         <motion.div className="mt-6" variants={itemVariants}>
           <Button
             as="a"
-            href="/waitlist"
+            href="/sign-up"
             variant="solid"
             color="primary"
             size="lg"
           >
-            Join the Waitlist
+            Get Started
           </Button>
         </motion.div>
       </motion.div>
