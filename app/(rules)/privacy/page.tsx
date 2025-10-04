@@ -132,10 +132,10 @@ const PrivacyPolicy = () => {
           changes will be communicated via email or in-app notice. The latest
           version will always be available at{" "}
           <a
-            href="https://scopematter.xyz/privacy-policy"
+            href="https://scopematter.xyz/privacy"
             className="text-primary underline"
           >
-            scopematter.com/privacy
+            scopematter.xyz/privacy
           </a>
           .
         </p>
