@@ -153,7 +153,7 @@ function SidebarContent({
                 {user?.username}
               </p>
               <p className="text-xs font-medium whitespace-nowrap">
-                {user?.emailAddresses[0].emailAddress}
+                {user?.emailAddresses?.[0]?.emailAddress}
               </p>
             </motion.div>
           </div>
