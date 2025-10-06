@@ -1,17 +1,13 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { Providers } from "./providers";
-
-import { siteConfig } from "@/config/site";
 import { fontInter } from "@/config/fonts";
-import { LandingNavbar } from "@/components/landing-navbar";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import FloatThemeToggle from "@/components/float-theme-toggle";
 import { Analytics } from "@vercel/analytics/next";
-import LogoutButton from "@/components/logout-button";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://scopematter.xyz"),
@@ -29,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "ScopeMatter",
     images: [
       {
-        url: "/og-scopematter.jpg",
+        url: "https://scopematter.xyz/og-scopematter.jpg",
         width: 1200,
         height: 630,
         alt: "ScopeMatter – Freelance Scope Management",
@@ -43,7 +39,7 @@ export const metadata: Metadata = {
     title: "ScopeMatter – Prevent Scope Creep and Protect Your Billable Hours",
     description:
       "A tool for freelance developers and agencies to formalize project requirements and manage client change requests without losing income to scope creep.",
-    images: ["/og-scopematter.jpg"],
+    images: ["https://scopematter.xyz/og-scopematter.jpg"],
     creator: "@ScopeMatterApp",
   },
   keywords: [
@@ -56,9 +52,42 @@ export const metadata: Metadata = {
     "prevent unpaid work freelancers",
   ],
   alternates: { canonical: "https://scopematter.xyz" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      {
+        url: "/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: "/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+      { url: "/favicon.ico" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png" }],
+    shortcut: ["/favicon.ico"],
+  },
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
