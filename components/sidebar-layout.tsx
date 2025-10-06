@@ -14,7 +14,7 @@ import {
   PanelLeft,
   Folders,
 } from "lucide-react";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import MainNavbar from "@/components/main-navbar"; // adjust path
 import { usePathname } from "next/navigation";
 import ScopematterLogo from "@/public/scopematter-brand.png";
@@ -48,8 +48,9 @@ function SidebarContent({
   fromMobile?: boolean;
 }) {
   const pathname = usePathname();
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href);
-
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(href);
+  const { user } = useUser();
   return (
     <div className="flex h-full flex-col">
       {/* Logo / Brand */}
@@ -130,23 +131,30 @@ function SidebarContent({
       {/* User Section */}
       <div className="relative z-20 flex w-64 flex-col gap-3 overflow-hidden p-4">
         <div className="flex items-center overflow-hidden">
-          <UserButton
-            appearance={{
-              elements: {
-                userButtonAvatarBox: { width: "2rem", height: "2rem" },
-              },
-            }}
-          />
+          <div className="size-8">
+            <UserButton
+              appearance={{
+                elements: {
+                  userButtonAvatarBox: { width: "2rem", height: "2rem" },
+                },
+              }}
+            />
+          </div>
           <div className="ml-3 flex-1 overflow-hidden">
             <motion.div
-              className="flex flex-col"
+              className="flex flex-col text-default-600"
               style={{ display: "inline-block" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: isCollapsed ? 0 : 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <p className="text-sm font-medium whitespace-nowrap">John Doe</p>
+              <p className="text-xs font-medium whitespace-nowrap">
+                {user?.username}
+              </p>
+              <p className="text-xs font-medium whitespace-nowrap">
+                {user?.emailAddresses[0].emailAddress}
+              </p>
             </motion.div>
           </div>
         </div>
