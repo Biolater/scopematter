@@ -16,60 +16,46 @@ import LogoutButton from "@/components/logout-button";
 export const metadata: Metadata = {
   metadataBase: new URL("https://scopematter.xyz"),
   title: {
-    default: "ScopeMatter — Formalize Requirements. Manage Change. Get Paid.",
-    template: "%s — ScopeMatter",
+    default: "ScopeMatter – Prevent Scope Creep and Protect Your Billable Hours",
+    template: "%s – ScopeMatter | Freelance Scope Management Tool",
   },
   description:
-    "ScopeMatter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
+    "ScopeMatter helps freelance developers and small agencies formalize project requirements, manage client change requests, and prevent unpaid work.",
   openGraph: {
-    title: "ScopeMatter",
+    title: "ScopeMatter – Prevent Scope Creep and Protect Your Billable Hours",
     description:
-      "ScopeMatter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
-    url: "/",
+      "Formalize your project scope, manage change requests, and ensure every extra request gets billed transparently.",
+    url: "https://scopematter.xyz",
     siteName: "ScopeMatter",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "ScopeMatter" }],
+    images: [
+      {
+        url: "/og-scopematter.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ScopeMatter – Freelance Scope Management",
+      },
+    ],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ScopeMatter",
+    title: "ScopeMatter – Prevent Scope Creep and Protect Your Billable Hours",
     description:
-      "ScopeMatter is a tool for freelance developers and agencies to prevent scope creep by formalizing project requirements and managing client change requests.",
-    images: ["/og.png"],
-    creator: "@scopematterscopeMatter",
+      "A tool for freelance developers and agencies to formalize project requirements and manage client change requests without losing income to scope creep.",
+    images: ["/og-scopematter.jpg"],
+    creator: "@ScopeMatterApp",
   },
   keywords: [
-    "scope creep",
-    "change requests",
-    "freelance developer tools",
-    "project management",
-    "client management",
-    "software development",
-    "requirements formalization",
-    "freelancer contracts",
+    "scope creep software",
+    "freelance project scope tool",
+    "change request management",
+    "client approval system",
+    "freelancer contract automation",
+    "project scope tracking app",
+    "prevent unpaid work freelancers",
   ],
-  alternates: { canonical: "/" },
-  manifest: "/site.webmanifest",
-  icons: {
-    icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      {
-        url: "/android-chrome-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        url: "/android-chrome-512x512.png",
-        sizes: "512x512",
-        type: "image/png",
-      },
-      { url: "/favicon.ico" },
-    ],
-    apple: [{ url: "/apple-touch-icon.png" }],
-    shortcut: ["/favicon.ico"],
-  },
+  alternates: { canonical: "https://scopematter.xyz" },
 };
 
 export const viewport: Viewport = {

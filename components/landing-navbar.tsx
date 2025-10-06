@@ -73,11 +73,11 @@ export function LandingNavbar() {
           href={isSignedIn ? "/dashboard" : "#hero"}
         >
           <img
-            alt="Scopematter"
+            alt="ScopeMatter"
             className="h-12 w-auto"
             src="/scopematter-brand.png"
           />
-          <p className="font-bold text-inherit -ml-1">Scopematter</p>
+          <p className="font-bold text-inherit -ml-1">ScopeMatter</p>
         </NextLink>
       </NavbarBrand>
 
