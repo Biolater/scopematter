@@ -130,7 +130,7 @@ function SidebarContent({
 
       {/* User Section */}
       <div className="relative z-20 flex w-64 flex-col gap-3 overflow-hidden p-4">
-        <div className="flex items-center overflow-hidden">
+        <div className="flex items-center overflow-hidden gap-2">
           <div className="size-8">
             <UserButton
               appearance={{
@@ -140,9 +140,9 @@ function SidebarContent({
               }}
             />
           </div>
-          <div className="ml-3 flex-1 overflow-hidden">
+          <div className="flex-1 overflow-hidden">
             <motion.div
-              className="flex flex-col text-default-600"
+              className="flex flex-col text-default-600 max-w-full"
               style={{ display: "inline-block" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: isCollapsed ? 0 : 1 }}
@@ -152,7 +152,10 @@ function SidebarContent({
               <p className="text-xs font-medium whitespace-nowrap">
                 {user?.username}
               </p>
-              <p className="text-xs font-medium whitespace-nowrap">
+              <p
+                className="text-xs font-medium truncate"
+                title={user?.emailAddresses?.[0]?.emailAddress}
+              >
                 {user?.emailAddresses?.[0]?.emailAddress}
               </p>
             </motion.div>
