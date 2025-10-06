@@ -62,7 +62,7 @@ export default function BenefitsSection() {
           className="mt-3 text-center text-balance text-default-600 max-w-2xl mx-auto"
           variants={itemVariants}
         >
-          Scopematter removes ambiguity, automates change orders, and makes sure{" "}
+          ScopeMatter removes ambiguity, automates change orders, and makes sure{" "}
           <span className="font-semibold text-foreground">
             every extra hour is tracked, approved, and ready to be billed.
           </span>

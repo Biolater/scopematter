@@ -53,7 +53,7 @@ function HowItWorksSection() {
           className="text-2xl lg:text-3xl font-semibold text-center text-default-900"
           variants={itemVariants}
         >
-          How Scopematter Works
+          How ScopeMatter Works
         </motion.h2>
         <motion.p
           className="mt-3 text-center text-balance text-default-600 max-w-2xl mx-auto"

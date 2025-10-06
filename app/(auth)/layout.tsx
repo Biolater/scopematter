@@ -16,10 +16,10 @@ export default function AuthLayout({
       >
         <img
           src="/scopematter-brand.png"
-          alt="Scopematter"
+          alt="ScopeMatter"
           className="h-12 -ml-3 w-auto"
         />
-        <p className="font-bold -ml-3 text-inherit">Scopematter</p>
+        <p className="font-bold -ml-3 text-inherit">ScopeMatter</p>
       </Button>
       {children}
     </div>

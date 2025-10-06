@@ -60,7 +60,7 @@ function SidebarContent({
         <Link prefetch href="/dashboard" className="flex items-center">
           <Image
             src={ScopematterLogo}
-            alt="Scopematter Logo"
+            alt="ScopeMatter Logo"
             width={47}
             height={47}
             className="h-[47px] w-[47px] shrink-0"

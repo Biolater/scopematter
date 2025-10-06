@@ -25,7 +25,7 @@ const faqItems = [
     key: "how-different",
     title: "How is this different from Jira, Trello, or other PM tools?",
     content:
-      "Scopematter is not a task manager. It's a financial agreement tool. It focuses on locking in the initial project scope and providing a clear, billable trail for any approved changes, so you can invoice with confidence and avoid unpaid work.",
+      "ScopeMatter is not a task manager. It's a financial agreement tool. It focuses on locking in the initial project scope and providing a clear, billable trail for any approved changes, so you can invoice with confidence and avoid unpaid work.",
   },
   {
     key: "client-experience",
@@ -37,13 +37,13 @@ const faqItems = [
     key: "payments",
     title: "How does this help me get paid?",
     content:
-      "Scopematter creates a formal, e-signature-style agreement on the scope and any changes. This gives you a clear record of what the client approved, eliminating disputes over extra work and providing the documentation you need to invoice confidently.",
+      "ScopeMatter creates a formal, e-signature-style agreement on the scope and any changes. This gives you a clear record of what the client approved, eliminating disputes over extra work and providing the documentation you need to invoice confidently.",
   },
   {
     key: "is-it-for-me",
-    title: "Who is Scopematter for?",
+    title: "Who is ScopeMatter for?",
     content:
-      "Scopematter is built for freelance developers and small agencies who are tired of losing money and time to scope creep, especially when working with clients who may not be familiar with the development process.",
+      "ScopeMatter is built for freelance developers and small agencies who are tired of losing money and time to scope creep, especially when working with clients who may not be familiar with the development process.",
   },
 ];
 
