@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "ScopeMatter",
     images: [
       {
-        url: "https://scopematter.xyz/og-scopematter.jpg",
+        url: "https://scopematter.xyz/og-scopematter-optimized.jpg",
         width: 1200,
         height: 630,
         alt: "ScopeMatter – Freelance Scope Management",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: "ScopeMatter – Prevent Scope Creep and Protect Your Billable Hours",
     description:
       "A tool for freelance developers and agencies to formalize project requirements and manage client change requests without losing income to scope creep.",
-    images: ["https://scopematter.xyz/og-scopematter.jpg"],
+    images: ["https://scopematter.xyz/og-scopematter-optimized.jpg"],
     creator: "@ScopeMatterApp",
   },
   keywords: [
