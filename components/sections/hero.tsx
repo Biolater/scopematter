@@ -140,8 +140,7 @@ export default function HeroSection() {
         >
           <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg shadow-xl bg-content1">
             <video
-              src="/scopematter-compressed.mp4"
-              poster="/scopematter-poster.jpg"
+              src="https://9nghnaawajmv9mqf.public.blob.vercel-storage.com/scopematter"
               autoPlay
               muted
               loop
