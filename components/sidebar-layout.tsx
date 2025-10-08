@@ -242,7 +242,7 @@ export default function SidebarLayout({
       <div className="flex flex-1 flex-col overflow-hidden">
         <MainNavbar onMenuPress={() => setIsOpen(true)} />
         <main className="flex-1 overflow-y-auto">
-          <div className="p-4 max-w-7xl mx-auto sm:py-6">{children}</div>
+          <div className="p-4 max-w-8xl mx-auto sm:py-6 h-full">{children}</div>
         </main>
       </div>
     </div>

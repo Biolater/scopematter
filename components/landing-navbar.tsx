@@ -77,7 +77,7 @@ export function LandingNavbar() {
             className="h-12 w-auto"
             src="/scopematter-brand.png"
           />
-          <p className="font-bold text-inherit -ml-1">ScopeMatter</p>
+          <p className="font-bold text-inherit">ScopeMatter</p>
         </NextLink>
       </NavbarBrand>
 
