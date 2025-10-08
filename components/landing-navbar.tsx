@@ -63,13 +63,13 @@ export function LandingNavbar() {
       isBordered
       id="site-navbar"
       isMenuOpen={isMenuOpen}
-      maxWidth="xl"
+      maxWidth="2xl"
       position="sticky"
       onMenuOpenChange={setIsMenuOpen}
     >
-      <NavbarBrand className="-ml-3">
+      <NavbarBrand className="-ml-3 grow-0 basis-auto">
         <NextLink
-          className="flex items-center font-semibold tracking-tight"
+          className="flex items-center shrink-0 font-semibold tracking-tight"
           href={isSignedIn ? "/dashboard" : "#hero"}
         >
           <img
@@ -84,28 +84,30 @@ export function LandingNavbar() {
       {/* Desktop navigation */}
       <NavbarContent className="hidden md:flex gap-4" justify="end">
         <SignedOut>
-          {navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <button
-                className="text-sm hover:text-foreground/80 cursor-pointer transition-colors"
-                onClick={() => handleNavItemClick(item.href)}
-              >
-                {item.label}
-              </button>
-            </NavbarItem>
-          ))}
+          <div className="flex gap-4 mx-auto">
+            {navItems.map((item) => (
+              <NavbarItem key={item.href}>
+                <button
+                  className="text-sm hover:text-foreground/80 cursor-pointer transition-colors"
+                  onClick={() => handleNavItemClick(item.href)}
+                >
+                  {item.label}
+                </button>
+              </NavbarItem>
+            ))}
 
-          {/* Legal links */}
-          {legalItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <NextLink
-                href={item.href as Route}
-                className="text-sm hover:text-foreground/80 transition-colors"
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
+            {/* Legal links */}
+            {legalItems.map((item) => (
+              <NavbarItem key={item.href}>
+                <NextLink
+                  href={item.href as Route}
+                  className="text-sm hover:text-foreground/80 transition-colors"
+                >
+                  {item.label}
+                </NextLink>
+              </NavbarItem>
+            ))}
+          </div>
 
           <NavbarItem>
             <Button as={NextLink} href="/sign-in" variant="flat">
