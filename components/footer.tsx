@@ -15,7 +15,7 @@ const Footer = () => {
             alt="ScopeMatter"
             className="h-10 w-auto"
           />
-          <span className="ml-2 font-bold">ScopeMatter</span>
+          <span className="font-bold">ScopeMatter</span>
         </NextLink>
 
         {/* Navigation */}

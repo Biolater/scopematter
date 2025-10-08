@@ -12,7 +12,7 @@ export default async function ProjectsPage() {
   const projects = await getProjects();
 
   return (
-    <>
+    <div className="flex flex-col h-full">
       <SectionHeader
         title="Projects"
         description="Manage all your freelance projects in one place."
@@ -28,7 +28,7 @@ export default async function ProjectsPage() {
       </SectionHeader>
 
       {projects.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-divider rounded-2xl bg-default-50">
+        <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-divider rounded-2xl bg-default-50 h-full">
           <div className="p-4 rounded-full bg-default-100 mb-4">
             <PlusIcon className="size-8 text-default-600" />
           </div>
@@ -46,6 +46,6 @@ export default async function ProjectsPage() {
       ) : (
         <ProjectsContent projects={projects} />
       )}
-    </>
+    </div>
   );
 }
