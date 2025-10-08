@@ -4,16 +4,6 @@
 </p>
 
 <p align="center">
-  <video src="https://9nghnaawajmv9mqf.public.blob.vercel-storage.com/scopematter" width="720" controls>
-    Your browser does not support the video tag.
-  </video>
-</p>
-
-<p align="center">
-  <img src="./public/scopematter-banner.png" />
-</p>
-
-<p align="center">
   <img src="https://img.shields.io/badge/Next.js-15-blue?style=flat-square&logo=next.js" />
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/PostgreSQL-Database-blue?style=flat-square&logo=postgresql" />
@@ -43,12 +33,6 @@
 | Frontend                 | Backend             | ORM     | Database   | Cache   | Auth    | Deployment |
 |--------------------------|---------------------|---------|------------|---------|---------|-------------|
 | Next.js 15 (App Router)  | Node.js (Express)   | Prisma  | PostgreSQL | Redis (Upstash) | Clerk   | Vercel (FE) / Render (BE) |
-
----
-
-## 📈 Demo
-
-🎬 Watch the demo video above to see ScopeMatter in action — creating projects, managing requests, generating change orders, and sharing client links.
 
 ---
 
