@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="./public/scopematter-banner.png" alt="ScopeMatter Banner" />
+  <img src="./public/scopematter-banner.png" />
 </p>
 
 <p align="center">
@@ -18,6 +18,7 @@
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/PostgreSQL-Database-blue?style=flat-square&logo=postgresql" />
   <img src="https://img.shields.io/badge/Prisma-ORM-2D3748?style=flat-square&logo=prisma&logoColor=white" />
+  <img src="https://img.shields.io/badge/Upstash-Redis-00C7B7?style=flat-square&logo=redis&logoColor=white" />
   <img src="https://img.shields.io/badge/Clerk-Auth-orange?style=flat-square&logo=clerk" />
   <img src="https://img.shields.io/badge/Status-MVP%20Complete-brightgreen?style=flat-square" />
 </p>
@@ -26,28 +27,28 @@
 
 ## ✅ Features
 
-- **Project Scope Management:** Define project deliverables clearly with explicit scope items.
-- **Client Requests Tracking:** Log and review every client request; mark them as in-scope or out-of-scope.
-- **Change Orders:** Automatically generate formal change orders for out-of-scope work, including pricing and delivery terms.
-- **Shareable Client Links:** Generate public, token-secured project views to share progress and approvals transparently.
-- **PDF Exports:** Export scope and change orders as branded PDFs for documentation or invoicing.
-- **Dashboard Overview:** View quick metrics for ongoing projects, pending requests, and approved change orders.
-- **Secure Authentication:** Clerk-powered user management and protection for all private routes.
-- **Cache-Optimized Performance:** Upstash Redis layer for 24h TTL caching on dashboards and projects.
+- **Scope Tracking:** Define and manage project deliverables clearly.
+- **Client Requests:** Log and track new client requests with approval flow.
+- **Change Orders:** Automatically generate and approve paid out-of-scope changes.
+- **Shareable Links:** Public, token-secured project views for clients.
+- **PDF Exports:** Generate professional project and change order PDFs.
+- **Dashboard:** View quick stats and activity summaries.
+- **Secure Auth:** Clerk-based authentication.
+- **Caching:** Fast Upstash Redis caching for dashboard and project data.
 
 ---
 
 ## 🛠 Tech Stack
 
-| Frontend                 | Backend             | ORM     | Database   | Auth    | Deployment |
-|--------------------------|---------------------|---------|------------|---------|-------------|
-| Next.js 15 (App Router)  | Node.js (Express)   | Prisma  | PostgreSQL | Clerk   | Vercel (FE) / Render (BE) |
+| Frontend                 | Backend             | ORM     | Database   | Cache   | Auth    | Deployment |
+|--------------------------|---------------------|---------|------------|---------|---------|-------------|
+| Next.js 15 (App Router)  | Node.js (Express)   | Prisma  | PostgreSQL | Redis (Upstash) | Clerk   | Vercel (FE) / Render (BE) |
 
 ---
 
 ## 📈 Demo
 
-> 🎬 Watch the demo video above — showcasing how ScopeMatter helps freelancers formalize project scope, handle change requests, and prevent unpaid work.
+🎬 Watch the demo video above to see ScopeMatter in action — creating projects, managing requests, generating change orders, and sharing client links.
 
 ---
 
@@ -66,11 +67,20 @@ npm install
 # 4. Setup environment variables
 cp .env.example .env
 
-# 5. Push the Prisma schema to your database
+# 5. Push Prisma schema
 npx prisma db push
 
-# 6. Run the backend (Express)
+# 6. Run development servers
 cd backend && npm run dev
-
-# 7. Run the frontend (Next.js)
 cd frontend && npm run dev
+```
+
+---
+
+## 👨‍💻 Author
+
+Built by [Murad Yusubov](https://github.com/biolater) — full-stack developer focused on building SaaS tools that empower freelancers and small agencies.
+
+---
+
+© 2025 ScopeMatter — All Rights Reserved.
