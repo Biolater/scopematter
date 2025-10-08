@@ -12,7 +12,8 @@ import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://scopematter.xyz"),
   title: {
-    default: "ScopeMatter – Prevent Scope Creep and Protect Your Billable Hours",
+    default:
+      "ScopeMatter – Prevent Scope Creep and Protect Your Billable Hours",
     template: "%s – ScopeMatter | Freelance Scope Management Tool",
   },
   description:
@@ -113,7 +114,8 @@ export default function RootLayout({
           <div className="relative flex flex-col min-h-screen">
             <SmoothScroll />
             {children}
-            <FloatThemeToggle />
+            {/*             <FloatThemeToggle />
+             */}{" "}
             <SpeedInsights />
           </div>
         </Providers>
