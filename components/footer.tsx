@@ -4,7 +4,7 @@ import NextLink from "next/link";
 const Footer = () => {
   return (
     <footer className="w-full py-8 border-t border-divider">
-      <div className="container mx-auto max-w-7xl px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+      <div className="container mx-auto max-w-8xl px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
         {/* Brand */}
         <NextLink
           href="#hero"

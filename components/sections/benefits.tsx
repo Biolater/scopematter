@@ -25,17 +25,17 @@ export default function BenefitsSection() {
     {
       emoji: "🛡️",
       title: "Lock the Scope",
-      desc: "Define deliverables, timelines, and acceptance criteria upfront. Extras are out-of-scope by default—no free work.",
+      desc: "Define deliverables, timelines, and pricing upfront. Everything is documented, so there’s zero confusion about what’s included.",
     },
     {
-      emoji: "🤝",
-      title: "Transparent for Clients",
-      desc: "Simple approvals and a clear audit trail build trust and end debates. Point to the system, not to a chat thread.",
+      emoji: "🔍",
+      title: "Full Transparency",
+      desc: "Share read-only project views with clients. They can always see the scope, requests, and updates — no logins, no messy chats.",
     },
     {
       emoji: "💸",
-      title: "Every Change = Paid",
-      desc: "New requests turn into quotes and approved line items automatically, so every extra hour is tracked, approved, and ready to be billed.",
+      title: "Get Paid for Every Change",
+      desc: "Turn out-of-scope requests into formal change orders with defined costs and extra time — keeping every new task billable and tracked.",
     },
   ];
 
@@ -62,9 +62,9 @@ export default function BenefitsSection() {
           className="mt-3 text-center text-balance text-default-600 max-w-2xl mx-auto"
           variants={itemVariants}
         >
-          ScopeMatter removes ambiguity, automates change orders, and makes sure{" "}
+          ScopeMatter keeps every project clear, traceable, and billable —{" "}
           <span className="font-semibold text-foreground">
-            every extra hour is tracked, approved, and ready to be billed.
+            so you stay in control and get paid for every hour you work.
           </span>
         </motion.p>
 

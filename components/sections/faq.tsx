@@ -25,25 +25,25 @@ const faqItems = [
     key: "how-different",
     title: "How is this different from Jira, Trello, or other PM tools?",
     content:
-      "ScopeMatter is not a task manager. It's a financial agreement tool. It focuses on locking in the initial project scope and providing a clear, billable trail for any approved changes, so you can invoice with confidence and avoid unpaid work.",
+      "ScopeMatter isn’t a project-management board. It’s a scope-control layer that sits above your existing workflow. Instead of tracking tasks, it tracks agreements — what was originally included and what became an extra, with a record ready to invoice.",
   },
   {
     key: "client-experience",
     title: "Will my non-technical clients find this difficult to use?",
     content:
-      "No. The client interface is designed to be extremely simple. They receive a clear proposal and approve changes with a click. It builds trust by framing scope changes professionally, rather than through messy email chains.",
+      "No. Clients don’t need an account or complex dashboards. You share a secure read-only link where they can see the agreed scope, new requests, and change orders — everything is transparent, nothing editable.",
   },
   {
     key: "payments",
     title: "How does this help me get paid?",
     content:
-      "ScopeMatter creates a formal, e-signature-style agreement on the scope and any changes. This gives you a clear record of what the client approved, eliminating disputes over extra work and providing the documentation you need to invoice confidently.",
+      "Every new request is categorized as in-scope or out-of-scope. Out-of-scope items are formalized into change orders with defined pricing and delivery impact, giving you a clean, documented trail for billing and preventing unpaid work.",
   },
   {
     key: "is-it-for-me",
     title: "Who is ScopeMatter for?",
     content:
-      "ScopeMatter is built for freelance developers and small agencies who are tired of losing money and time to scope creep, especially when working with clients who may not be familiar with the development process.",
+      "ScopeMatter is built for freelance developers and small agencies who want a lightweight system to prevent scope creep, keep clients informed, and turn extra requests into clearly billable work — without switching to heavy PM software.",
   },
 ];
 
