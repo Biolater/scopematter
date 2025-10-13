@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function ProjectNotFound() {
   return (
-    <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
+    <div className="flex flex-col items-center justify-center py-20 px-4 text-center max-w-2xl mx-auto">
       {/* Animated icon */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
