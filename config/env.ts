@@ -4,8 +4,6 @@ const required = (key: string): string => {
     return value;
 };
 
-
-
 export const env = {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: required('NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY'),
     CLERK_SECRET_KEY: required('CLERK_SECRET_KEY'),
