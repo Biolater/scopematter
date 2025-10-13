@@ -66,7 +66,7 @@ export default function ScopeItemsTable({
               Add Item
             </Button>
             <Button
-              isDisabled={exporting}
+              isDisabled={exporting || items.length === 0}
               size="sm"
               startContent={!exporting && <Download className="size-4" />}
               variant="flat"
