@@ -1,6 +1,29 @@
-"use client";
+import { Metadata } from "next";
 
-import React from "react";
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description:
+    "Review ScopeMatter’s Terms of Service outlining user responsibilities, account usage, payment terms, and data protection obligations.",
+  openGraph: {
+    title: "Terms of Service | ScopeMatter",
+    description:
+      "Learn the rules and conditions governing your use of ScopeMatter’s freelance project management platform.",
+    url: "https://scopematter.xyz/terms",
+    siteName: "ScopeMatter",
+    locale: "en_US",
+    type: "article",
+  },
+  twitter: {
+    card: "summary",
+    title: "Terms of Service | ScopeMatter",
+    description:
+      "Read ScopeMatter’s Terms of Service to understand your rights, responsibilities, and usage conditions.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 const TermsOfService = () => {
   return (

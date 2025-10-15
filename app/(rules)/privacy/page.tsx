@@ -1,6 +1,29 @@
-"use client";
+import { Metadata } from "next";
 
-import React from "react";
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Read ScopeMatter’s Privacy Policy to learn how we collect, use, and protect your personal data while you manage projects, clients, and change requests.",
+  openGraph: {
+    title: "Privacy Policy | ScopeMatter",
+    description:
+      "Understand how ScopeMatter safeguards your information, from authentication to project data and payment security.",
+    url: "https://scopematter.xyz/privacy",
+    siteName: "ScopeMatter",
+    locale: "en_US",
+    type: "article",
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | ScopeMatter",
+    description:
+      "Learn how ScopeMatter protects your privacy and securely manages your project data.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 const PrivacyPolicy = () => {
   return (

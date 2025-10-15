@@ -5,8 +5,30 @@ import { Button } from "@heroui/button";
 import { PlusIcon } from "lucide-react";
 import CreateProjectDialog from "@/components/projects/create-project-dialog";
 import EditProjectDialog from "@/components/projects/edit-project-dialog";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Manage all your freelance projects in one organized workspace. Track project scope, client requests, and approved change orders to prevent unpaid work.",
+  openGraph: {
+    title: "Projects – Freelance Project Management | ScopeMatter",
+    description:
+      "View and manage all your freelance projects in one place. Keep scopes clear, handle client change requests, and avoid scope creep effortlessly.",
+    url: "https://scopematter.xyz/projects",
+    siteName: "ScopeMatter",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Projects – Freelance Project Management | ScopeMatter",
+    description:
+      "Stay on top of all your freelance projects, track scope changes, and protect your billable hours with ScopeMatter.",
+  },
+};
 
 export default async function ProjectsPage() {
   const projects = await getProjects();

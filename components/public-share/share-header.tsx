@@ -5,6 +5,7 @@ import { Button } from "@heroui/button";
 import { ArrowLeft } from "lucide-react";
 import { projectStatusMeta } from "@/components/projects/project-detail/status-meta";
 import type { ProjectStatus } from "@/lib/types/project.types";
+import Link from "next/link";
 
 /**
  * Read-only header for public project share page
@@ -26,9 +27,10 @@ export default function ShareHeader({
       <div className="mb-4">
         <Button
           variant="light"
+          as={Link}
           size="sm"
+          href="/dashboard"
           startContent={<ArrowLeft className="size-4" />}
-          onPress={() => window.history.back()}
           className="text-default-600 hover:text-default-900"
         >
           Go Back
