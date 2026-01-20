@@ -92,18 +92,18 @@ This structure separates **Mechanism** (http) from **Intent** (actions/validatio
 
 ```mermaid
 graph TD
-    User[User / Client Browser]
+    User["User / Client Browser"]
     subgraph "ScopeMatter (Next.js)"
-        UI[HeroUI Components]
-        Router[App Router]
-        Action[Server Actions (lib/actions)]
-        Cache[Next.js Data Cache]
-        Validator[Zod Validation]
+        UI["HeroUI Components"]
+        Router["App Router"]
+        Action["Server Actions (lib/actions)"]
+        Cache["Next.js Data Cache"]
+        Validator["Zod Validation"]
     end
-    External[External Domain API]
+    External["External Domain API"]
 
     User -- Interacts --> UI
-    UI -- Submits Form --> Action
+    UI -- "Submits Form" --> Action
     Action --> Validator
     Validator -- Valid --> Action
     Action -- "Mutate + Revalidate" --> External
