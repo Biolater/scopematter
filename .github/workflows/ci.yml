@@ -31,7 +31,7 @@ jobs:
         run: npm run build
         env:
           # Dummy values for build-time validation
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_dummy
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_Y2xlcmsuZXhhbXBsZS5jb20k
           NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
           NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
           API_URL: http://localhost:8080
@@ -59,7 +59,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_dummy
+            NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_Y2xlcmsuZXhhbXBsZS5jb20k
+
             NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
             NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
             API_URL=http://localhost:8080
