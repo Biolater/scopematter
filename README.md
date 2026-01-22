@@ -27,6 +27,7 @@
 ---
 
 ## 💡 Why I Built This
+
 In the B2B service economy, **Scope Creep** isn't just a nuisance—it's a multi-billion dollar revenue leak. Freelancers and agencies often absorb "minor" client requests to avoid social friction, resulting in 15-20% billable hour loss.
 
 **ScopeMatter** was engineered to solve the **"Social Friction vs. Financial Integrity"** paradox. By providing a neutral, immutable system of record for deliverables, it transforms awkward negotiation into a structured, professional approval loop. It ensures that every extension of work is explicitly acknowledged, approved, and documented for billing.
@@ -34,24 +35,26 @@ In the B2B service economy, **Scope Creep** isn't just a nuisance—it's a multi
 ---
 
 ## 🧠 Engineering Cognition
+
 This repository serves as a **Trust Engine**. It demonstrates high-level ownership of complex distributed state, secure asynchronous workflows, and type-safe proxying.
 
-> [!IMPORTANT]
-> **[Read the ARCHITECTURE.md](./ARCHITECTURE.md)**  
+> [!IMPORTANT] > **[Read the ARCHITECTURE.md](./ARCHITECTURE.md)**  
 > This project is built on **Sovereign Design Principles**. The Architecture Doc details our **BFF (Backend-for-Frontend)** strategy, the **Envelope Proxy Pattern** for API normalization, and the systematic use of **Server Actions** as a secure mutation gateway.
 
 ---
 
 ## 🏗️ The "Architect" Stack
+
 A selection of technologies chosen not for popularity, but for their contribution to system sovereignty and transactional integrity.
 
-| Layer | Technology | Architectural Rationale |
-| :--- | :--- | :--- |
-| **Orchestration** | **Next.js 15 (App Router)** | Used as a BFF to handle edge validation, RSC caching, and secure token injection before data hits the Domain API. |
-| **Foundation** | **React 19** | Leveraging the latest "Actions" API for native form-state management and reduced client-side bundle size. |
-| **Auth & Identity** | **Clerk 6.31** | Externalized identity management using ephemeral session tokens to ensure zero-trust communication with the backend. |
-| **Validation** | **Zod 4.0** | Acts as the "System Firewall," ensuring strict type-safety at the network edge and within Server Actions. |
-| **UI Experience** | **HeroUI + Framer Motion** | High-performance component library paired with declarative animations for a "Premium Grade" user experience. |
+| Layer               | Technology                  | Architectural Rationale                                                                                              |
+| :------------------ | :-------------------------- | :------------------------------------------------------------------------------------------------------------------- |
+| **Orchestration**   | **Next.js 15 (App Router)** | Used as a BFF to handle edge validation, RSC caching, and secure token injection before data hits the Domain API.    |
+| **Foundation**      | **React 19**                | Leveraging the latest "Actions" API for native form-state management and reduced client-side bundle size.            |
+| **Auth & Identity** | **Clerk 6.31**              | Externalized identity management using ephemeral session tokens to ensure zero-trust communication with the backend. |
+| **Validation**      | **Zod 4.0**                 | Acts as the "System Firewall," ensuring strict type-safety at the network edge and within Server Actions.            |
+| **Styling**         | **Tailwind CSS v4**         | Utilizes the new Rust-based engine for instant HMR and zero-runtime overhead.                                        |
+| **UI Experience**   | **HeroUI + Framer Motion**  | High-performance component library paired with declarative animations for a "Premium Grade" user experience.         |
 
 ---
 
@@ -66,6 +69,7 @@ A selection of technologies chosen not for popularity, but for their contributio
 ---
 
 ## 🌐 System Landscape
+
 ScopeMatter is a **Distributed System**. This repository contains the **Frontend Interface (Orchestrator)**.
 
 - **Frontend (This Repo)**: Handles the Experience Layer, State Orchestration, and API Caching.
@@ -79,11 +83,13 @@ ScopeMatter is a **Distributed System**. This repository contains the **Frontend
 ## 🚀 Getting Started (Local Sovereignty)
 
 ### Prerequisites
+
 - Node.js 20+
 - A Clerk Account (Dev Keys)
 - Access to the [ScopeMatter Backend](https://github.com/Biolater/scopematter-be)
 
-### Instant Setup
+### Instant Setup (Node.js)
+
 ```bash
 # Clone the sovereignty
 git clone https://github.com/Biolater/scopematter.git
@@ -94,16 +100,25 @@ npm install
 
 # Configure the environment
 cp .env.example .env
-# Set NEXT_PUBLIC_API_URL and CLERK_ keys
+# Set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY and CLERK_SECRET_KEY
 
 # Launch development environment (Turbopack enabled)
 npm run dev
 ```
 
+### Containerized Setup (Docker - Recommended)
+
+```bash
+# Build and Run in Isolation
+docker-compose up --build
+```
+
 ---
 
 ## 🤖 AI Disclosure & Governance
-This codebase was developed using a **"Human-Managed Agentic Workflow"**. 
+
+This codebase was developed using a **"Human-Managed Agentic Workflow"**.
+
 1. **Design**: Conceptualized and architected by a Human Principal Engineer.
 2. **Implementation**: Code generated/refined by AI agents (Claude 3.5 Sonnet / Gemini 2.0 Pro) under strict architectural constraints.
 3. **Verification**: 100% of logic paths, security patterns, and type definitions have been manually reviewed and verified for production safety.

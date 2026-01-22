@@ -6,10 +6,15 @@ on:
   pull_request:
     branches: [ "**" ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-lint:
     name: Build & Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
       - name: Checkout Code
@@ -42,6 +47,7 @@ jobs:
   docker-verify:
     name: Docker Build Check
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     
     steps:
       - name: Checkout Code
