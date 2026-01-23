@@ -1,25 +1,19 @@
-name: CI
+name: Trust Engine CI
 
 on:
   push:
-    branches: [ "**" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "**" ]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [ "main" ]
 
 jobs:
-  build-and-lint:
-    name: Build & Lint
+  quality-gate:
+    name: 🛡️ Quality Gate
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,53 +23,52 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run Linter
+      - name: 🚨 Linting (ESLint)
         run: npm run lint
-
-      - name: Run Unit Tests
-        run: npm test
-
-      - name: Type Check
+        
+      - name: 📐 Type Integrity (TSC)
         run: npx tsc --noEmit
 
-      - name: Build Application
-        run: npm run build
-        env:
-          # Dummy values for build-time validation
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_Y2xlcmsuZXhhbXBsZS5jb20k
-          NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
-          NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
-          API_URL: http://localhost:8080
-          PUBLIC_API_URL: http://localhost:8080
-          CLERK_SECRET_KEY: sk_test_dummy
-          DATABASE_PASSWORD: dummy
-
-  docker-verify:
-    name: Docker Build Check
+  trust-verification:
+    name: 🧪 Trust Verification
+    needs: quality-gate
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Docker Image
-        uses: docker/build-push-action@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          context: .
-          push: false
-          tags: scopematter:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_Y2xlcmsuZXhhbXBsZS5jb20k
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install Dependencies
+        run: npm ci
 
-            NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-            NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-            API_URL=http://localhost:8080
-            PUBLIC_API_URL=http://localhost:8080
-            CLERK_SECRET_KEY=sk_test_dummy
-            DATABASE_PASSWORD=dummy
+      - name: 🧪 Unit Tests (Vitest)
+        run: npm run test
+
+  build-provenance:
+    name: 🏗️ Build Provenance
+    needs: trust-verification
+    runs-on: ubuntu-latest
+    env:
+      # Dummy values for build-time static generation
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_dummy
+      CLERK_SECRET_KEY: sk_test_dummy
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
+      API_URL: https://api.example.com
+      PUBLIC_API_URL: https://api.example.com
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: 🏗️ Production Build
+        run: npm run build

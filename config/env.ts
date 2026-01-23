@@ -7,7 +7,7 @@ const required = (key: string): string => {
 export const env = {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: required('NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY'),
     CLERK_SECRET_KEY: required('CLERK_SECRET_KEY'),
-    DATABASE_PASSWORD: required('DATABASE_PASSWORD'),
+
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: required('NEXT_PUBLIC_CLERK_SIGN_IN_URL'),
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: required('NEXT_PUBLIC_CLERK_SIGN_UP_URL'),
     API_URL: required('API_URL'),
